@@ -594,17 +594,24 @@
         <div class="max-w-7xl mx-auto relative z-10 w-full flex justify-start my-auto">
           <div class="w-full max-w-xl lg:max-w-2xl space-y-4 sm:space-y-6 text-left">
             
-            <!-- Encabezado de Sección -->
-            <div class="space-y-1 sm:space-y-1.5">
-              <span class="text-[10px] sm:text-[11px] font-brand tracking-[0.25em] text-[#0effc7] uppercase block">
+            <!-- Encabezado de Sección Dinámico -->
+            <div id="discHeaderContainer" class="space-y-1.5 transition-all duration-500 ease-out">
+              <span id="discHeaderBadge" class="text-[10px] sm:text-[11px] font-brand tracking-[0.25em] text-[#0effc7] uppercase block transition-all duration-300">
                 Disciplinas FOR+
               </span>
-              <h2 class="font-brand text-2xl sm:text-3xl lg:text-4xl font-normal uppercase tracking-tight text-white leading-tight drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)]">
-                DISTINTAS FORMAS <br>
+              <h2 id="discMainHeading" class="font-brand uppercase tracking-tight text-white transition-all duration-500 ease-out origin-left leading-tight drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)] text-3xl sm:text-5xl lg:text-6xl">
+                DISTINTAS FORMAS <br class="disc-break">
                 <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-white/95 to-white/60">
                   DE ENTRENAR
                 </span>
               </h2>
+
+              <!-- Descripción introductoria que se esconde al hacer el primer scroll -->
+              <div id="discIntroDescWrapper" class="transition-all duration-500 ease-out overflow-hidden max-h-[220px] opacity-100 pt-1">
+                <p id="discIntroDesc" class="text-sm sm:text-base lg:text-lg text-white/90 font-light leading-relaxed max-w-lg drop-shadow-[0_2px_14px_rgba(0,0,0,0.95)]">
+                  No existe una sola manera. Cada disciplina somete al cuerpo a un estímulo diferente: fuerza biomecánica pura, sincronía rítmica colectiva, cadencia cardiovascular o dinamismo funcional.
+                </p>
+              </div>
             </div>
 
             <!-- Dock interactivo de iconos estilo Apple (crecen conforme se recorren las disciplinas) -->
@@ -654,8 +661,8 @@
               </div>
             </div>
 
-            <!-- Ficha técnica dinámica de la disciplina activa (desaparece y aparece suavemente al cambiar) -->
-            <div id="discDetailBox" class="space-y-3.5 pt-1 transition-all duration-200 ease-out will-change-[opacity,transform]">
+            <!-- Ficha técnica dinámica de la disciplina activa (aparece al hacer scroll y cambia por disciplina) -->
+            <div id="discDetailBox" class="space-y-3.5 pt-1 transition-all duration-500 ease-out will-change-[opacity,transform] max-h-0 opacity-0 overflow-hidden transform translate-y-6 pointer-events-none">
               
               <!-- TÍTULO PROMINENTE Y CLARO DE LA DISCIPLINA -->
               <div class="space-y-1">
@@ -1451,6 +1458,61 @@
     let currentDiscActiveIdx = -1;
     let isTransitioningDisc = false;
     let queuedDiscIdx = -1;
+    let isDiscFocusMode = false;
+
+    function setDiscFocusMode(focus) {
+      if (isDiscFocusMode === focus) return;
+      isDiscFocusMode = focus;
+
+      const heading = document.getElementById('discMainHeading');
+      const introDesc = document.getElementById('discIntroDescWrapper');
+      const detailBox = document.getElementById('discDetailBox');
+      const badge = document.getElementById('discHeaderBadge');
+
+      if (focus) {
+        // Al hacer el primer scroll: se esconde la descripción general y el titular se encoge arriba
+        if (introDesc) {
+          introDesc.style.maxHeight = '0px';
+          introDesc.style.opacity = '0';
+          introDesc.style.pointerEvents = 'none';
+          introDesc.style.transform = 'translateY(-10px)';
+        }
+        if (heading) {
+          heading.className = 'font-brand uppercase tracking-[0.22em] text-white/50 transition-all duration-500 ease-out origin-left leading-none text-xs sm:text-sm drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]';
+          heading.innerHTML = 'DISTINTAS FORMAS DE ENTRENAR';
+        }
+        if (badge) {
+          badge.style.display = 'none';
+        }
+        if (detailBox) {
+          detailBox.style.maxHeight = '800px';
+          detailBox.style.opacity = '1';
+          detailBox.style.transform = 'translateY(0)';
+          detailBox.style.pointerEvents = '';
+        }
+      } else {
+        // En reposo inicial (antes del primer scroll): titular grande y descripción visible
+        if (introDesc) {
+          introDesc.style.maxHeight = '240px';
+          introDesc.style.opacity = '1';
+          introDesc.style.pointerEvents = '';
+          introDesc.style.transform = 'translateY(0)';
+        }
+        if (heading) {
+          heading.className = 'font-brand uppercase tracking-tight text-white transition-all duration-500 ease-out origin-left leading-tight drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)] text-3xl sm:text-5xl lg:text-6xl';
+          heading.innerHTML = 'DISTINTAS FORMAS <br class="disc-break"><span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-white/95 to-white/60">DE ENTRENAR</span>';
+        }
+        if (badge) {
+          badge.style.display = 'block';
+        }
+        if (detailBox) {
+          detailBox.style.maxHeight = '0px';
+          detailBox.style.opacity = '0';
+          detailBox.style.transform = 'translateY(16px)';
+          detailBox.style.pointerEvents = 'none';
+        }
+      }
+    }
 
     function renderDiscContent(idx) {
       const data = discDetails[idx];
@@ -1472,10 +1534,6 @@
       if (currentDiscActiveIdx === -1) {
         currentDiscActiveIdx = idx;
         renderDiscContent(idx);
-        if (discDetailBox) {
-          discDetailBox.style.opacity = '1';
-          discDetailBox.style.transform = 'translateY(0)';
-        }
         return;
       }
 
@@ -1488,8 +1546,8 @@
       isTransitioningDisc = true;
       currentDiscActiveIdx = idx;
 
-      // 1. El contenido saliente desaparece suavemente (fade out y slide)
-      if (discDetailBox) {
+      // 1. El contenido saliente desaparece suavemente si estamos en focus mode
+      if (discDetailBox && isDiscFocusMode) {
         discDetailBox.style.opacity = '0';
         discDetailBox.style.transform = 'translateY(12px)';
       }
@@ -1502,8 +1560,8 @@
 
         renderDiscContent(targetIdx);
 
-        // 3. El nuevo contenido aparece claramente (fade in y elevación)
-        if (discDetailBox) {
+        // 3. El nuevo contenido aparece claramente si estamos en focus mode
+        if (discDetailBox && isDiscFocusMode) {
           discDetailBox.style.opacity = '1';
           discDetailBox.style.transform = 'translateY(0)';
         }
@@ -1534,7 +1592,7 @@
       const currentScrollY = window.pageYOffset || document.documentElement.scrollTop;
       const trackTop = currentScrollY + rect.top;
       const scrollable = rect.height - window.innerHeight;
-      const targets = [0.06, 0.28, 0.50, 0.72, 0.94];
+      const targets = [0.12, 0.33, 0.53, 0.73, 0.93];
       const targetScroll = trackTop + targets[idx] * scrollable;
       window.scrollTo({ top: targetScroll, behavior: 'smooth' });
     }
@@ -1544,16 +1602,23 @@
     }
 
     // Centros de cada disciplina en el recorrido de scroll (p: 0 a 1)
-    const discCenters = [0.06, 0.28, 0.50, 0.72, 0.94];
+    const discCenters = [0.12, 0.33, 0.53, 0.73, 0.93];
 
     function applyDisciplinasProgress(p) {
       if (!discSlides.length) return;
 
+      // Control de modo: Intro general vs Foco en Disciplina activa
+      if (p > 0.045) {
+        setDiscFocusMode(true);
+      } else if (p < 0.035) {
+        setDiscFocusMode(false);
+      }
+
       // Calcular opacidad continua de cada fotografía de fondo
-      const s1 = Math.max(0, Math.min(1.0, (p - 0.16) / 0.08));
-      const s2 = Math.max(0, Math.min(1.0, (p - 0.38) / 0.08));
-      const s3 = Math.max(0, Math.min(1.0, (p - 0.60) / 0.08));
-      const s4 = Math.max(0, Math.min(1.0, (p - 0.82) / 0.08));
+      const s1 = Math.max(0, Math.min(1.0, (p - 0.20) / 0.06));
+      const s2 = Math.max(0, Math.min(1.0, (p - 0.40) / 0.06));
+      const s3 = Math.max(0, Math.min(1.0, (p - 0.60) / 0.06));
+      const s4 = Math.max(0, Math.min(1.0, (p - 0.80) / 0.06));
 
       if (discSlides[0]) discSlides[0].style.opacity = '1';
       if (discSlides[1]) discSlides[1].style.opacity = s1.toFixed(3);
@@ -1562,7 +1627,7 @@
       if (discSlides[4]) discSlides[4].style.opacity = s4.toFixed(3);
 
       // Efecto Dock de Apple: magnificación continua y fluida de los iconos conforme se avanza
-      const radius = 0.22;
+      const radius = 0.20;
       let activeIdx = 0;
       let minDistance = 999;
 
@@ -1579,16 +1644,16 @@
           weight = 0.5 * (1 + Math.cos(Math.PI * norm)); // Campana suave de coseno (0 a 1)
         }
 
-        // Escala tipo Dock: de 1.0x en reposo hasta 1.48x en el foco
-        const scale = (1.0 + 0.48 * weight).toFixed(3);
-        const translateY = (-8 * weight).toFixed(1);
-        const opacity = (0.35 + 0.65 * weight).toFixed(3);
+        // Si estamos en intro pura, los iconos reposan sutiles
+        const scale = (!isDiscFocusMode ? 1.0 : (1.0 + 0.48 * weight)).toFixed(3);
+        const translateY = (!isDiscFocusMode ? 0 : (-8 * weight)).toFixed(1);
+        const opacity = (!isDiscFocusMode ? (i === 0 ? 0.75 : 0.40) : (0.35 + 0.65 * weight)).toFixed(3);
 
         const iconEl = discDockIcons[i];
         if (iconEl) {
           iconEl.style.transform = `scale(${scale}) translateY(${translateY}px)`;
           iconEl.style.opacity = opacity;
-          if (weight > 0.55) {
+          if (weight > 0.55 && isDiscFocusMode) {
             iconEl.style.filter = 'drop-shadow(0 0 12px rgba(14,255,199,0.75)) brightness(1.2)';
           } else {
             iconEl.style.filter = 'drop-shadow(0 2px 6px rgba(0,0,0,0.8)) brightness(0.9)';
@@ -1597,7 +1662,7 @@
 
         const dotEl = discDockDots[i];
         if (dotEl) {
-          if (weight > 0.55) {
+          if (weight > 0.55 && isDiscFocusMode) {
             const dotW = (6 + 14 * ((weight - 0.55) / 0.45)).toFixed(1);
             dotEl.style.width = `${dotW}px`;
             dotEl.style.backgroundColor = '#0effc7';
