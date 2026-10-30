@@ -17,6 +17,7 @@ movil/
 # Videos (Only optimized, active web videos are tracked)
 videos/*
 !videos/facade.mp4
+!videos/facade-new.mp4
 !videos/phone.mp4
 
 # Assets: Textures (Only steel.jpg used in Hero overlay)
