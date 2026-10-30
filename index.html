@@ -360,88 +360,90 @@
 
 
     <!-- ======================================================== -->
-    <!-- PREVIEW 1: ESPACIOS (PLANO DE INFRAESTRUCTURA FOR+ - SCROLL DRIVEN) -->
+    <!-- PREVIEW 1: ESPACIOS (PLANO ARQUITECTÓNICO Y RECORRIDO DE ESPACIOS) -->
     <!-- ======================================================== -->
-    <div id="espaciosTrack" class="relative h-[380vh]">
+    <div id="espaciosTrack" class="relative h-[580vh]">
       <section id="espaciosPreview" class="sticky top-0 h-screen w-full px-6 sm:px-8 pt-20 sm:pt-24 pb-8 sm:pb-12 border-t border-white/10 bg-[#141416] overflow-hidden flex items-center justify-center">
 
-        <!-- FONDOS FOTOGRÁFICOS DEL RECORRIDO DE ESPACIOS (Se activan con "Conoce los espacios") -->
+        <!-- FONDOS FOTOGRÁFICOS DE LOS ESPACIOS CON CAPA OSCURECEDORA DE ALTO CONTRASTE -->
         <div id="spacesTourBg" class="absolute inset-0 z-0 opacity-0 pointer-events-none transition-opacity duration-700 ease-out overflow-hidden">
           <div id="spaceBg-0" class="space-bg-slide absolute inset-0 bg-cover bg-center transition-opacity duration-700 opacity-100 scale-100" style="background-image: url('assets/images/spaces/planta-2.jpg');"></div>
           <div id="spaceBg-1" class="space-bg-slide absolute inset-0 bg-cover bg-center transition-opacity duration-700 opacity-0 scale-100" style="background-image: url('assets/images/spaces/planta-1.jpg');"></div>
           <div id="spaceBg-2" class="space-bg-slide absolute inset-0 bg-cover bg-center transition-opacity duration-700 opacity-0 scale-100" style="background-image: url('assets/images/spaces/planta-baja.jpg');"></div>
           <div id="spaceBg-3" class="space-bg-slide absolute inset-0 bg-cover bg-center transition-opacity duration-700 opacity-0 scale-100" style="background-image: url('assets/images/spaces/subsuelo.jpg');"></div>
-          <!-- Filtro de contraste oscuro cinemático para asegurar legibilidad -->
-          <div class="absolute inset-0 bg-gradient-to-r from-black/95 via-black/85 to-black/70 sm:from-black/90 sm:via-black/80 sm:to-black/60 pointer-events-none"></div>
-          <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-transparent to-black/70 pointer-events-none"></div>
+
+          <!-- CAPA OSCURECEDORA DE ALTO CONTRASTE ENTRE FOTO Y TEXTO (Garantiza lectura impecable) -->
+          <div class="absolute inset-0 bg-[#080808]/85 backdrop-blur-[1px] pointer-events-none"></div>
+          <div class="absolute inset-0 bg-gradient-to-r from-black/95 via-black/80 to-black/65 pointer-events-none"></div>
         </div>
 
         <div class="max-w-7xl mx-auto relative z-10 w-full my-auto">
-          
-          <!-- VISTA 1: PREVIEW ORIGINAL CON APARICIÓN DE PLANTA A PLANTA POR SCROLL -->
-          <div id="espaciosDefaultView" class="w-full transition-all duration-500 ease-out">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
+            
+            <!-- Columna Izquierda: Título (preview) y plano arquitectónico que se desplaza a la izquierda -->
+            <div class="lg:col-span-6 xl:col-span-6 flex flex-col items-start justify-center space-y-4 sm:space-y-6 my-auto">
               
-              <!-- Columna Izquierda: Título y dibujo arquitectónico centrados a la mitad de altura -->
-              <div class="lg:col-span-7 flex flex-col items-start justify-center lg:-ml-10 xl:-ml-16 space-y-4 sm:space-y-6 my-auto">
-                
-                <!-- Título sobre el plano con aparición en fade in controlada por scroll -->
-                <div id="espaciosTitle" class="pl-2 sm:pl-4 lg:pl-10 xl:pl-16 will-change-[opacity,transform] opacity-0">
-                  <h2 class="font-brand text-2xl sm:text-4xl lg:text-5xl font-normal uppercase tracking-tight text-white leading-tight">
-                    4 NIVELES DE <br>
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-white/95 to-white/60">
-                      ENTRENAMIENTO PURO
-                    </span>
-                  </h2>
-                </div>
-
-                <!-- Contenedor del plano arquitectónico -->
-                <div id="blueprintContainer" class="relative w-full max-w-[720px] lg:max-w-[800px] aspect-[1366/675] select-none">
-                  
-                  <!-- Retícula técnica arquitectónica tenue de fondo -->
-                  <div class="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.06)_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none opacity-40"></div>
-
-                  <!-- Capa del dibujo vectorial con máscara vertical ascendente (de abajo hacia arriba) -->
-                  <div id="blueprintDrawWrapper" class="relative w-full h-full overflow-hidden will-change-[clip-path]" style="clip-path: inset(100% 0 0 0);">
-                    <img id="blueprintSvg" src="assets/images/draw.svg" alt="Corte Arquitectónico Vectorial Edificio FOR+" decoding="async" class="w-full h-full object-contain object-bottom relative z-10 filter brightness-[1.05] contrast-[1.05]">
-                  </div>
-
-                  <!-- Línea horizontal de trazado CAD ascendente (cyan #0effc7) -->
-                  <div id="blueprintLaserLine" class="absolute left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#0effc7] to-transparent shadow-[0_0_14px_#0effc7,0_0_28px_#0effc7] z-20 pointer-events-none will-change-[top,opacity] opacity-0" style="top: 100%;">
-                    <div class="absolute -top-[3px] left-4 w-2 h-2 rounded-full bg-[#0effc7] shadow-[0_0_8px_#0effc7]"></div>
-                    <div class="absolute -top-[3px] right-4 w-2 h-2 rounded-full bg-[#0effc7] shadow-[0_0_8px_#0effc7]"></div>
-                    <div class="absolute -top-6 right-8 px-2 py-0.5 rounded bg-black/90 border border-[#0effc7]/40 text-[#0effc7] text-[9px] font-brand tracking-widest uppercase shadow whitespace-nowrap">
-                      <span id="laserFloorText">SUBSUELO</span>
-                    </div>
-                  </div>
-
-                  <!-- Marcadores técnicos únicamente con el nombre de planta (Ocultos en móvil para no tapar el plano) -->
-                  <div id="tagP2" class="blueprint-tag hidden md:block absolute top-[12%] left-2 sm:left-4 z-20 px-2.5 py-1 rounded bg-black/85 border border-white/20 text-[11px] font-brand uppercase tracking-wider text-white will-change-[opacity,transform] opacity-0">
-                    PLANTA 2
-                  </div>
-                  <div id="tagP1" class="blueprint-tag hidden md:block absolute top-[38%] left-2 sm:left-4 z-20 px-2.5 py-1 rounded bg-black/85 border border-white/20 text-[11px] font-brand uppercase tracking-wider text-white will-change-[opacity,transform] opacity-0">
-                    PLANTA 1
-                  </div>
-                  <div id="tagP0" class="blueprint-tag hidden md:block absolute top-[62%] left-2 sm:left-4 z-20 px-2.5 py-1 rounded bg-black/85 border border-white/20 text-[11px] font-brand uppercase tracking-wider text-white will-change-[opacity,transform] opacity-0">
-                    PLANTA 0
-                  </div>
-                  <div id="tagSub" class="blueprint-tag hidden md:block absolute bottom-[6%] left-2 sm:left-4 z-20 px-2.5 py-1 rounded bg-black/85 border border-white/20 text-[11px] font-brand uppercase tracking-wider text-white will-change-[opacity,transform] opacity-0">
-                    SUBSUELO
-                  </div>
-
-                </div>
+              <!-- Título sobre el plano en preview (Se desvanece al comenzar el recorrido) -->
+              <div id="espaciosTitle" class="pl-2 sm:pl-4 will-change-[opacity,transform] opacity-0">
+                <h2 class="font-brand text-2xl sm:text-4xl lg:text-5xl font-normal uppercase tracking-tight text-white leading-tight">
+                  4 NIVELES DE <br>
+                  <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-white/95 to-white/60">
+                    ENTRENAMIENTO PURO
+                  </span>
+                </h2>
               </div>
 
-              <!-- Columna Derecha: Contenido descriptivo, detalle de plantas y CTA centrados a la mitad de altura -->
-              <div class="lg:col-span-5 space-y-4 sm:space-y-7 my-auto">
-                <!-- Descripción general (Oculta en móvil para priorizar el plano y las descripciones que se acumulan) -->
+              <!-- Contenedor del plano arquitectónico: En el recorrido se desliza a la izquierda mostrando solo su mitad derecha -->
+              <div id="blueprintContainer" class="relative w-full max-w-[720px] lg:max-w-[780px] aspect-[1366/675] select-none will-change-[transform] transition-transform duration-300 ease-out origin-left">
+                
+                <!-- Retícula técnica arquitectónica tenue de fondo -->
+                <div class="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.06)_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none opacity-40"></div>
+
+                <!-- Capa del dibujo vectorial con máscara vertical ascendente (de abajo hacia arriba) -->
+                <div id="blueprintDrawWrapper" class="relative w-full h-full overflow-hidden will-change-[clip-path]" style="clip-path: inset(100% 0 0 0);">
+                  <img id="blueprintSvg" src="assets/images/draw.svg" alt="Corte Arquitectónico Vectorial Edificio FOR+" decoding="async" class="w-full h-full object-contain object-bottom relative z-10 filter brightness-[1.05] contrast-[1.05]">
+                </div>
+
+                <!-- Línea horizontal de trazado CAD / Señalización de planta activa -->
+                <div id="blueprintLaserLine" class="absolute left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#0effc7] to-transparent shadow-[0_0_14px_#0effc7,0_0_28px_#0effc7] z-20 pointer-events-none will-change-[top,opacity] opacity-0" style="top: 100%;">
+                  <div class="absolute -top-[3px] left-4 w-2 h-2 rounded-full bg-[#0effc7] shadow-[0_0_8px_#0effc7]"></div>
+                  <div class="absolute -top-[3px] right-4 w-2 h-2 rounded-full bg-[#0effc7] shadow-[0_0_8px_#0effc7]"></div>
+                  <div class="absolute -top-6 right-8 px-2.5 py-0.5 rounded bg-black/90 border border-[#0effc7]/40 text-[#0effc7] text-[10px] font-brand tracking-widest uppercase shadow whitespace-nowrap">
+                    <span id="laserFloorText">SUBSUELO</span>
+                  </div>
+                </div>
+
+                <!-- Marcadores técnicos situados en la mitad derecha del corte (visibles en preview y durante el recorrido) -->
+                <div id="tagP2" class="blueprint-tag hidden md:block absolute top-[12%] left-[54%] z-20 px-2.5 py-1 rounded bg-black/85 border border-white/20 text-[11px] font-brand uppercase tracking-wider text-white will-change-[opacity,transform,background-color,color] opacity-0">
+                  PLANTA 2
+                </div>
+                <div id="tagP1" class="blueprint-tag hidden md:block absolute top-[38%] left-[54%] z-20 px-2.5 py-1 rounded bg-black/85 border border-white/20 text-[11px] font-brand uppercase tracking-wider text-white will-change-[opacity,transform,background-color,color] opacity-0">
+                  PLANTA 1
+                </div>
+                <div id="tagP0" class="blueprint-tag hidden md:block absolute top-[62%] left-[54%] z-20 px-2.5 py-1 rounded bg-black/85 border border-white/20 text-[11px] font-brand uppercase tracking-wider text-white will-change-[opacity,transform,background-color,color] opacity-0">
+                  PLANTA 0
+                </div>
+                <div id="tagSub" class="blueprint-tag hidden md:block absolute bottom-[6%] left-[54%] z-20 px-2.5 py-1 rounded bg-black/85 border border-white/20 text-[11px] font-brand uppercase tracking-wider text-white will-change-[opacity,transform,background-color,color] opacity-0">
+                  SUBSUELO
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Columna Derecha: Contenido Dual (Resumen inicial / Recorrido guiado planta por planta) -->
+            <div class="lg:col-span-6 xl:col-span-6 relative my-auto">
+              
+              <!-- 1. CONTENIDO DE PREVIEW INICIAL (Se desvanece al comenzar el recorrido) -->
+              <div id="espaciosPreviewContent" class="space-y-4 sm:space-y-7 will-change-[opacity,transform]">
+                
+                <!-- Descripción general -->
                 <div id="espaciosDesc" class="hidden md:block will-change-[opacity,transform] opacity-0">
                   <p class="text-base sm:text-lg text-white/75 font-light leading-relaxed">
                     Un edificio vertical concebido para cumplir las demandas de espacio, acústicas y biomecánicas de cada disciplina. Desde el subsuelo hasta la segunda planta, son 4 niveles concebidos para entrenar.
                   </p>
                 </div>
 
-                <!-- Detalle limpio de las plantas: en móvil se acumulan abajo conforme aparecen; en desktop nivel +2 a -1 -->
+                <!-- Detalle limpio de las plantas -->
                 <div id="floorRowsList" class="flex flex-col space-y-2 sm:space-y-3.5 pt-1">
                   <div id="rowSub" class="order-1 md:order-4 flex items-baseline justify-between border-b border-white/10 pb-2 will-change-[opacity,transform] opacity-0">
                     <div>
@@ -478,145 +480,44 @@
 
                 <!-- Botón CTA con fade in -->
                 <div id="espaciosCta" class="pt-2 will-change-[opacity,transform] opacity-0">
-                  <button type="button" onclick="openSpacesTour()" class="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-white text-black font-brand text-xs uppercase tracking-widest hover:bg-white/90 hover:scale-105 transition-all shadow-xl group cursor-pointer">
+                  <button type="button" onclick="scrollEspaciosToTour()" class="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-white text-black font-brand text-xs uppercase tracking-widest hover:bg-white/90 hover:scale-105 transition-all shadow-xl group cursor-pointer">
                     <span>Conoce los espacios</span>
                     <span class="group-hover:translate-x-1 transition-transform">→</span>
                   </button>
                 </div>
               </div>
 
-            </div>
-          </div>
-
-          <!-- ======================================================== -->
-          <!-- VISTA 2: RECORRIDO INTERACTIVO DE ESPACIOS (P2 -> SUB) -->
-          <!-- ======================================================== -->
-          <div id="spacesTourView" class="hidden opacity-0 w-full transition-all duration-500 ease-out relative z-10">
-            
-            <!-- Barra superior del recorrido: Título y botón volver -->
-            <div class="flex items-center justify-between border-b border-white/15 pb-3 mb-5 sm:mb-6">
-              <div class="flex items-center gap-3">
-                <span class="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-brand tracking-widest uppercase bg-[#0effc7]/15 text-[#0effc7] border border-[#0effc7]/30">
-                  Recorrido de Espacios
-                </span>
-                <span class="text-xs text-white/50 hidden sm:inline font-light">4 niveles de entrenamiento</span>
-              </div>
-
-              <button type="button" onclick="closeSpacesTour()" class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 border border-white/15 text-white/90 hover:text-white text-xs font-brand tracking-wider uppercase transition-all group cursor-pointer">
-                <span>Volver al resumen</span>
-                <span class="group-hover:rotate-90 transition-transform">✕</span>
-              </button>
-            </div>
-
-            <!-- Cuadrícula: Plano a la izquierda en desktop, detalle de planta a la derecha -->
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-center">
-              
-              <!-- COLUMNA IZQUIERDA: EL CORTE ARQUITECTÓNICO A LA IZQUIERDA -->
-              <div class="lg:col-span-5 flex flex-col items-center justify-center">
-                <div class="relative w-full max-w-[440px] lg:max-w-none aspect-[1366/675] select-none rounded-2xl overflow-hidden border border-white/20 bg-black/70 backdrop-blur-md shadow-2xl p-2 sm:p-4">
-                  
-                  <!-- Retícula técnica arquitectónica -->
-                  <div class="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.08)_1px,transparent_1px)] [background-size:20px_20px] pointer-events-none opacity-60"></div>
-
-                  <div class="relative w-full h-full">
-                    <img src="assets/images/draw.svg" alt="Corte Arquitectónico FOR+" class="w-full h-full object-contain object-bottom relative z-10 filter brightness-[1.1] contrast-[1.1]">
-
-                    <!-- Línea láser indicadora de planta activa en el tour -->
-                    <div id="tourLaserLine" class="absolute left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#0effc7] to-transparent shadow-[0_0_12px_#0effc7,0_0_24px_#0effc7] z-20 pointer-events-none transition-all duration-500 ease-out" style="top: 12%;">
-                      <div class="absolute -top-[3px] left-2 w-2 h-2 rounded-full bg-[#0effc7] shadow-[0_0_8px_#0effc7]"></div>
-                      <div class="absolute -top-[3px] right-2 w-2 h-2 rounded-full bg-[#0effc7] shadow-[0_0_8px_#0effc7]"></div>
-                    </div>
-
-                    <!-- Marcadores interactivos directos en el plano -->
-                    <button type="button" onclick="setTourFloor(0)" id="pinP2" class="tour-pin absolute top-[10%] left-1 sm:left-3 z-30 px-2 py-0.5 rounded text-[10px] font-brand tracking-wider uppercase transition-all bg-[#0effc7] text-black font-bold shadow-lg cursor-pointer">
-                      PLANTA 2
-                    </button>
-                    <button type="button" onclick="setTourFloor(1)" id="pinP1" class="tour-pin absolute top-[36%] left-1 sm:left-3 z-30 px-2 py-0.5 rounded text-[10px] font-brand tracking-wider uppercase transition-all bg-black/80 text-white/70 hover:text-white border border-white/20 cursor-pointer">
-                      PLANTA 1
-                    </button>
-                    <button type="button" onclick="setTourFloor(2)" id="pinP0" class="tour-pin absolute top-[60%] left-1 sm:left-3 z-30 px-2 py-0.5 rounded text-[10px] font-brand tracking-wider uppercase transition-all bg-black/80 text-white/70 hover:text-white border border-white/20 cursor-pointer">
-                      PLANTA 0
-                    </button>
-                    <button type="button" onclick="setTourFloor(3)" id="pinSub" class="tour-pin absolute bottom-[8%] left-1 sm:left-3 z-30 px-2 py-0.5 rounded text-[10px] font-brand tracking-wider uppercase transition-all bg-black/80 text-white/70 hover:text-white border border-white/20 cursor-pointer">
-                      SUBSUELO
-                    </button>
-                  </div>
+              <!-- 2. CONTENIDO DETALLADO DEL RECORRIDO (Aparece al deslizarse el plano, guiado por scroll) -->
+              <div id="espaciosTourContent" class="space-y-4 sm:space-y-6 will-change-[opacity,transform] opacity-0 pointer-events-none absolute inset-0 my-auto flex flex-col justify-center">
+                <!-- Nivel -->
+                <div class="flex items-center gap-2.5">
+                  <span id="tourFloorBadge" class="text-xs font-brand tracking-widest text-[#0effc7] uppercase">NIVEL +2</span>
+                  <span class="text-white/30">•</span>
+                  <span class="text-xs font-brand tracking-wider text-white/50 uppercase">ESPACIOS FOR+</span>
                 </div>
 
-                <!-- Indicador técnico de cota arquitectónica -->
-                <div class="w-full flex items-center justify-between text-[11px] font-brand text-white/40 uppercase tracking-widest pt-2.5 px-1">
-                  <span>Corte Longitudinal</span>
-                  <span id="tourFloorAltitude">Cota +6.80 m</span>
-                </div>
-              </div>
-
-              <!-- COLUMNA DERECHA: INFORMACIÓN DETALLADA DE LA PLANTA -->
-              <div class="lg:col-span-7 space-y-4 sm:space-y-5">
-                
-                <!-- Selector horizontal de niveles (Pills rápidos de Planta 2 a Subsuelo) -->
-                <div class="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-1 select-none">
-                  <button type="button" onclick="setTourFloor(0)" id="tabP2" class="tour-tab px-3.5 sm:px-4 py-2 rounded-xl text-xs font-brand uppercase tracking-wider transition-all bg-white text-black font-bold shadow-md cursor-pointer">
-                    Planta 2 <span class="opacity-60 text-[10px] ml-1">+2</span>
-                  </button>
-                  <button type="button" onclick="setTourFloor(1)" id="tabP1" class="tour-tab px-3.5 sm:px-4 py-2 rounded-xl text-xs font-brand uppercase tracking-wider transition-all bg-white/10 hover:bg-white/20 text-white/80 border border-white/10 cursor-pointer">
-                    Planta 1 <span class="opacity-60 text-[10px] ml-1">+1</span>
-                  </button>
-                  <button type="button" onclick="setTourFloor(2)" id="tabP0" class="tour-tab px-3.5 sm:px-4 py-2 rounded-xl text-xs font-brand uppercase tracking-wider transition-all bg-white/10 hover:bg-white/20 text-white/80 border border-white/10 cursor-pointer">
-                    Planta Baja <span class="opacity-60 text-[10px] ml-1">0</span>
-                  </button>
-                  <button type="button" onclick="setTourFloor(3)" id="tabSub" class="tour-tab px-3.5 sm:px-4 py-2 rounded-xl text-xs font-brand uppercase tracking-wider transition-all bg-white/10 hover:bg-white/20 text-white/80 border border-white/10 cursor-pointer">
-                    Subsuelo <span class="opacity-60 text-[10px] ml-1">-1</span>
-                  </button>
-                </div>
-
-                <!-- Cabecera de planta -->
+                <!-- Título y Subtítulo de Planta -->
                 <div class="space-y-2">
-                  <div class="flex items-center gap-3">
-                    <span id="tourFloorLevelBadge" class="text-xs font-brand tracking-widest text-[#0effc7] uppercase">NIVEL +2</span>
-                    <span class="text-white/20">•</span>
-                    <span id="tourFloorSubBadge" class="text-xs font-brand tracking-wider text-white/60 uppercase">Cúpula Superior</span>
-                  </div>
-
-                  <h3 id="tourFloorTitle" class="font-brand text-2xl sm:text-3xl lg:text-4xl font-normal uppercase tracking-tight text-white leading-tight drop-shadow-[0_4px_24px_rgba(0,0,0,0.8)]">
-                    CARDIO+GLUTEUP & AERÓBICOS 2
+                  <h3 id="tourFloorTitle" class="font-brand text-3xl sm:text-4xl lg:text-5xl font-normal uppercase tracking-tight text-white leading-tight">
+                    PLANTA 2
                   </h3>
-
-                  <p id="tourFloorDesc" class="text-sm sm:text-base text-white/85 font-light leading-relaxed max-w-2xl drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)]">
-                    Ubicada en la cúspide del edificio con iluminación natural cenital. Alberga la zona de cardio de alto rendimiento, el sector especializado GluteUp para entrenamiento biomecánico focalizado de tren inferior y el salón de aeróbicos 2 con vistas panorámicas y control acústico.
+                  <p id="tourFloorSubtitle" class="text-sm sm:text-base font-brand uppercase tracking-wider text-[#0effc7]">
+                    Cardio+GluteUp Zone y aeróbicos 2
                   </p>
                 </div>
 
-                <!-- Cualidades / Equipamiento de la planta -->
-                <div id="tourFloorTags" class="flex flex-wrap gap-2 pt-1">
-                  <span class="px-3 py-1 rounded-lg bg-black/60 border border-white/15 text-xs text-white/90 backdrop-blur-sm">✦ Iluminación natural cenital</span>
-                  <span class="px-3 py-1 rounded-lg bg-black/60 border border-white/15 text-xs text-white/90 backdrop-blur-sm">✦ GluteUp Zone especializada</span>
-                  <span class="px-3 py-1 rounded-lg bg-black/60 border border-white/15 text-xs text-white/90 backdrop-blur-sm">✦ Cardio alta exigencia</span>
-                  <span class="px-3 py-1 rounded-lg bg-black/60 border border-white/15 text-xs text-white/90 backdrop-blur-sm">✦ Salón aeróbicos 2</span>
-                </div>
-
-                <!-- Controles de navegación en el recorrido: Planta Superior / Inferior y Salida -->
-                <div class="flex flex-wrap items-center gap-3 pt-3 border-t border-white/15">
-                  <button type="button" id="btnTourPrev" onclick="navigateTour(-1)" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-brand text-xs uppercase tracking-wider transition-all disabled:opacity-30 disabled:pointer-events-none cursor-pointer" disabled>
-                    <span>↑</span>
-                    <span>Planta Superior</span>
-                  </button>
-
-                  <button type="button" id="btnTourNext" onclick="navigateTour(1)" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#0effc7] text-black font-brand text-xs uppercase tracking-wider font-bold hover:bg-[#0effc7]/90 hover:scale-105 transition-all shadow-lg cursor-pointer">
-                    <span id="btnTourNextText">Planta Inferior</span>
-                    <span>↓</span>
-                  </button>
-
-                  <button type="button" onclick="continueToDisciplines()" class="ml-auto inline-flex items-center gap-2 text-xs font-brand uppercase tracking-wider text-white/70 hover:text-white transition-colors cursor-pointer py-2">
-                    <span>Ir a Disciplinas</span>
-                    <span class="text-[#0effc7]">↓</span>
-                  </button>
-                </div>
-
+                <!-- Descripción detallada de la planta -->
+                <p id="tourFloorDesc" class="text-base sm:text-lg text-white/90 font-light leading-relaxed max-w-xl">
+                  Ubicada en la cúspide del edificio con iluminación natural cenital. Alberga la zona de cardio de alto rendimiento, el sector especializado GluteUp para entrenamiento biomecánico focalizado de tren inferior y el salón de aeróbicos 2 con vistas panorámicas y control acústico.
+                </p>
               </div>
 
             </div>
 
           </div>
+        </div>
+      </section>
+    </div>
 
         </div>
       </section>
@@ -819,30 +720,75 @@
 
 
     // ==========================================
-    // ESPACIOS SCROLL-DRIVEN CONTROLLER (draw.svg)
-    // Trazado arquitectónico CAD 100% interactivo por scroll
+    // ESPACIOS: CONTROLADOR CONTINUO POR SCROLL (PREVIEW + RECORRIDO DE ARRIBA A ABAJO)
     // ==========================================
     const espaciosTrack = document.getElementById('espaciosTrack');
+    const blueprintContainer = document.getElementById('blueprintContainer');
     const blueprintWrapper = document.getElementById('blueprintDrawWrapper');
     const blueprintLaser = document.getElementById('blueprintLaserLine');
     const laserFloorText = document.getElementById('laserFloorText');
     const espaciosTitle = document.getElementById('espaciosTitle');
     const espaciosDesc = document.getElementById('espaciosDesc');
     const espaciosCta = document.getElementById('espaciosCta');
+    const espaciosPreviewContent = document.getElementById('espaciosPreviewContent');
+    const espaciosTourContent = document.getElementById('espaciosTourContent');
+    const spacesTourBg = document.getElementById('spacesTourBg');
+
+    const tourFloorBadge = document.getElementById('tourFloorBadge');
+    const tourFloorTitle = document.getElementById('tourFloorTitle');
+    const tourFloorSubtitle = document.getElementById('tourFloorSubtitle');
+    const tourFloorDesc = document.getElementById('tourFloorDesc');
 
     const blueprintTags = {
       sub: document.getElementById('tagSub'),
       p0: document.getElementById('tagP0'),
       p1: document.getElementById('tagP1'),
-      p2: document.getElementById('tagP2')
+      p2: document.getElementById('tagP2'),
     };
 
     const blueprintRows = {
       sub: document.getElementById('rowSub'),
       p0: document.getElementById('rowP0'),
       p1: document.getElementById('rowP1'),
-      p2: document.getElementById('rowP2')
+      p2: document.getElementById('rowP2'),
     };
+
+    const tourFloorsInfo = [
+      {
+        tagKey: 'p2',
+        badge: 'NIVEL +2',
+        title: 'PLANTA 2',
+        subtitle: 'Cardio+GluteUp Zone y aeróbicos 2',
+        desc: 'Ubicada en la cúspide del edificio con iluminación natural cenital. Alberga la zona de cardio de alto rendimiento, el sector especializado GluteUp para entrenamiento biomecánico focalizado de tren inferior y el salón de aeróbicos 2 con vistas panorámicas y control acústico.',
+        laserTop: 12
+      },
+      {
+        tagKey: 'p1',
+        badge: 'NIVEL +1',
+        title: 'PLANTA 1',
+        subtitle: 'Spinning & Aeróbicos 1',
+        desc: 'Piso intermedio diseñado para disciplinas de alta energía y ritmo dinámico. Cuenta con la sala de ciclismo indoor (Spinning) tratada acústicamente con muros geométricos y luminotecnia inmersiva, junto al salón principal de aeróbicos 1 equipado con piso biomecánico de suspensión amortiguada.',
+        laserTop: 38
+      },
+      {
+        tagKey: 'p0',
+        badge: 'NIVEL 0',
+        title: 'PLANTA BAJA',
+        subtitle: 'Musculación & Recepción',
+        desc: 'Ingreso principal y recepción del edificio. Diseñada con alta capacidad estructural para soportar las demandas biomecánicas de fuerza con el sector central de musculación, peso libre, barras olímpicas y maquinaria guiada de última generación para hipertrofia y fuerza.',
+        laserTop: 62
+      },
+      {
+        tagKey: 'sub',
+        badge: 'NIVEL -1',
+        title: 'SUBSUELO',
+        subtitle: 'Underground & Vestidores',
+        desc: 'Nivel subterráneo concebido para el entrenamiento funcional más exigente y de alta intensidad. Alberga la zona Underground (Cross training, césped sintético para arrastre de trineo, racks y barras) junto a los vestidores principales con duchas de alta presión, lockers y máxima comodidad.',
+        laserTop: 86
+      }
+    ];
+
+    let currentFloorContentIndex = -1;
 
     let espaciosTargetProgress = 0;
     let espaciosCurrentProgress = 0;
@@ -856,6 +802,16 @@
       espaciosTargetProgress = progress;
     }
 
+    function scrollEspaciosToTour() {
+      if (!espaciosTrack) return;
+      const rect = espaciosTrack.getBoundingClientRect();
+      const currentScrollY = window.pageYOffset || document.documentElement.scrollTop;
+      const trackTop = currentScrollY + rect.top;
+      const scrollable = rect.height - window.innerHeight;
+      const targetScroll = trackTop + 0.38 * scrollable;
+      window.scrollTo({ top: targetScroll, behavior: 'smooth' });
+    }
+
     function setFloorItem(tag, row, vis) {
       if (tag) {
         tag.style.opacity = vis.toFixed(3);
@@ -864,337 +820,308 @@
       if (row) {
         row.style.opacity = vis.toFixed(3);
         row.style.transform = `translateY(${(1 - vis) * 10}px)`;
-        // En móvil, las descripciones se ocultan si no están activas para acumularse abajo conforme aparecen
         if (window.innerWidth < 768) {
-          if (vis <= 0.01) {
-            row.style.display = 'none';
-          } else {
-            row.style.display = 'flex';
-          }
+          row.style.display = (vis <= 0.01) ? 'none' : 'flex';
         } else {
           row.style.display = 'flex';
         }
       }
     }
 
-    function applyEspaciosProgress(p) {
-      if (isSpacesTourOpen) return;
-      if (!blueprintWrapper || !blueprintLaser) return;
-
-      // ========================================================
-      // SECUENCIA DE APARICIÓN DE ESPACIOS
-      // 1. Va apareciendo planta a planta el edificio y sus descripciones (p: 0.00 -> 0.72)
-      // 2. Aparece el título por encima y el resto de texto a la derecha (p: 0.72 -> 0.90)
-      // 3. Recién se avanza a la siguiente sección (p: 0.90 -> 1.00)
-      // En reversa hacia arriba, se desarma como retrocediendo en el tiempo.
-      // ========================================================
-
-      // 1. Altura de corte vertical del láser y recorte SVG (planta a planta de abajo hacia arriba)
-      let currentTop = 100;
-      let currentFloor = 'SUBSUELO';
-      let laserOp = 1;
-
-      if (p < 0.18) {
-        const t = p / 0.18;
-        currentTop = 100 - t * 26;
-        currentFloor = 'SUBSUELO';
-        laserOp = Math.min(1.0, p / 0.04);
-      } else if (p < 0.36) {
-        const t = (p - 0.18) / 0.18;
-        currentTop = 74 - t * 21;
-        currentFloor = 'PLANTA BAJA';
-        laserOp = 1;
-      } else if (p < 0.54) {
-        const t = (p - 0.36) / 0.18;
-        currentTop = 53 - t * 25;
-        currentFloor = 'PLANTA 1';
-        laserOp = 1;
-      } else if (p < 0.72) {
-        const t = (p - 0.54) / 0.18;
-        currentTop = 28 - t * 28;
-        currentFloor = 'PLANTA 2';
-        laserOp = 1;
-      } else {
-        currentTop = 0;
-        currentFloor = 'COMPLETO';
-        laserOp = Math.max(0, 1 - (p - 0.72) / 0.08);
-      }
-
-      blueprintWrapper.style.clipPath = `inset(${currentTop.toFixed(2)}% 0 0 0)`;
-      blueprintLaser.style.top = `${currentTop.toFixed(2)}%`;
-      blueprintLaser.style.opacity = laserOp.toFixed(3);
-      if (laserFloorText) laserFloorText.textContent = currentFloor;
-
-      // Descripciones y marcadores de cada planta: aparecen y desaparecen en sincronía con el corte del plano
-      const subVis = Math.max(0, Math.min(1.0, (100 - currentTop) / 16.0));
-      const p0Vis  = Math.max(0, Math.min(1.0, (74 - currentTop) / 14.0));
-      const p1Vis  = Math.max(0, Math.min(1.0, (53 - currentTop) / 16.0));
-      const p2Vis  = Math.max(0, Math.min(1.0, (28 - currentTop) / 18.0));
-
-      setFloorItem(blueprintTags.sub, blueprintRows.sub, subVis);
-      setFloorItem(blueprintTags.p0, blueprintRows.p0, p0Vis);
-      setFloorItem(blueprintTags.p1, blueprintRows.p1, p1Vis);
-      setFloorItem(blueprintTags.p2, blueprintRows.p2, p2Vis);
-
-      // 2. Título por encima del plano y resto del texto a la derecha (aparecen DESPUÉS de armar las 4 plantas)
-      const titleVis = Math.max(0, Math.min(1.0, (p - 0.72) / 0.12));
-      const descVis  = Math.max(0, Math.min(1.0, (p - 0.74) / 0.12));
-      const ctaVis   = Math.max(0, Math.min(1.0, (p - 0.78) / 0.12));
-
-      if (espaciosTitle) {
-        espaciosTitle.style.opacity = titleVis.toFixed(3);
-        espaciosTitle.style.transform = `translateY(${(1 - titleVis) * 16}px)`;
-      }
-      if (espaciosDesc) {
-        espaciosDesc.style.opacity = descVis.toFixed(3);
-        espaciosDesc.style.transform = `translateY(${(1 - descVis) * 16}px)`;
-      }
-      if (espaciosCta) {
-        espaciosCta.style.opacity = ctaVis.toFixed(3);
-        espaciosCta.style.transform = `translateY(${(1 - ctaVis) * 16}px)`;
-        espaciosCta.style.pointerEvents = ctaVis > 0.4 ? 'auto' : 'none';
-      }
+    function highlightTourTag(activeKey) {
+      const keys = ['p2', 'p1', 'p0', 'sub'];
+      keys.forEach(k => {
+        const tag = blueprintTags[k];
+        if (!tag) return;
+        if (k === activeKey) {
+          tag.style.opacity = '1';
+          tag.style.backgroundColor = '#0effc7';
+          tag.style.color = '#000000';
+          tag.style.borderColor = '#0effc7';
+          tag.style.fontWeight = '700';
+          tag.style.boxShadow = '0 0 14px rgba(14,255,199,0.5)';
+        } else {
+          tag.style.opacity = '0.35';
+          tag.style.backgroundColor = 'rgba(0,0,0,0.85)';
+          tag.style.color = 'rgba(255,255,255,0.7)';
+          tag.style.borderColor = 'rgba(255,255,255,0.2)';
+          tag.style.fontWeight = '400';
+          tag.style.boxShadow = 'none';
+        }
+      });
     }
 
-    // ==========================================
-    // RECORRIDO INTERACTIVO DE ESPACIOS (Conoce los espacios)
-    // ==========================================
-    let isSpacesTourOpen = false;
-    let currentTourFloorIndex = 0; // Inicia en la planta más alta: Planta 2 (index 0)
+    function resetBlueprintTagsToNormal() {
+      const keys = ['p2', 'p1', 'p0', 'sub'];
+      keys.forEach(k => {
+        const tag = blueprintTags[k];
+        if (!tag) return;
+        tag.style.backgroundColor = 'rgba(0,0,0,0.85)';
+        tag.style.color = '#ffffff';
+        tag.style.borderColor = 'rgba(255,255,255,0.2)';
+        tag.style.fontWeight = '400';
+        tag.style.boxShadow = 'none';
+      });
+    }
 
-    const tourFloorsData = [
-      {
-        id: 'P2',
-        levelBadge: 'NIVEL +2',
-        subBadge: 'Cúpula Superior',
-        altitude: 'Cota +6.80 m',
-        title: 'CARDIO+GLUTEUP & AERÓBICOS 2',
-        desc: 'Ubicada en la cúspide del edificio con iluminación natural cenital. Alberga la zona cardiovascular de alto rendimiento, el sector especializado GluteUp para entrenamiento biomecánico focalizado de tren inferior y el salón de aeróbicos 2 con vistas panorámicas y control acústico.',
-        tags: [
-          '✦ Iluminación natural cenital',
-          '✦ GluteUp Zone especializada',
-          '✦ Maquinaria cardiovascular',
-          '✦ Salón polivalente aeróbicos 2'
-        ],
-        laserTop: '12%',
-        bgIndex: 0
-      },
-      {
-        id: 'P1',
-        levelBadge: 'NIVEL +1',
-        subBadge: 'Piso Intermedio',
-        altitude: 'Cota +3.40 m',
-        title: 'SPINNING & AERÓBICOS 1',
-        desc: 'Piso intermedio diseñado para disciplinas de alta energía y ritmo dinámico. Cuenta con la sala de ciclismo indoor (Spinning) tratada acústicamente con muros geométricos y luminotecnia inmersiva, junto al salón principal de aeróbicos 1 equipado con piso biomecánico de suspensión amortiguada.',
-        tags: [
-          '✦ Sala Spinning acústica',
-          '✦ Muros fonoabsorbentes',
-          '✦ Piso biomecánico amortiguado',
-          '✦ Iluminación rítmica inmersiva'
-        ],
-        laserTop: '38%',
-        bgIndex: 1
-      },
-      {
-        id: 'P0',
-        levelBadge: 'NIVEL 0',
-        subBadge: 'Planta Principal',
-        altitude: 'Cota ±0.00 m',
-        title: 'MUSCULACIÓN & RECEPCIÓN',
-        desc: 'Punto de acceso principal y recepción del edificio. Diseñada con alta capacidad estructural para soportar las demandas biomecánicas de fuerza: peso libre, mancuernas de alta graduación, bancos olímpicos y maquinaria guiada de precisión para hipertrofia y acondicionamiento muscular.',
-        tags: [
-          '✦ Acceso principal y recepción',
-          '✦ Sector central de musculación',
-          '✦ Zona de peso libre y barras',
-          '✦ Maquinaria guiada de precisión'
-        ],
-        laserTop: '62%',
-        bgIndex: 2
-      },
-      {
-        id: 'Sub',
-        levelBadge: 'NIVEL -1',
-        subBadge: 'Subsuelo Underground',
-        altitude: 'Cota -3.20 m',
-        title: 'UNDERGROUND & VESTIDORES',
-        desc: 'Nivel subterráneo concebido para el entrenamiento funcional más exigente y de alta intensidad. Alberga la zona Underground (Cross training, césped sintético para arrastre de trineo, racks y barras) junto a los vestidores principales con duchas de alta presión, lockers y máxima comodidad.',
-        tags: [
-          '✦ Box funcional Underground',
-          '✦ Césped sintético y trineos',
-          '✦ Estructura para cross training',
-          '✦ Vestidores completos y duchas'
-        ],
-        laserTop: '86%',
-        bgIndex: 3
-      }
-    ];
+    function updateTourFloorContent(index) {
+      if (currentFloorContentIndex === index) return;
+      currentFloorContentIndex = index;
+      const data = tourFloorsInfo[index];
+      if (!data) return;
 
-    function setTourFloor(index) {
-      if (index < 0 || index >= tourFloorsData.length) return;
-      currentTourFloorIndex = index;
-      const data = tourFloorsData[index];
+      if (tourFloorBadge) tourFloorBadge.textContent = data.badge;
+      if (tourFloorTitle) tourFloorTitle.textContent = data.title;
+      if (tourFloorSubtitle) tourFloorSubtitle.textContent = data.subtitle;
+      if (tourFloorDesc) tourFloorDesc.textContent = data.desc;
+    }
 
-      // 1. Fondos fotográficos con crossfade suave
+    function setTourBackgroundOpacities(activeIdx, crossfadeProgress) {
+      // Crossfade suave entre activeIdx y activeIdx+1
       for (let i = 0; i < 4; i++) {
         const bg = document.getElementById(`spaceBg-${i}`);
-        if (bg) {
-          if (i === data.bgIndex) {
-            bg.style.opacity = '1';
-            bg.style.zIndex = '1';
-          } else {
-            bg.style.opacity = '0';
-            bg.style.zIndex = '0';
-          }
-        }
-      }
-
-      // 2. Línea láser indicadora de planta en el corte a la izquierda
-      const laser = document.getElementById('tourLaserLine');
-      if (laser) {
-        laser.style.top = data.laserTop;
-      }
-
-      // 3. Pines activos en el corte arquitectónico
-      const pins = ['pinP2', 'pinP1', 'pinP0', 'pinSub'];
-      pins.forEach((id, i) => {
-        const el = document.getElementById(id);
-        if (!el) return;
-        if (i === index) {
-          el.className = 'tour-pin absolute z-30 px-2 py-0.5 rounded text-[10px] font-brand tracking-wider uppercase transition-all bg-[#0effc7] text-black font-bold shadow-lg cursor-pointer scale-105';
+        if (!bg) continue;
+        if (i === activeIdx) {
+          bg.style.opacity = (1 - crossfadeProgress).toFixed(3);
+        } else if (i === activeIdx + 1) {
+          bg.style.opacity = crossfadeProgress.toFixed(3);
         } else {
-          el.className = 'tour-pin absolute z-30 px-2 py-0.5 rounded text-[10px] font-brand tracking-wider uppercase transition-all bg-black/80 text-white/70 hover:text-white border border-white/20 cursor-pointer scale-100';
+          bg.style.opacity = '0';
         }
-      });
+      }
+    }
 
-      // 4. Botones / Tabs de selección de nivel
-      const tabs = ['tabP2', 'tabP1', 'tabP0', 'tabSub'];
-      tabs.forEach((id, i) => {
-        const el = document.getElementById(id);
-        if (!el) return;
-        if (i === index) {
-          el.className = 'tour-tab px-3.5 sm:px-4 py-2 rounded-xl text-xs font-brand uppercase tracking-wider transition-all bg-white text-black font-bold shadow-md cursor-pointer';
+    function applyEspaciosProgress(p) {
+      if (!blueprintWrapper || !blueprintLaser || !blueprintContainer) return;
+
+      // ========================================================
+      // FASE 1: ESCANEO Y PRESENTACIÓN DEL EDIFICIO (p: 0.00 -> 0.26)
+      // El plano está centrado, el láser sube revelando las plantas de abajo a arriba.
+      // ========================================================
+      if (p <= 0.26) {
+        // Asegurar que el plano está en su posición inicial centrada
+        blueprintContainer.style.transform = 'translateX(0%)';
+
+        // Ocultar recorrido y capas de fotos
+        if (spacesTourBg) spacesTourBg.style.opacity = '0';
+        if (espaciosTourContent) {
+          espaciosTourContent.style.opacity = '0';
+          espaciosTourContent.style.pointerEvents = 'none';
+        }
+        if (espaciosPreviewContent) {
+          espaciosPreviewContent.style.opacity = '1';
+          espaciosPreviewContent.style.transform = 'translateY(0px)';
+          espaciosPreviewContent.style.pointerEvents = 'auto';
+        }
+
+        resetBlueprintTagsToNormal();
+        currentFloorContentIndex = -1;
+
+        // Escaneo de abajo hacia arriba
+        let currentTop = 100;
+        let currentFloor = 'SUBSUELO';
+        let laserOp = 1;
+
+        if (p < 0.05) {
+          currentTop = 100 - (p / 0.05) * 26;
+          currentFloor = 'SUBSUELO';
+          laserOp = Math.min(1.0, p / 0.015);
+        } else if (p < 0.10) {
+          const t = (p - 0.05) / 0.05;
+          currentTop = 74 - t * 21;
+          currentFloor = 'PLANTA BAJA';
+          laserOp = 1;
+        } else if (p < 0.16) {
+          const t = (p - 0.10) / 0.06;
+          currentTop = 53 - t * 25;
+          currentFloor = 'PLANTA 1';
+          laserOp = 1;
+        } else if (p < 0.22) {
+          const t = (p - 0.16) / 0.06;
+          currentTop = 28 - t * 28;
+          currentFloor = 'PLANTA 2';
+          laserOp = 1;
         } else {
-          el.className = 'tour-tab px-3.5 sm:px-4 py-2 rounded-xl text-xs font-brand uppercase tracking-wider transition-all bg-white/10 hover:bg-white/20 text-white/80 border border-white/10 cursor-pointer';
+          currentTop = 0;
+          currentFloor = 'COMPLETO';
+          laserOp = Math.max(0, 1 - (p - 0.22) / 0.04);
         }
-      });
 
-      // 5. Textos dinámicos descriptivos
-      const badgeEl = document.getElementById('tourFloorLevelBadge');
-      if (badgeEl) badgeEl.textContent = data.levelBadge;
-      const subBadgeEl = document.getElementById('tourFloorSubBadge');
-      if (subBadgeEl) subBadgeEl.textContent = data.subBadge;
-      const altEl = document.getElementById('tourFloorAltitude');
-      if (altEl) altEl.textContent = data.altitude;
-      const titleEl = document.getElementById('tourFloorTitle');
-      if (titleEl) titleEl.textContent = data.title;
-      const descEl = document.getElementById('tourFloorDesc');
-      if (descEl) descEl.textContent = data.desc;
+        blueprintWrapper.style.clipPath = `inset(${currentTop.toFixed(2)}% 0 0 0)`;
+        blueprintLaser.style.top = `${currentTop.toFixed(2)}%`;
+        blueprintLaser.style.opacity = laserOp.toFixed(3);
+        if (laserFloorText) laserFloorText.textContent = currentFloor;
 
-      const tagsContainer = document.getElementById('tourFloorTags');
-      if (tagsContainer) {
-        tagsContainer.innerHTML = data.tags.map(t => 
-          `<span class="px-3 py-1 rounded-lg bg-black/60 border border-white/15 text-xs text-white/90 backdrop-blur-sm">${t}</span>`
-        ).join('');
+        // Aparición de etiquetas y filas según corte del láser
+        const subVis = Math.max(0, Math.min(1.0, (100 - currentTop) / 16.0));
+        const p0Vis  = Math.max(0, Math.min(1.0, (74 - currentTop) / 14.0));
+        const p1Vis  = Math.max(0, Math.min(1.0, (53 - currentTop) / 16.0));
+        const p2Vis  = Math.max(0, Math.min(1.0, (28 - currentTop) / 18.0));
+
+        setFloorItem(blueprintTags.sub, blueprintRows.sub, subVis);
+        setFloorItem(blueprintTags.p0, blueprintRows.p0, p0Vis);
+        setFloorItem(blueprintTags.p1, blueprintRows.p1, p1Vis);
+        setFloorItem(blueprintTags.p2, blueprintRows.p2, p2Vis);
+
+        // Título de presentación y CTA en preview
+        const previewVis = Math.max(0, Math.min(1.0, (p - 0.18) / 0.05));
+        if (espaciosTitle) {
+          espaciosTitle.style.opacity = previewVis.toFixed(3);
+          espaciosTitle.style.transform = `translateY(${(1 - previewVis) * 16}px)`;
+        }
+        if (espaciosDesc) {
+          espaciosDesc.style.opacity = previewVis.toFixed(3);
+          espaciosDesc.style.transform = `translateY(${(1 - previewVis) * 16}px)`;
+        }
+        if (espaciosCta) {
+          espaciosCta.style.opacity = previewVis.toFixed(3);
+          espaciosCta.style.transform = `translateY(${(1 - previewVis) * 16}px)`;
+          espaciosCta.style.pointerEvents = previewVis > 0.4 ? 'auto' : 'none';
+        }
+        return;
       }
 
-      // 6. Botones de navegación (Recorriendo desde la más alta a la más baja)
-      const prevBtn = document.getElementById('btnTourPrev');
-      if (prevBtn) {
-        prevBtn.disabled = (index === 0);
+      // ========================================================
+      // FASE 2: TRANSICIÓN HACIA EL RECORRIDO (p: 0.26 -> 0.36)
+      // El plano se desplaza suavemente a la izquierda (ocultando su mitad izquierda)
+      // La capa oscura y las fotos de fondo aparecen, y se posiciona en Planta 2.
+      // ========================================================
+      if (p > 0.26 && p < 0.36) {
+        const t = (p - 0.26) / 0.10; // 0.0 a 1.0
+
+        // El plano está 100% revelado internamente
+        blueprintWrapper.style.clipPath = 'inset(0% 0 0 0)';
+
+        // Desplazamiento a la izquierda: en desktop -50%, en móvil -38%
+        const maxShift = window.innerWidth < 1024 ? 38 : 50;
+        const shiftX = -t * maxShift;
+        blueprintContainer.style.transform = `translateX(${shiftX.toFixed(2)}%)`;
+
+        // Desvanecimiento del contenido del preview
+        const fadeOut = (1 - t);
+        if (espaciosTitle) {
+          espaciosTitle.style.opacity = fadeOut.toFixed(3);
+          espaciosTitle.style.transform = `translateY(-${(t * 16).toFixed(1)}px)`;
+        }
+        if (espaciosPreviewContent) {
+          espaciosPreviewContent.style.opacity = fadeOut.toFixed(3);
+          espaciosPreviewContent.style.transform = `translateY(-${(t * 16).toFixed(1)}px)`;
+          espaciosPreviewContent.style.pointerEvents = t > 0.4 ? 'none' : 'auto';
+        }
+
+        // Aparición de capa oscura y fotos de fondo (inicia Planta 2)
+        if (spacesTourBg) spacesTourBg.style.opacity = t.toFixed(3);
+        setTourBackgroundOpacities(0, 0);
+
+        // Aparición del contenido de Planta 2
+        updateTourFloorContent(0);
+        if (espaciosTourContent) {
+          espaciosTourContent.style.opacity = t.toFixed(3);
+          espaciosTourContent.style.transform = `translateY(${((1 - t) * 16).toFixed(1)}px)`;
+          espaciosTourContent.style.pointerEvents = t > 0.5 ? 'auto' : 'none';
+        }
+
+        // Posicionar láser en Planta 2
+        blueprintLaser.style.top = '12%';
+        blueprintLaser.style.opacity = t.toFixed(3);
+        if (laserFloorText) laserFloorText.textContent = 'PLANTA 2';
+        highlightTourTag('p2');
+        return;
       }
 
-      const nextBtnText = document.getElementById('btnTourNextText');
-      if (nextBtnText) {
-        if (index === 0) {
-          nextBtnText.textContent = 'Bajar a Planta 1';
-        } else if (index === 1) {
-          nextBtnText.textContent = 'Bajar a Planta Baja';
-        } else if (index === 2) {
-          nextBtnText.textContent = 'Bajar a Subsuelo';
+      // ========================================================
+      // FASE 3: RECORRIDO PLANTA POR PLANTA (p: 0.36 -> 0.94)
+      // Plano fijo a la izquierda (mitad visible). El scroll recorre de arriba hacia abajo:
+      // Planta 2 -> Planta 1 -> Planta Baja -> Subsuelo.
+      // ========================================================
+      blueprintWrapper.style.clipPath = 'inset(0% 0 0 0)';
+      const maxShift = window.innerWidth < 1024 ? 38 : 50;
+      blueprintContainer.style.transform = `translateX(-${maxShift}%)`;
+
+      // Preview 100% oculto
+      if (espaciosTitle) espaciosTitle.style.opacity = '0';
+      if (espaciosPreviewContent) {
+        espaciosPreviewContent.style.opacity = '0';
+        espaciosPreviewContent.style.pointerEvents = 'none';
+      }
+
+      // Recorrido y fondo 100% activos
+      if (spacesTourBg) spacesTourBg.style.opacity = '1';
+      if (espaciosTourContent) {
+        espaciosTourContent.style.opacity = '1';
+        espaciosTourContent.style.transform = 'translateY(0px)';
+        espaciosTourContent.style.pointerEvents = 'auto';
+      }
+
+      blueprintLaser.style.opacity = '1';
+
+      // 4 tramos de scroll desde Planta 2 hasta Subsuelo:
+      // 1. Planta 2: p de 0.36 a 0.50
+      // 2. Planta 1: p de 0.50 a 0.65
+      // 3. Planta Baja: p de 0.65 a 0.80
+      // 4. Subsuelo: p de 0.80 a 0.95
+
+      if (p < 0.50) {
+        // PLANTA 2 (Cúpula Superior)
+        updateTourFloorContent(0);
+        highlightTourTag('p2');
+        if (laserFloorText) laserFloorText.textContent = 'PLANTA 2';
+
+        // Movimiento sutil o crossfade hacia la siguiente planta al final del tramo
+        if (p < 0.46) {
+          blueprintLaser.style.top = '12%';
+          setTourBackgroundOpacities(0, 0);
         } else {
-          nextBtnText.textContent = 'Ir a Disciplinas';
+          const cross = (p - 0.46) / 0.04;
+          const laserY = 12 + cross * (38 - 12);
+          blueprintLaser.style.top = `${laserY.toFixed(2)}%`;
+          setTourBackgroundOpacities(0, cross);
         }
-      }
-    }
+      } else if (p < 0.65) {
+        // PLANTA 1 (Spinning & Aeróbicos)
+        updateTourFloorContent(1);
+        highlightTourTag('p1');
+        if (laserFloorText) laserFloorText.textContent = 'PLANTA 1';
 
-    function navigateTour(dir) {
-      const nextIdx = currentTourFloorIndex + dir;
-      if (nextIdx >= tourFloorsData.length) {
-        continueToDisciplines();
-      } else if (nextIdx >= 0) {
-        setTourFloor(nextIdx);
-      }
-    }
+        if (p < 0.61) {
+          blueprintLaser.style.top = '38%';
+          setTourBackgroundOpacities(1, 0);
+        } else {
+          const cross = (p - 0.61) / 0.04;
+          const laserY = 38 + cross * (62 - 38);
+          blueprintLaser.style.top = `${laserY.toFixed(2)}%`;
+          setTourBackgroundOpacities(1, cross);
+        }
+      } else if (p < 0.80) {
+        // PLANTA BAJA (Musculación & Recepción)
+        updateTourFloorContent(2);
+        highlightTourTag('p0');
+        if (laserFloorText) laserFloorText.textContent = 'PLANTA BAJA';
 
-    function openSpacesTour() {
-      isSpacesTourOpen = true;
-      const defaultView = document.getElementById('espaciosDefaultView');
-      const tourView = document.getElementById('spacesTourView');
-      const tourBg = document.getElementById('spacesTourBg');
+        if (p < 0.76) {
+          blueprintLaser.style.top = '62%';
+          setTourBackgroundOpacities(2, 0);
+        } else {
+          const cross = (p - 0.76) / 0.04;
+          const laserY = 62 + cross * (86 - 62);
+          blueprintLaser.style.top = `${laserY.toFixed(2)}%`;
+          setTourBackgroundOpacities(2, cross);
+        }
+      } else {
+        // SUBSUELO (Underground & Vestidores)
+        updateTourFloorContent(3);
+        highlightTourTag('sub');
+        if (laserFloorText) laserFloorText.textContent = 'SUBSUELO';
+        blueprintLaser.style.top = '86%';
+        setTourBackgroundOpacities(3, 0);
 
-      if (defaultView) {
-        defaultView.style.opacity = '0';
-        defaultView.style.pointerEvents = 'none';
-        setTimeout(() => {
-          defaultView.style.display = 'none';
-          if (tourView) {
-            tourView.style.display = 'block';
-            tourView.classList.remove('hidden');
-            setTimeout(() => {
-              tourView.style.opacity = '1';
-            }, 30);
-          }
-        }, 300);
-      }
-
-      if (tourBg) {
-        tourBg.style.display = 'block';
-        tourBg.classList.remove('pointer-events-none');
-        setTimeout(() => {
-          tourBg.style.opacity = '1';
-        }, 30);
-      }
-
-      // Inicia en la planta más alta (Planta 2: Cardio+GluteUp)
-      setTourFloor(0);
-    }
-
-    function closeSpacesTour() {
-      isSpacesTourOpen = false;
-      const defaultView = document.getElementById('espaciosDefaultView');
-      const tourView = document.getElementById('spacesTourView');
-      const tourBg = document.getElementById('spacesTourBg');
-
-      if (tourView) {
-        tourView.style.opacity = '0';
-        setTimeout(() => {
-          tourView.style.display = 'none';
-          tourView.classList.add('hidden');
-          if (defaultView) {
-            defaultView.style.display = 'block';
-            setTimeout(() => {
-              defaultView.style.opacity = '1';
-              defaultView.style.pointerEvents = 'auto';
-            }, 30);
-          }
-        }, 300);
-      }
-
-      if (tourBg) {
-        tourBg.style.opacity = '0';
-        setTimeout(() => {
-          tourBg.classList.add('pointer-events-none');
-        }, 300);
-      }
-
-      applyEspaciosProgress(espaciosCurrentProgress);
-    }
-
-    function continueToDisciplines() {
-      closeSpacesTour();
-      const disc = document.getElementById('disciplinasTrack');
-      if (disc) {
-        disc.scrollIntoView({ behavior: 'smooth' });
+        // Desvanecimiento suave al salir hacia Disciplinas (p > 0.95)
+        if (p > 0.95) {
+          const exitT = Math.max(0, 1 - (p - 0.95) / 0.05);
+          if (espaciosTourContent) espaciosTourContent.style.opacity = exitT.toFixed(3);
+          if (spacesTourBg) spacesTourBg.style.opacity = exitT.toFixed(3);
+          blueprintLaser.style.opacity = exitT.toFixed(3);
+        }
       }
     }
 
