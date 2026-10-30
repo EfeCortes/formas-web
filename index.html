@@ -413,17 +413,17 @@
                   </div>
                 </div>
 
-                <!-- Marcadores técnicos situados en la mitad derecha del corte (visibles en preview y durante el recorrido) -->
-                <div id="tagP2" class="blueprint-tag hidden md:block absolute top-[12%] left-[54%] z-20 px-2.5 py-1 rounded bg-black/85 border border-white/20 text-[11px] font-brand uppercase tracking-wider text-white will-change-[opacity,transform,background-color,color] opacity-0">
+                <!-- Marcadores técnicos del plano (Visibles solo en preview inicial, se ocultan en el recorrido para no duplicar etiquetas) -->
+                <div id="tagP2" class="blueprint-tag hidden md:block absolute top-[12%] left-2 sm:left-4 z-20 px-2.5 py-1 rounded bg-black/85 border border-white/20 text-[11px] font-brand uppercase tracking-wider text-white will-change-[opacity,transform] opacity-0">
                   PLANTA 2
                 </div>
-                <div id="tagP1" class="blueprint-tag hidden md:block absolute top-[38%] left-[54%] z-20 px-2.5 py-1 rounded bg-black/85 border border-white/20 text-[11px] font-brand uppercase tracking-wider text-white will-change-[opacity,transform,background-color,color] opacity-0">
+                <div id="tagP1" class="blueprint-tag hidden md:block absolute top-[38%] left-2 sm:left-4 z-20 px-2.5 py-1 rounded bg-black/85 border border-white/20 text-[11px] font-brand uppercase tracking-wider text-white will-change-[opacity,transform] opacity-0">
                   PLANTA 1
                 </div>
-                <div id="tagP0" class="blueprint-tag hidden md:block absolute top-[62%] left-[54%] z-20 px-2.5 py-1 rounded bg-black/85 border border-white/20 text-[11px] font-brand uppercase tracking-wider text-white will-change-[opacity,transform,background-color,color] opacity-0">
+                <div id="tagP0" class="blueprint-tag hidden md:block absolute top-[62%] left-2 sm:left-4 z-20 px-2.5 py-1 rounded bg-black/85 border border-white/20 text-[11px] font-brand uppercase tracking-wider text-white will-change-[opacity,transform] opacity-0">
                   PLANTA 0
                 </div>
-                <div id="tagSub" class="blueprint-tag hidden md:block absolute bottom-[6%] left-[54%] z-20 px-2.5 py-1 rounded bg-black/85 border border-white/20 text-[11px] font-brand uppercase tracking-wider text-white will-change-[opacity,transform,background-color,color] opacity-0">
+                <div id="tagSub" class="blueprint-tag hidden md:block absolute bottom-[6%] left-2 sm:left-4 z-20 px-2.5 py-1 rounded bg-black/85 border border-white/20 text-[11px] font-brand uppercase tracking-wider text-white will-change-[opacity,transform] opacity-0">
                   SUBSUELO
                 </div>
 
@@ -828,39 +828,11 @@
       }
     }
 
-    function highlightTourTag(activeKey) {
+    function hideBlueprintTags() {
       const keys = ['p2', 'p1', 'p0', 'sub'];
       keys.forEach(k => {
         const tag = blueprintTags[k];
-        if (!tag) return;
-        if (k === activeKey) {
-          tag.style.opacity = '1';
-          tag.style.backgroundColor = '#0effc7';
-          tag.style.color = '#000000';
-          tag.style.borderColor = '#0effc7';
-          tag.style.fontWeight = '700';
-          tag.style.boxShadow = '0 0 14px rgba(14,255,199,0.5)';
-        } else {
-          tag.style.opacity = '0.35';
-          tag.style.backgroundColor = 'rgba(0,0,0,0.85)';
-          tag.style.color = 'rgba(255,255,255,0.7)';
-          tag.style.borderColor = 'rgba(255,255,255,0.2)';
-          tag.style.fontWeight = '400';
-          tag.style.boxShadow = 'none';
-        }
-      });
-    }
-
-    function resetBlueprintTagsToNormal() {
-      const keys = ['p2', 'p1', 'p0', 'sub'];
-      keys.forEach(k => {
-        const tag = blueprintTags[k];
-        if (!tag) return;
-        tag.style.backgroundColor = 'rgba(0,0,0,0.85)';
-        tag.style.color = '#ffffff';
-        tag.style.borderColor = 'rgba(255,255,255,0.2)';
-        tag.style.fontWeight = '400';
-        tag.style.boxShadow = 'none';
+        if (tag) tag.style.opacity = '0';
       });
     }
 
@@ -914,7 +886,6 @@
           espaciosPreviewContent.style.pointerEvents = 'auto';
         }
 
-        resetBlueprintTagsToNormal();
         currentFloorContentIndex = -1;
 
         // Escaneo de abajo hacia arriba
@@ -1028,7 +999,7 @@
         blueprintLaser.style.top = '12%';
         blueprintLaser.style.opacity = t.toFixed(3);
         if (laserFloorText) laserFloorText.textContent = 'PLANTA 2';
-        highlightTourTag('p2');
+        hideBlueprintTags();
         return;
       }
 
@@ -1059,6 +1030,7 @@
       }
 
       blueprintLaser.style.opacity = '1';
+      hideBlueprintTags();
 
       // 4 tramos de scroll desde Planta 2 hasta Subsuelo:
       // 1. Planta 2: p de 0.36 a 0.50
@@ -1069,7 +1041,6 @@
       if (p < 0.50) {
         // PLANTA 2 (Cúpula Superior)
         updateTourFloorContent(0);
-        highlightTourTag('p2');
         if (laserFloorText) laserFloorText.textContent = 'PLANTA 2';
 
         // Movimiento sutil o crossfade hacia la siguiente planta al final del tramo
@@ -1085,7 +1056,6 @@
       } else if (p < 0.65) {
         // PLANTA 1 (Spinning & Aeróbicos)
         updateTourFloorContent(1);
-        highlightTourTag('p1');
         if (laserFloorText) laserFloorText.textContent = 'PLANTA 1';
 
         if (p < 0.61) {
@@ -1100,7 +1070,6 @@
       } else if (p < 0.80) {
         // PLANTA BAJA (Musculación & Recepción)
         updateTourFloorContent(2);
-        highlightTourTag('p0');
         if (laserFloorText) laserFloorText.textContent = 'PLANTA BAJA';
 
         if (p < 0.76) {
@@ -1115,7 +1084,6 @@
       } else {
         // SUBSUELO (Underground & Vestidores)
         updateTourFloorContent(3);
-        highlightTourTag('sub');
         if (laserFloorText) laserFloorText.textContent = 'SUBSUELO';
         blueprintLaser.style.top = '86%';
         setTourBackgroundOpacities(3, 0);
