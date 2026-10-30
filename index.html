@@ -183,9 +183,6 @@
     ::-webkit-scrollbar-thumb { background: #3a3a3a; border-radius: 2px; }
     ::-webkit-scrollbar-thumb:hover { background: #666666; }
 
-    50% { transform: scale(0.85); opacity: 0.4; }
-    }
-
     .building-transition {
       transition: transform 0.5s cubic-bezier(0.2, 0.9, 0.3, 1), opacity 0.4s ease;
     }
@@ -202,6 +199,16 @@
       background-color: #ffffff !important;
       color: #000000 !important;
       border-color: #ffffff !important;
+    }
+
+    /* Fundido suave desde el fondo gris #141416 detrás del plano a la izquierda hacia las fotos a la derecha */
+    .spaces-tour-fade {
+      background: linear-gradient(to right, #141416 0%, #141416 24%, rgba(20, 20, 22, 0.92) 38%, rgba(20, 20, 22, 0.45) 54%, transparent 72%);
+    }
+    @media (min-width: 1024px) {
+      .spaces-tour-fade {
+        background: linear-gradient(to right, #141416 0%, #141416 35%, rgba(20, 20, 22, 0.94) 47%, rgba(20, 20, 22, 0.45) 60%, transparent 75%);
+      }
     }
   </style>
 </head>
@@ -365,16 +372,21 @@
     <div id="espaciosTrack" class="relative h-[580vh]">
       <section id="espaciosPreview" class="sticky top-0 h-screen w-full px-6 sm:px-8 pt-20 sm:pt-24 pb-8 sm:pb-12 border-t border-white/10 bg-[#141416] overflow-hidden flex items-center justify-center">
 
-        <!-- FONDOS FOTOGRÁFICOS DE LOS ESPACIOS CON CAPA OSCURECEDORA DE ALTO CONTRASTE -->
-        <div id="spacesTourBg" class="absolute inset-0 z-0 opacity-0 pointer-events-none transition-opacity duration-700 ease-out overflow-hidden">
-          <div id="spaceBg-0" class="space-bg-slide absolute inset-0 bg-cover bg-center transition-opacity duration-700 opacity-100 scale-100" style="background-image: url('assets/images/spaces/planta-2.jpg');"></div>
-          <div id="spaceBg-1" class="space-bg-slide absolute inset-0 bg-cover bg-center transition-opacity duration-700 opacity-0 scale-100" style="background-image: url('assets/images/spaces/planta-1.jpg');"></div>
-          <div id="spaceBg-2" class="space-bg-slide absolute inset-0 bg-cover bg-center transition-opacity duration-700 opacity-0 scale-100" style="background-image: url('assets/images/spaces/planta-baja.jpg');"></div>
-          <div id="spaceBg-3" class="space-bg-slide absolute inset-0 bg-cover bg-center transition-opacity duration-700 opacity-0 scale-100" style="background-image: url('assets/images/spaces/subsuelo.jpg');"></div>
+        <!-- FONDOS FOTOGRÁFICOS DE LOS ESPACIOS CON FUNDIDO DESDE FONDO GRIS A LA IZQUIERDA -->
+        <div id="spacesTourBg" class="absolute inset-0 z-0 opacity-0 pointer-events-none transition-opacity duration-700 ease-out overflow-hidden bg-[#141416]">
+          <!-- Fotos de las 4 plantas -->
+          <div class="absolute inset-0 overflow-hidden">
+            <div id="spaceBg-0" class="space-bg-slide absolute inset-0 bg-cover bg-center transition-opacity duration-700 opacity-100 scale-100" style="background-image: url('assets/images/spaces/planta-2.jpg');"></div>
+            <div id="spaceBg-1" class="space-bg-slide absolute inset-0 bg-cover bg-center transition-opacity duration-700 opacity-0 scale-100" style="background-image: url('assets/images/spaces/planta-1.jpg');"></div>
+            <div id="spaceBg-2" class="space-bg-slide absolute inset-0 bg-cover bg-center transition-opacity duration-700 opacity-0 scale-100" style="background-image: url('assets/images/spaces/planta-baja.jpg');"></div>
+            <div id="spaceBg-3" class="space-bg-slide absolute inset-0 bg-cover bg-center transition-opacity duration-700 opacity-0 scale-100" style="background-image: url('assets/images/spaces/subsuelo.jpg');"></div>
+          </div>
 
-          <!-- CAPA OSCURECEDORA (+15% de opacidad para equilibrio óptico perfecto de contraste y lectura) -->
-          <div class="absolute inset-0 bg-[#080808]/55 pointer-events-none"></div>
-          <div class="absolute inset-0 bg-gradient-to-r from-black/65 via-black/45 to-black/20 pointer-events-none"></div>
+          <!-- Capa oscurecedora para equilibrio óptico y contraste de lectura sobre las fotos -->
+          <div class="absolute inset-0 bg-[#080808]/50 pointer-events-none"></div>
+
+          <!-- Capa de fondo gris sólido (#141416) detrás del plano a la izquierda con fundido suave hacia la derecha -->
+          <div class="spaces-tour-fade absolute inset-0 pointer-events-none z-10"></div>
         </div>
 
         <div class="max-w-7xl mx-auto relative z-10 w-full my-auto">
