@@ -213,6 +213,21 @@
         background: linear-gradient(to right, #141416 0%, #141416 35%, rgba(20, 20, 22, 0.94) 47%, rgba(20, 20, 22, 0.45) 60%, transparent 75%);
       }
     }
+
+    /* Footer Expandable Experience Transition */
+    #footerExperienceWrapper {
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      transform: translateY(24px);
+      transition: max-height 0.75s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: max-height, opacity, transform;
+    }
+    #footerExperienceWrapper.is-expanded {
+      max-height: 2200px;
+      opacity: 1;
+      transform: translateY(0);
+    }
   </style>
 </head>
 <body class="selection:bg-white selection:text-black">
@@ -235,7 +250,7 @@
 
       <!-- Action Button: Experiencia (Redes y Contacto) -->
       <div class="hidden sm:flex items-center gap-3">
-        <a href="#contacto" class="px-5 py-2.5 rounded-full bg-white text-black hover:bg-white/90 font-brand text-xs uppercase tracking-wider transition-all duration-300 hover:scale-105 shadow-md flex items-center">
+        <a href="#contacto" id="headerExperienciaBtn" onclick="openExperienciaFromNav(event)" class="px-5 py-2.5 rounded-full bg-white text-black hover:bg-white/90 font-brand text-xs uppercase tracking-wider transition-all duration-300 hover:scale-105 shadow-md flex items-center cursor-pointer">
           Experiencia
         </a>
       </div>
@@ -281,7 +296,7 @@
         </div>
 
         <div class="pt-2">
-          <a href="#contacto" class="inline-flex items-center justify-center gap-3 w-full py-4 rounded-xl bg-white text-black font-brand text-xs uppercase tracking-widest shadow-xl" onclick="closeMobileMenu()">
+          <a href="#contacto" id="mobileExperienciaBtn" onclick="openExperienciaFromNav(event)" class="inline-flex items-center justify-center gap-3 w-full py-4 rounded-xl bg-white text-black font-brand text-xs uppercase tracking-widest shadow-xl cursor-pointer">
             <span>Experiencia & Redes</span>
             <span>→</span>
           </a>
@@ -746,34 +761,207 @@
   </div>
 
 
-    <!-- FOOTER / CONTACTO & REDES -->
-  <footer id="contacto" class="border-t border-white/10 bg-[#050505] pt-8 sm:pt-10 pb-[84px] sm:pb-[90px] px-6 sm:px-8">
-    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
-      
-      <!-- Izquierda: Ícono ion-formas.svg + Copyright -->
-      <div class="flex items-center gap-3.5">
-        <img src="assets/icons/ion-formas.svg" alt="FOR+ Formas" class="h-6 w-auto opacity-75 hover:opacity-100 transition-opacity">
-        <span class="text-xs text-white/50 font-light">
-          © 2026 FOR+ / Gimnasio Formas. Todos los derechos reservados.
-        </span>
-      </div>
+    <!-- FOOTER / CONTACTO & EXPERIENCIA EXPANDIBLE -->
+  <footer id="contacto" class="border-t border-white/10 bg-[#070709] relative transition-all duration-500">
+    
+    <!-- Barra superior teaser / disparador de experiencia -->
+    <div class="border-b border-white/10 bg-[#0a0a0d]/90 backdrop-blur-md">
+      <div class="max-w-7xl mx-auto px-6 sm:px-8 py-3.5 flex items-center justify-between">
+        <button type="button" id="footerExpandToggleBtn" onclick="toggleFooterExperience()" class="flex items-center gap-3 text-xs font-brand uppercase tracking-wider text-white/75 hover:text-white transition-colors cursor-pointer group text-left">
+          <span class="w-2 h-2 rounded-full bg-[#0effc7] animate-pulse"></span>
+          <span class="text-white/40 text-[10px] tracking-widest hidden sm:inline">Desliza o haz clic:</span>
+          <span class="text-white group-hover:text-[#0effc7] transition-colors">Vivir la Experiencia FOR+ en Redes</span>
+          <svg id="footerExpandChevron" class="w-4 h-4 text-[#0effc7] transition-transform duration-300 group-hover:translate-y-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+          </svg>
+        </button>
 
-      <!-- Derecha: Redes sociales oficiales (TikTok, Instagram, Facebook, WhatsApp) -->
-      <div class="flex items-center gap-5 text-white/50">
-        <a href="https://www.tiktok.com/@fit.formas" target="_blank" rel="noopener noreferrer" aria-label="TikTok @fit.formas" class="hover:text-[#0effc7] hover:scale-110 transition-all">
-          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1.04-.1z"/></svg>
-        </a>
-        <a href="https://www.instagram.com/fit.formas/" target="_blank" rel="noopener noreferrer" aria-label="Instagram @fit.formas" class="hover:text-[#faa0c3] hover:scale-110 transition-all">
-          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-        </a>
-        <a href="https://www.facebook.com/formas.fitness" target="_blank" rel="noopener noreferrer" aria-label="Facebook formas.fitness" class="hover:text-[#fddb00] hover:scale-110 transition-all">
-          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-        </a>
-        <a href="https://wa.me/59170799500?text=Hola%2C%20quisiera%20m%C3%A1s%20informaci%C3%B3n%20sobre%20FOR%2B" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp Contacto FOR+" class="hover:text-[#0effc7] hover:scale-110 transition-all">
-          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        </a>
+        <button type="button" onclick="toggleFooterExperience()" id="footerExpandStateLabel" class="text-[10px] font-brand uppercase tracking-widest text-white/50 hover:text-white transition-colors cursor-pointer">
+          [ Desplegar ]
+        </button>
       </div>
+    </div>
 
+    <!-- Contenedor desplegable con la experiencia completa -->
+    <div id="footerExperienceWrapper" class="overflow-hidden">
+      <div class="max-w-7xl mx-auto px-6 sm:px-8 pt-12 sm:pt-16 pb-16 sm:pb-20 space-y-12 sm:space-y-16">
+        
+        <!-- Encabezado de la Experiencia -->
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/10 pb-8">
+          <div class="space-y-3 max-w-2xl">
+            <span class="text-[10px] sm:text-[11px] font-brand tracking-[0.25em] text-[#0effc7] uppercase block">
+              Comunidad & Redes Oficiales
+            </span>
+            <h2 class="font-brand text-2xl sm:text-4xl lg:text-5xl font-normal uppercase tracking-tight text-white leading-tight">
+              LA EXPERIENCIA FOR+ <br>
+              <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-white/95 to-white/60">
+                EN NUESTRAS REDES
+              </span>
+            </h2>
+            <p class="text-sm sm:text-base text-white/70 font-light leading-relaxed">
+              El verdadero pulso de FOR+ es la gente que entrena aquí todos los días. Síguenos en nuestras redes oficiales para ver los entrenamientos, eventos y la vida diaria del club. ¡Entrena, comparte tu progreso y menciónanos en tus historias!
+            </p>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <a href="https://wa.me/59170799500?text=Hola%2C%20quisiera%20m%C3%A1s%20informaci%C3%B3n%20para%20vivir%20la%20experiencia%20FOR%2B" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-3 px-6 py-3.5 rounded-xl bg-white text-black font-brand text-xs uppercase tracking-widest hover:bg-white/90 hover:scale-105 transition-all shadow-xl group whitespace-nowrap">
+              <span>Escríbenos a WhatsApp</span>
+              <span class="text-[#0effc7] group-hover:translate-x-1 transition-transform">↗</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Grid de 3 Tarjetas Visuales: TikTok, Instagram, Facebook -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+          
+          <!-- Card 1: TikTok (@fit.formas) -->
+          <a href="https://www.tiktok.com/@fit.formas" target="_blank" rel="noopener noreferrer" class="group relative rounded-2xl sm:rounded-3xl bg-[#101013] border border-white/10 overflow-hidden hover:border-[#0effc7]/50 hover:bg-[#141418] transition-all duration-300 shadow-xl flex flex-col justify-between">
+            <div class="relative h-48 sm:h-56 overflow-hidden bg-black">
+              <img src="assets/images/funcional.jpg" alt="Entrenamientos FOR+ TikTok" class="w-full h-full object-cover filter brightness-[0.85] group-hover:scale-105 transition-transform duration-500">
+              <div class="absolute inset-0 bg-gradient-to-t from-[#101013] via-transparent to-transparent"></div>
+              <div class="absolute top-4 left-4">
+                <span class="px-3 py-1 rounded-md bg-black/80 backdrop-blur-md border border-[#0effc7]/40 text-[#0effc7] text-[10px] font-brand uppercase tracking-wider">
+                  TikTok
+                </span>
+              </div>
+              <div class="absolute top-4 right-4 w-8 h-8 rounded-full bg-black/70 backdrop-blur-md border border-white/20 flex items-center justify-center text-white text-xs font-brand group-hover:text-[#0effc7] group-hover:border-[#0effc7] transition-all">
+                ↗
+              </div>
+            </div>
+
+            <div class="p-6 sm:p-7 space-y-4 flex-1 flex flex-col justify-between">
+              <div class="space-y-2">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-brand text-[#0effc7]">@fit.formas</span>
+                  <span class="text-[10px] text-white/40 font-mono uppercase">Videos & Rutinas</span>
+                </div>
+                <p class="text-xs sm:text-sm text-white/80 font-light leading-relaxed">
+                  Clips en video de clases, desafíos de fuerza y dinámicas de entrenamiento en nuestras salas.
+                </p>
+              </div>
+              <div class="pt-4 border-t border-white/10 flex items-center justify-between text-xs font-brand uppercase tracking-wider text-[#0effc7]">
+                <span>tiktok.com/@fit.formas</span>
+                <span class="group-hover:translate-x-1 transition-transform">→</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- Card 2: Instagram (@fit.formas) -->
+          <a href="https://www.instagram.com/fit.formas/" target="_blank" rel="noopener noreferrer" class="group relative rounded-2xl sm:rounded-3xl bg-[#101013] border border-white/10 overflow-hidden hover:border-[#faa0c3]/50 hover:bg-[#141418] transition-all duration-300 shadow-xl flex flex-col justify-between">
+            <div class="relative h-48 sm:h-56 overflow-hidden bg-black">
+              <img src="assets/images/spinning.jpg" alt="Comunidad FOR+ Instagram" class="w-full h-full object-cover filter brightness-[0.85] group-hover:scale-105 transition-transform duration-500">
+              <div class="absolute inset-0 bg-gradient-to-t from-[#101013] via-transparent to-transparent"></div>
+              <div class="absolute top-4 left-4">
+                <span class="px-3 py-1 rounded-md bg-black/80 backdrop-blur-md border border-[#faa0c3]/40 text-[#faa0c3] text-[10px] font-brand uppercase tracking-wider">
+                  Instagram
+                </span>
+              </div>
+              <div class="absolute top-4 right-4 w-8 h-8 rounded-full bg-black/70 backdrop-blur-md border border-white/20 flex items-center justify-center text-white text-xs font-brand group-hover:text-[#faa0c3] group-hover:border-[#faa0c3] transition-all">
+                ↗
+              </div>
+            </div>
+
+            <div class="p-6 sm:p-7 space-y-4 flex-1 flex flex-col justify-between">
+              <div class="space-y-2">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-brand text-[#faa0c3]">@fit.formas</span>
+                  <span class="text-[10px] text-white/40 font-mono uppercase">Historias & Comunidad</span>
+                </div>
+                <p class="text-xs sm:text-sm text-white/80 font-light leading-relaxed">
+                  Historias del día a día, técnica biomecánica, anuncios y la vida de la comunidad. Etiquétanos en tus historias.
+                </p>
+              </div>
+              <div class="pt-4 border-t border-white/10 flex items-center justify-between text-xs font-brand uppercase tracking-wider text-[#faa0c3]">
+                <span>instagram.com/fit.formas</span>
+                <span class="group-hover:translate-x-1 transition-transform">→</span>
+              </div>
+            </div>
+          </a>
+
+          <!-- Card 3: Facebook (formas.fitness) -->
+          <a href="https://www.facebook.com/formas.fitness" target="_blank" rel="noopener noreferrer" class="group relative rounded-2xl sm:rounded-3xl bg-[#101013] border border-white/10 overflow-hidden hover:border-[#fddb00]/50 hover:bg-[#141418] transition-all duration-300 shadow-xl flex flex-col justify-between">
+            <div class="relative h-48 sm:h-56 overflow-hidden bg-black">
+              <img src="assets/images/aerobicos.jpg" alt="Eventos FOR+ Facebook" class="w-full h-full object-cover filter brightness-[0.85] group-hover:scale-105 transition-transform duration-500">
+              <div class="absolute inset-0 bg-gradient-to-t from-[#101013] via-transparent to-transparent"></div>
+              <div class="absolute top-4 left-4">
+                <span class="px-3 py-1 rounded-md bg-black/80 backdrop-blur-md border border-[#fddb00]/40 text-[#fddb00] text-[10px] font-brand uppercase tracking-wider">
+                  Facebook
+                </span>
+              </div>
+              <div class="absolute top-4 right-4 w-8 h-8 rounded-full bg-black/70 backdrop-blur-md border border-white/20 flex items-center justify-center text-white text-xs font-brand group-hover:text-[#fddb00] group-hover:border-[#fddb00] transition-all">
+                ↗
+              </div>
+            </div>
+
+            <div class="p-6 sm:p-7 space-y-4 flex-1 flex flex-col justify-between">
+              <div class="space-y-2">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-brand text-[#fddb00]">formas.fitness</span>
+                  <span class="text-[10px] text-white/40 font-mono uppercase">Masterclasses & Avisos</span>
+                </div>
+                <p class="text-xs sm:text-sm text-white/80 font-light leading-relaxed">
+                  Horarios actualizados de clases especiales, transmisiones en vivo y coberturas de eventos institucionales.
+                </p>
+              </div>
+              <div class="pt-4 border-t border-white/10 flex items-center justify-between text-xs font-brand uppercase tracking-wider text-[#fddb00]">
+                <span>facebook.com/formas.fitness</span>
+                <span class="group-hover:translate-x-1 transition-transform">→</span>
+              </div>
+            </div>
+          </a>
+
+        </div>
+
+        <!-- Banner de llamada a la acción: Compartir en redes -->
+        <div class="rounded-2xl p-6 sm:p-8 bg-gradient-to-r from-white/[0.04] via-white/[0.07] to-white/[0.02] border border-white/10 flex flex-col sm:flex-row items-center justify-between gap-6">
+          <div class="space-y-1 text-center sm:text-left">
+            <h3 class="font-brand text-base sm:text-lg uppercase text-white tracking-wide">
+              ¿Entrenaste hoy en FOR+?
+            </h3>
+            <p class="text-xs sm:text-sm text-white/60 font-light">
+              Menciónanos en tus publicaciones con <span class="text-[#0effc7] font-medium">#WhatAreYouMadeOf</span> y <span class="text-white font-medium">@fit.formas</span> para aparecer en nuestras historias.
+            </p>
+          </div>
+          <button type="button" onclick="collapseFooterExperience()" class="px-5 py-2.5 rounded-full border border-white/20 hover:border-white/50 text-white/70 hover:text-white font-brand text-[11px] uppercase tracking-wider transition-all cursor-pointer whitespace-nowrap">
+            Ocultar experiencia ↑
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Barra inferior fija del Footer (Copyright & Redes Rápidas) -->
+    <div class="border-t border-white/10 bg-[#050505] pt-8 sm:pt-10 pb-[84px] sm:pb-[90px] px-6 sm:px-8">
+      <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
+        
+        <!-- Izquierda: Ícono ion-formas.svg + Copyright -->
+        <div class="flex items-center gap-3.5">
+          <img src="assets/icons/ion-formas.svg" alt="FOR+ Formas" class="h-6 w-auto opacity-75 hover:opacity-100 transition-opacity">
+          <span class="text-xs text-white/50 font-light">
+            © 2026 FOR+ / Gimnasio Formas. Todos los derechos reservados.
+          </span>
+        </div>
+
+        <!-- Derecha: Redes sociales oficiales (TikTok, Instagram, Facebook, WhatsApp) -->
+        <div class="flex items-center gap-5 text-white/50">
+          <a href="https://www.tiktok.com/@fit.formas" target="_blank" rel="noopener noreferrer" aria-label="TikTok @fit.formas" class="hover:text-[#0effc7] hover:scale-110 transition-all">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1.04-.1z"/></svg>
+          </a>
+          <a href="https://www.instagram.com/fit.formas/" target="_blank" rel="noopener noreferrer" aria-label="Instagram @fit.formas" class="hover:text-[#faa0c3] hover:scale-110 transition-all">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </a>
+          <a href="https://www.instagram.com/fit.formas/" target="_blank" rel="noopener noreferrer" aria-label="Instagram @fit.formas" class="hover:text-[#faa0c3] hover:scale-110 transition-all">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </a>
+          <a href="https://www.facebook.com/formas.fitness" target="_blank" rel="noopener noreferrer" aria-label="Facebook formas.fitness" class="hover:text-[#fddb00] hover:scale-110 transition-all">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          </a>
+          <a href="https://wa.me/59170799500?text=Hola%2C%20quisiera%20m%C3%A1s%20informaci%C3%B3n%20sobre%20FOR%2B" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp Contacto FOR+" class="hover:text-[#0effc7] hover:scale-110 transition-all">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </a>
+        </div>
+
+      </div>
     </div>
   </footer>
 
@@ -1665,6 +1853,118 @@
       }
     }
 
+    // ==========================================
+    // FOOTER: EXPERIENCIA EXPANDIBLE POR SCROLL & NAVEGACIÓN DIRECTA
+    // ==========================================
+    const footerExperienceWrapper = document.getElementById('footerExperienceWrapper');
+    const footerExpandChevron = document.getElementById('footerExpandChevron');
+    const footerExpandStateLabel = document.getElementById('footerExpandStateLabel');
+    const appSection = document.getElementById('appSection');
+    let isFooterExpanded = false;
+
+    function expandFooter(autoScroll = false) {
+      if (isFooterExpanded) return;
+      isFooterExpanded = true;
+      if (footerExperienceWrapper) {
+        footerExperienceWrapper.classList.add('is-expanded');
+      }
+      if (footerExpandChevron) {
+        footerExpandChevron.style.transform = 'rotate(180deg)';
+      }
+      if (footerExpandStateLabel) {
+        footerExpandStateLabel.textContent = '[ Contraer ]';
+      }
+      if (autoScroll) {
+        requestAnimationFrame(() => {
+          window.scrollBy({ top: 120, behavior: 'smooth' });
+        });
+      }
+    }
+
+    function collapseFooterExperience() {
+      if (!isFooterExpanded) return;
+      isFooterExpanded = false;
+      if (footerExperienceWrapper) {
+        footerExperienceWrapper.classList.remove('is-expanded');
+      }
+      if (footerExpandChevron) {
+        footerExpandChevron.style.transform = '';
+      }
+      if (footerExpandStateLabel) {
+        footerExpandStateLabel.textContent = '[ Desplegar ]';
+      }
+    }
+
+    function toggleFooterExperience() {
+      if (isFooterExpanded) {
+        collapseFooterExperience();
+      } else {
+        expandFooter(true);
+      }
+    }
+
+    function openExperienciaFromNav(e) {
+      if (e) {
+        e.preventDefault();
+      }
+      closeMobileMenu();
+      expandFooter(false);
+      setTimeout(() => {
+        const target = document.getElementById('contacto');
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 40);
+    }
+
+    function checkFooterScrollExpand(scrollY) {
+      const docHeight = document.documentElement.scrollHeight;
+      const winHeight = window.innerHeight;
+      const distFromBottom = docHeight - (scrollY + winHeight);
+
+      // Si el usuario hace scroll hasta el final del contenido
+      if (distFromBottom <= 40 && !isFooterExpanded) {
+        expandFooter(false);
+      } else if (isFooterExpanded && appSection && scrollY < appSection.offsetTop - 250) {
+        // Si el usuario sube considerablemente hacia disciplinas o espacios, replegamos para la próxima vez
+        collapseFooterExperience();
+      }
+    }
+
+    // Gesto de scroll / trackpad hacia abajo al pie de página para desplegar
+    window.addEventListener('wheel', (e) => {
+      if (e.deltaY > 8 && !isFooterExpanded) {
+        const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+        const docHeight = document.documentElement.scrollHeight;
+        const winHeight = window.innerHeight;
+        if (scrollY + winHeight >= docHeight - 110) {
+          expandFooter(true);
+        }
+      }
+    }, { passive: true });
+
+    // Gesto táctil swipe hacia arriba al final de página en móvil
+    let touchFooterStartY = 0;
+    window.addEventListener('touchstart', (e) => {
+      if (e.touches && e.touches[0]) {
+        touchFooterStartY = e.touches[0].clientY;
+      }
+    }, { passive: true });
+
+    window.addEventListener('touchmove', (e) => {
+      if (e.touches && e.touches[0] && !isFooterExpanded) {
+        const diffY = touchFooterStartY - e.touches[0].clientY;
+        if (diffY > 25) {
+          const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+          const docHeight = document.documentElement.scrollHeight;
+          const winHeight = window.innerHeight;
+          if (scrollY + winHeight >= docHeight - 130) {
+            expandFooter(true);
+          }
+        }
+      }
+    }, { passive: true });
+
     function onPageScroll() {
       const scrollY = window.pageYOffset || document.documentElement.scrollTop;
 
@@ -1694,6 +1994,7 @@
       updateDisciplinasScroll();
       updatePhoneVideoScroll();
       updateGlobalScrollIndicator();
+      checkFooterScrollExpand(scrollY);
     }
 
     window.addEventListener('scroll', onPageScroll, { passive: true });
