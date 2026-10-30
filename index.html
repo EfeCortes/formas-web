@@ -704,10 +704,13 @@
             </div>
           </div>
 
-          <!-- 2. VIDEO DEL TELÉFONO (phone.mp4) (En móvil segundo, en desktop columna derecha) -->
+          <!-- 2. VIDEO DEL TELÉFONO (phone.mp4) CON IMAGEN DE RESPALDO (phone-safe.png) -->
           <div class="order-2 lg:col-span-5 lg:row-span-2 flex items-center justify-center relative min-h-[380px] sm:min-h-[480px] lg:min-h-[600px] w-full">
             <div class="relative w-full max-w-[270px] sm:max-w-[320px] lg:max-w-[380px] aspect-[720/1280] flex items-center justify-center select-none">
-              <video id="phoneVideo" src="videos/phone.mp4" playsinline muted preload="none" class="w-full h-full object-contain pointer-events-none"></video>
+              <!-- Imagen estática de respaldo / mientras carga el video del teléfono -->
+              <img id="phoneFallback" src="assets/images/phone-safe.png" alt="App FOR+ Preview" class="absolute inset-0 w-full h-full object-contain pointer-events-none transition-opacity duration-500 z-10" loading="lazy" decoding="async">
+              <!-- Video interactivo scroll-driven del teléfono giratorio -->
+              <video id="phoneVideo" src="videos/phone.mp4" playsinline muted preload="none" class="w-full h-full object-contain pointer-events-none transition-opacity duration-500 opacity-0 relative z-20"></video>
             </div>
           </div>
 
@@ -1522,13 +1525,31 @@
 
 
     // ==========================================
-    // PHONE VIDEO SCROLL-DRIVEN CONTROLLER (phone.mp4)
+    // PHONE VIDEO SCROLL-DRIVEN CONTROLLER (phone.mp4) CON IMAGEN DE RESPALDO (phone-safe.png)
     // ==========================================
     const phoneVideo = document.getElementById('phoneVideo');
+    const phoneFallback = document.getElementById('phoneFallback');
     let phoneTargetTime = 0;
     let phoneCurrentTime = 0;
     let isPhoneSeeking = false;
     let pendingPhoneSeekTime = null;
+    let isPhoneVideoReady = false;
+
+    function onPhoneVideoReady() {
+      if (isPhoneVideoReady) return;
+      isPhoneVideoReady = true;
+      if (phoneVideo) {
+        phoneVideo.style.opacity = '1';
+      }
+      if (phoneFallback) {
+        phoneFallback.style.opacity = '0';
+        setTimeout(() => {
+          if (isPhoneVideoReady && phoneFallback) {
+            phoneFallback.style.display = 'none';
+          }
+        }, 550);
+      }
+    }
 
     function requestPhoneSeek(targetTime) {
       if (!phoneVideo || isNaN(targetTime)) return;
@@ -1563,13 +1584,25 @@
       phoneVideo.addEventListener('seeking', () => {
         isPhoneSeeking = true;
       });
+      phoneVideo.addEventListener('error', () => {
+        // Si el video falla al cargar o no es soportado, mantener la imagen phone-safe.png visible
+        if (phoneFallback) {
+          phoneFallback.style.display = '';
+          phoneFallback.style.opacity = '1';
+        }
+        if (phoneVideo) {
+          phoneVideo.style.opacity = '0';
+        }
+      });
 
       const primePhoneVideo = () => {
         phoneVideo.play().then(() => {
           phoneVideo.pause();
           updatePhoneVideoScroll();
+          onPhoneVideoReady();
         }).catch(() => {
           updatePhoneVideoScroll();
+          onPhoneVideoReady();
         });
       };
 
