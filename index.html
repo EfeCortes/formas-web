@@ -6,6 +6,9 @@
   <title>FOR+ | What Are You Made Of?</title>
   <meta name="description" content="FOR+ Gimnasio Formas. Tu cuerpo está hecho de capacidades que pueden desarrollarse. Descubre distintas formas de entrenar. What are you made of?">
   
+  <!-- Preload de imagen poster del hero para carga inmediata sin fondo vacio -->
+  <link rel="preload" as="image" href="assets/images/hero.jpg" fetchpriority="high">
+
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
 
@@ -309,8 +312,11 @@
     <!-- HERO SECTION: VIDEO CONTROLADO POR SCROLL CON PALABRAS EN 4 CUARTOS Y FUNDIDO A STATEMENT -->
     <div id="heroTrack" class="relative h-[340vh]">
       <section id="hero" class="sticky top-0 h-screen w-full flex items-center justify-center px-6 sm:px-8 pt-24 pb-16 overflow-hidden bg-[#080808]">
+        <!-- Imagen de respaldo / poster de carga inmediata para evitar parpadeos o fondos vacíos -->
+        <img id="heroFallback" src="assets/images/hero.jpg" alt="Fachada FOR+" class="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none" style="object-position: center top;" fetchpriority="high" decoding="async">
+
         <!-- Video interactivo scroll-driven de fachada al 100% sin zoom y sin blurs laterales -->
-        <video id="heroVideo" src="videos/comp1.mp4" playsinline muted preload="auto" class="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none" style="object-position: center top;"></video>
+        <video id="heroVideo" src="videos/comp1.mp4" poster="assets/images/hero.jpg" playsinline muted preload="auto" class="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none" style="object-position: center top;"></video>
         
         <!-- Capa oscurecedora al 10% en modo multiplicar sobre el video -->
         <div class="absolute inset-0 pointer-events-none z-[1]" style="background-color: #000000; opacity: 0.10; mix-blend-mode: multiply;"></div>
