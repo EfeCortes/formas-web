@@ -185,17 +185,6 @@
 
     50% { transform: scale(0.85); opacity: 0.4; }
     }
-    /* Máscara fotométrica con la silueta de building.png */
-    .building-mask {
-      -webkit-mask-image: url('assets/images/building.png');
-      mask-image: url('assets/images/building.png');
-      -webkit-mask-size: 100% 100%;
-      mask-size: 100% 100%;
-      -webkit-mask-repeat: no-repeat;
-      mask-repeat: no-repeat;
-      -webkit-mask-position: center;
-      mask-position: center;
-    }
 
     .building-transition {
       transition: transform 0.5s cubic-bezier(0.2, 0.9, 0.3, 1), opacity 0.4s ease;
@@ -347,7 +336,7 @@
         <!-- OVERLAY FUNDIDO STATEMENT: WHAT ARE YOU MADE OF -->
         <div id="heroStatementOverlay" class="absolute inset-0 flex items-center justify-center pointer-events-none z-[12] px-6 sm:px-8 overflow-hidden opacity-0 will-change-[opacity,transform]" style="opacity: 0; transform: scale(0.96);">
           <!-- Ambient texture & lighting -->
-          <div class="texture-canvas pointer-events-none opacity-25" style="background-image: url('assets/textures/steel.png');"></div>
+          <div class="texture-canvas pointer-events-none opacity-25" style="background-image: url('assets/textures/steel.jpg');"></div>
           <div class="hero-glow top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none opacity-30"></div>
 
           <div class="relative z-10 max-w-5xl mx-auto text-center space-y-8 my-auto">
@@ -400,7 +389,7 @@
 
                 <!-- Capa del dibujo vectorial con máscara vertical ascendente (de abajo hacia arriba) -->
                 <div id="blueprintDrawWrapper" class="relative w-full h-full overflow-hidden will-change-[clip-path]" style="clip-path: inset(100% 0 0 0);">
-                  <img id="blueprintSvg" src="assets/images/draw.svg" alt="Corte Arquitectónico Vectorial Edificio FOR+" class="w-full h-full object-contain object-bottom relative z-10 filter brightness-[1.05] contrast-[1.05]">
+                  <img id="blueprintSvg" src="assets/images/draw.svg" alt="Corte Arquitectónico Vectorial Edificio FOR+" decoding="async" class="w-full h-full object-contain object-bottom relative z-10 filter brightness-[1.05] contrast-[1.05]">
                 </div>
 
                 <!-- Línea horizontal de trazado CAD ascendente (cyan #0effc7) -->
@@ -499,23 +488,23 @@
         <div id="discSlideshow" class="absolute inset-0 z-0">
           <!-- Slide 1: Musculación -->
           <div class="disc-slide absolute inset-0 z-0 will-change-[opacity]" style="opacity: 1;">
-            <img src="assets/images/disciplines/musculacion1.jpg" alt="Musculación FOR+" class="w-full h-full object-cover object-[right_top] sm:object-[80%_top] lg:object-[85%_top] origin-top filter brightness-100 contrast-[1.02]">
+            <img src="assets/images/disciplines/musculacion1.jpg" alt="Musculación FOR+" decoding="async" class="w-full h-full object-cover object-[right_top] sm:object-[80%_top] lg:object-[85%_top] origin-top filter brightness-100 contrast-[1.02]">
           </div>
           <!-- Slide 2: Spinning -->
           <div class="disc-slide absolute inset-0 z-[1] will-change-[opacity]" style="opacity: 0;">
-            <img src="assets/images/disciplines/spinning1.jpg" alt="Spinning FOR+" class="w-full h-full object-cover object-[right_top] sm:object-[80%_top] lg:object-[85%_top] origin-top filter brightness-100 contrast-[1.02]">
+            <img src="assets/images/disciplines/spinning1.jpg" alt="Spinning FOR+" loading="lazy" decoding="async" class="w-full h-full object-cover object-[right_top] sm:object-[80%_top] lg:object-[85%_top] origin-top filter brightness-100 contrast-[1.02]">
           </div>
           <!-- Slide 3: Funcional / Underground -->
           <div class="disc-slide absolute inset-0 z-[2] will-change-[opacity]" style="opacity: 0;">
-            <img src="assets/images/disciplines/funcional1.jpg" alt="Funcional Underground FOR+" class="w-full h-full object-cover object-[right_top] sm:object-[80%_top] lg:object-[85%_top] origin-top filter brightness-100 contrast-[1.02]">
+            <img src="assets/images/disciplines/funcional1.jpg" alt="Funcional Underground FOR+" loading="lazy" decoding="async" class="w-full h-full object-cover object-[right_top] sm:object-[80%_top] lg:object-[85%_top] origin-top filter brightness-100 contrast-[1.02]">
           </div>
           <!-- Slide 4: Pilates -->
           <div class="disc-slide absolute inset-0 z-[3] will-change-[opacity]" style="opacity: 0;">
-            <img src="assets/images/disciplines/pilates1.jpg" alt="Pilates FOR+" class="w-full h-full object-cover object-[right_top] sm:object-[80%_top] lg:object-[85%_top] origin-top filter brightness-100 contrast-[1.02]">
+            <img src="assets/images/disciplines/pilates1.jpg" alt="Pilates FOR+" loading="lazy" decoding="async" class="w-full h-full object-cover object-[right_top] sm:object-[80%_top] lg:object-[85%_top] origin-top filter brightness-100 contrast-[1.02]">
           </div>
           <!-- Slide 5: Aeróbicos -->
           <div class="disc-slide absolute inset-0 z-[4] will-change-[opacity]" style="opacity: 0;">
-            <img src="assets/images/disciplines/aerobics1.jpg" alt="Aeróbicos FOR+" class="w-full h-full object-cover object-[right_top] sm:object-[80%_top] lg:object-[85%_top] origin-top filter brightness-100 contrast-[1.02]">
+            <img src="assets/images/disciplines/aerobics1.jpg" alt="Aeróbicos FOR+" loading="lazy" decoding="async" class="w-full h-full object-cover object-[right_top] sm:object-[80%_top] lg:object-[85%_top] origin-top filter brightness-100 contrast-[1.02]">
           </div>
         </div>
 
@@ -589,7 +578,7 @@
           <!-- 2. VIDEO DEL TELÉFONO (phone.mp4) (En móvil segundo, en desktop columna derecha) -->
           <div class="order-2 lg:col-span-5 lg:row-span-2 flex items-center justify-center relative min-h-[380px] sm:min-h-[480px] lg:min-h-[600px] w-full">
             <div class="relative w-full max-w-[270px] sm:max-w-[320px] lg:max-w-[380px] aspect-[720/1280] flex items-center justify-center select-none">
-              <video id="phoneVideo" src="videos/phone.mp4" playsinline muted preload="auto" class="w-full h-full object-contain pointer-events-none"></video>
+              <video id="phoneVideo" src="videos/phone.mp4" playsinline muted preload="none" class="w-full h-full object-contain pointer-events-none"></video>
             </div>
           </div>
 
@@ -965,14 +954,39 @@
         });
       };
 
-      if (phoneVideo.readyState >= 2) {
-        primePhoneVideo();
+      // Carga diferida bajo demanda del video del teléfono (IntersectionObserver)
+      // Evita competir con el video del hero y las fotos durante la carga inicial
+      let phoneLoaded = false;
+      const initPhoneVideoOnDemand = () => {
+        if (phoneLoaded || !phoneVideo) return;
+        phoneLoaded = true;
+        phoneVideo.preload = 'auto';
+        phoneVideo.load();
+
+        if (phoneVideo.readyState >= 2) {
+          primePhoneVideo();
+        } else {
+          phoneVideo.addEventListener('loadeddata', primePhoneVideo, { once: true });
+          phoneVideo.addEventListener('canplay', primePhoneVideo, { once: true });
+          phoneVideo.addEventListener('loadedmetadata', () => {
+            updatePhoneVideoScroll();
+          }, { once: true });
+        }
+      };
+
+      const appSecEl = document.getElementById('appSection');
+      if ('IntersectionObserver' in window && appSecEl) {
+        const phoneObserver = new IntersectionObserver((entries) => {
+          if (entries[0].isIntersecting) {
+            initPhoneVideoOnDemand();
+            phoneObserver.disconnect();
+          }
+        }, { rootMargin: '800px 0px' });
+        phoneObserver.observe(appSecEl);
       } else {
-        phoneVideo.addEventListener('loadeddata', primePhoneVideo, { once: true });
-        phoneVideo.addEventListener('canplay', primePhoneVideo, { once: true });
-        phoneVideo.addEventListener('loadedmetadata', () => {
-          updatePhoneVideoScroll();
-        }, { once: true });
+        window.addEventListener('scroll', () => {
+          if (window.scrollY > window.innerHeight * 0.5) initPhoneVideoOnDemand();
+        }, { once: true, passive: true });
       }
     }
 

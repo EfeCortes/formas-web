@@ -1,0 +1,82 @@
+# ==============================================================================
+# FOR+ (formas.com.bo) - Apache & cPanel Performance Configuration
+# ==============================================================================
+
+# 1. COMPRESIÓN GZIP / DEFLATE (mod_deflate)
+# Reduce drásticamente el peso de transferencia de archivos de texto, HTML, SVG y fuentes.
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html
+  AddOutputFilterByType DEFLATE text/plain
+  AddOutputFilterByType DEFLATE text/xml
+  AddOutputFilterByType DEFLATE text/css
+  AddOutputFilterByType DEFLATE text/javascript
+  AddOutputFilterByType DEFLATE application/javascript
+  AddOutputFilterByType DEFLATE application/x-javascript
+  AddOutputFilterByType DEFLATE application/json
+  AddOutputFilterByType DEFLATE application/xml
+  AddOutputFilterByType DEFLATE application/xhtml+xml
+  AddOutputFilterByType DEFLATE application/rss+xml
+  AddOutputFilterByType DEFLATE application/atom_xml
+  AddOutputFilterByType DEFLATE image/svg+xml
+  AddOutputFilterByType DEFLATE font/ttf
+  AddOutputFilterByType DEFLATE font/otf
+  AddOutputFilterByType DEFLATE font/woff
+  AddOutputFilterByType DEFLATE font/woff2
+  AddOutputFilterByType DEFLATE application/vnd.ms-fontobject
+</IfModule>
+
+# 2. CACHÉ DEL NAVEGADOR (mod_expires & mod_headers)
+# Hace que las visitas y recargas sean instantáneas evitando re-descargar multimedia.
+<IfModule mod_expires.c>
+  ExpiresActive On
+
+  # HTML: Siempre fresco para que los cambios se reflejen de inmediato
+  ExpiresByType text/html "access plus 0 seconds"
+
+  # Imágenes y vectores: 1 mes
+  ExpiresByType image/jpg "access plus 1 month"
+  ExpiresByType image/jpeg "access plus 1 month"
+  ExpiresByType image/gif "access plus 1 month"
+  ExpiresByType image/png "access plus 1 month"
+  ExpiresByType image/webp "access plus 1 month"
+  ExpiresByType image/svg+xml "access plus 1 month"
+  ExpiresByType image/x-icon "access plus 1 year"
+
+  # Videos: 1 mes
+  ExpiresByType video/mp4 "access plus 1 month"
+  ExpiresByType video/webm "access plus 1 month"
+
+  # Fuentes: 1 año
+  ExpiresByType font/ttf "access plus 1 year"
+  ExpiresByType font/otf "access plus 1 year"
+  ExpiresByType font/woff "access plus 1 year"
+  ExpiresByType font/woff2 "access plus 1 year"
+
+  # CSS y JavaScript: 1 semana
+  ExpiresByType text/css "access plus 1 week"
+  ExpiresByType application/javascript "access plus 1 week"
+  ExpiresByType text/javascript "access plus 1 week"
+</IfModule>
+
+<IfModule mod_headers.c>
+  # Forzar revalidación de HTML para ver cambios sin limpiar caché manual
+  <FilesMatch "\.(html|htm)$">
+    Header set Cache-Control "max-age=0, no-cache, no-store, must-revalidate"
+    Header set Pragma "no-cache"
+    Header set Expires "0"
+  </FilesMatch>
+
+  # Cache-Control para assets estáticos
+  <FilesMatch "\.(ico|pdf|flv|jpg|jpeg|png|gif|webp|js|css|swf|svg)$">
+    Header set Cache-Control "max-age=2592000, public"
+  </FilesMatch>
+
+  # Byte-Ranges para videos (permite scrubbing y reproducción fluida sin descargar todo)
+  <FilesMatch "\.(mp4|webm)$">
+    Header set Accept-Ranges bytes
+    Header set Cache-Control "max-age=2592000, public"
+  </FilesMatch>
+
+  # Seguridad básica
+  Header set X-Content-Type-Options "nosniff"
+</IfModule>

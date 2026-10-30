@@ -19,9 +19,9 @@ videos/*
 !videos/facade.mp4
 !videos/phone.mp4
 
-# Assets: Textures (Only steel.png used in Hero overlay)
+# Assets: Textures (Only steel.jpg used in Hero overlay)
 assets/textures/*
-!assets/textures/steel.png
+!assets/textures/steel.jpg
 
 # Assets: App Preview drafts
 assets/app-preview/
@@ -31,7 +31,7 @@ assets/images/*.jpg
 assets/images/*.ai
 assets/images/infra/
 assets/images/phone/
-assets/images/building.png *
+assets/images/building.png*
 
 # Assets: Unused Icon PNGs
 assets/icons/*.png

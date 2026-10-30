@@ -3,5 +3,6 @@ deployment:
   tasks:
     - export DEPLOYPATH=/home1/crossbot/public_html/formas.com.bo/
     - /bin/cp index.html $DEPLOYPATH
+    - /bin/cp .htaccess $DEPLOYPATH
     - /bin/cp -R assets $DEPLOYPATH
     - /bin/cp -R videos $DEPLOYPATH
