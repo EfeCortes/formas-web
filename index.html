@@ -315,8 +315,8 @@
         <!-- Capa oscurecedora al 10% en modo multiplicar sobre el video -->
         <div class="absolute inset-0 pointer-events-none z-[1]" style="background-color: #000000; opacity: 0.10; mix-blend-mode: multiply;"></div>
 
-        <!-- Difuminado a blur en la parte superior de la imagen (oscurecimiento reducido a la mitad) -->
-        <div class="absolute top-0 left-0 right-0 h-[120px] sm:h-[150px] pointer-events-none z-[2]" style="-webkit-backdrop-filter: blur(24px); backdrop-filter: blur(24px); -webkit-mask-image: linear-gradient(to bottom, black 0%, black 45%, rgba(0,0,0,0.8) 70%, transparent 100%); mask-image: linear-gradient(to bottom, black 0%, black 45%, rgba(0,0,0,0.8) 70%, transparent 100%); background: linear-gradient(to bottom, rgba(8,8,8,0.41) 0%, rgba(8,8,8,0.32) 45%, rgba(8,8,8,0.10) 75%, transparent 100%);"></div>
+        <!-- Difuminado a blur en la parte superior de la imagen (blur reducido a 12px) -->
+        <div class="absolute top-0 left-0 right-0 h-[120px] sm:h-[150px] pointer-events-none z-[2]" style="-webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); -webkit-mask-image: linear-gradient(to bottom, black 0%, black 45%, rgba(0,0,0,0.8) 70%, transparent 100%); mask-image: linear-gradient(to bottom, black 0%, black 45%, rgba(0,0,0,0.8) 70%, transparent 100%); background: linear-gradient(to bottom, rgba(8,8,8,0.41) 0%, rgba(8,8,8,0.32) 45%, rgba(8,8,8,0.10) 75%, transparent 100%);"></div>
 
         <!-- Sutil fade inferior para una transición limpia con la siguiente sección -->
         <div class="absolute bottom-0 left-0 right-0 h-28 pointer-events-none z-[2]" style="background: linear-gradient(to top, #080808 0%, rgba(8,8,8,0.7) 50%, transparent 100%);"></div>
