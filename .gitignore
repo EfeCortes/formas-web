@@ -1,0 +1,37 @@
+# Operating System
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+
+# Vercel
+.vercel
+
+# Legacy / Draft Folders & Raw Design Files
+2026/
+movil/
+*.ai
+/iconos.ai
+/brand.svg
+
+# Videos (Only optimized, active web videos are tracked)
+videos/*
+!videos/facade.mp4
+!videos/phone.mp4
+
+# Assets: Textures (Only steel.png used in Hero overlay)
+assets/textures/*
+!assets/textures/steel.png
+
+# Assets: App Preview drafts
+assets/app-preview/
+
+# Assets: Unused Images
+assets/images/*.jpg
+assets/images/*.ai
+assets/images/infra/
+assets/images/phone/
+assets/images/building.png *
+
+# Assets: Unused Icon PNGs
+assets/icons/*.png

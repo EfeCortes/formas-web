@@ -1,0 +1,1268 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth bg-[#080808] text-white">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FOR+ | What Are You Made Of?</title>
+  <meta name="description" content="FOR+ Gimnasio Formas. Tu cuerpo está hecho de capacidades que pueden desarrollarse. Descubre distintas formas de entrenar. What are you made of?">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts: Michroma & Roboto -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Michroma&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            brand: ['Michroma', 'sans-serif'],
+            sans: ['Roboto', 'system-ui', '-apple-system', 'sans-serif'],
+          },
+          colors: {
+            brandCyan: '#0effc7',
+            brandPink: '#faa0c3',
+            brandYellow: '#fddb00',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root {
+      --accent-cyan: #0effc7;
+      --accent-pink: #faa0c3;
+      --accent-yellow: #fddb00;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: #080808;
+      color: #ffffff;
+      font-family: 'Roboto', system-ui, -apple-system, sans-serif;
+      overflow-x: clip;
+      selection-background-color: #ffffff;
+      selection-color: #000000;
+    }
+
+    /* Michroma Base Typography */
+    .font-brand {
+      font-family: 'Michroma', sans-serif;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      -webkit-text-stroke: 0.2px currentColor;
+      paint-order: stroke fill;
+    }
+
+    /* Reinforced Heavyweight Titles (Mayor Peso y Contundencia en Títulos) */
+    h1.font-brand, .font-brand-h1 {
+      -webkit-text-stroke: 0.85px currentColor;
+      letter-spacing: -0.03em;
+    }
+
+    h2.font-brand, h3.font-brand, .font-brand-h2 {
+      -webkit-text-stroke: 0.6px currentColor;
+      letter-spacing: -0.02em;
+    }
+
+    /* Preservar peso en gradientes recortados de títulos */
+    .font-brand span[class*="bg-clip-text"], span[class*="bg-clip-text"].font-brand {
+      -webkit-text-stroke: 0.65px rgba(255, 255, 255, 0.85);
+    }
+
+    /* Fixed Space Textures (Quietos en el espacio) */
+    .texture-canvas {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      opacity: 0.8;
+      mix-blend-mode: luminosity;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+    }
+
+    /* Dynamic Seamless Frosted Header */
+    #mainHeader {
+      transition: background 0.3s ease, border-color 0.3s ease, backdrop-filter 0.3s ease;
+    }
+
+    .header-hero {
+      background: transparent !important;
+      border-color: transparent !important;
+      backdrop-filter: blur(0px) !important;
+      -webkit-backdrop-filter: blur(0px) !important;
+      box-shadow: none !important;
+    }
+
+    .header-scrolled {
+      background: rgba(10, 10, 10, 0.35) !important;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
+      backdrop-filter: blur(24px) saturate(180%) !important;
+      -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3) !important;
+    }
+
+    .nav-link {
+      position: relative;
+      transition: color 0.25s ease;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+    }
+
+    .nav-link:hover {
+      color: #ffffff !important;
+    }
+
+    /* Subtle Hero Ambient Glow */
+    .hero-glow {
+      position: absolute;
+      width: 650px;
+      height: 450px;
+      background: radial-gradient(circle, rgba(14, 255, 199, 0.18) 0%, rgba(250, 160, 195, 0.08) 45%, transparent 70%);
+      pointer-events: none;
+      filter: blur(80px);
+      z-index: 0;
+    }
+
+    /* Material Boxes with Visible Texture */
+    .material-box {
+      position: relative;
+      background: rgba(15, 15, 15, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      backdrop-filter: blur(10px);
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .material-box:hover {
+      border-color: rgba(255, 255, 255, 0.5);
+      transform: translateY(-5px);
+      background: rgba(20, 20, 20, 0.8);
+      box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.9);
+    }
+
+    .material-box .box-texture {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      opacity: 0.65;
+      mix-blend-mode: luminosity;
+      transition: opacity 0.4s ease, transform 0.5s ease;
+    }
+
+    .material-box:hover .box-texture {
+      opacity: 0.9;
+      transform: scale(1.04);
+    }
+
+    .active-discipline-tab {
+      background: #ffffff !important;
+      color: #000000 !important;
+      border-color: #ffffff !important;
+    }
+    .active-discipline-tab img {
+      filter: brightness(0) !important;
+      transition: filter 0.2s ease;
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: #080808; }
+    ::-webkit-scrollbar-thumb { background: #3a3a3a; border-radius: 2px; }
+    ::-webkit-scrollbar-thumb:hover { background: #666666; }
+
+    50% { transform: scale(0.85); opacity: 0.4; }
+    }
+    /* Máscara fotométrica con la silueta de building.png */
+    .building-mask {
+      -webkit-mask-image: url('assets/images/building.png');
+      mask-image: url('assets/images/building.png');
+      -webkit-mask-size: 100% 100%;
+      mask-size: 100% 100%;
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+      -webkit-mask-position: center;
+      mask-position: center;
+    }
+
+    .building-transition {
+      transition: transform 0.5s cubic-bezier(0.2, 0.9, 0.3, 1), opacity 0.4s ease;
+    }
+
+    @keyframes laserSweep {
+      0%, 100% { transform: translateY(0); opacity: 0.6; }
+      50% { transform: translateY(100%); opacity: 1; }
+    }
+    .laser-line {
+      animation: laserSweep 2.2s infinite ease-in-out;
+    }
+
+    .floor-pill-active {
+      background-color: #ffffff !important;
+      color: #000000 !important;
+      border-color: #ffffff !important;
+    }
+  </style>
+</head>
+<body class="selection:bg-white selection:text-black">
+
+  <!-- DYNAMIC INTEGRATED NAVBAR -->
+  <header id="mainHeader" class="fixed top-0 left-0 right-0 z-50 header-hero border-b transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-6 sm:px-8 h-20 flex items-center justify-between">
+      
+      <!-- Brand Logo -->
+      <a href="index.html" class="flex items-center gap-3 group">
+        <img src="assets/brand/brand.svg" alt="FOR+ Formas" class="h-9 w-auto object-contain transition-transform group-hover:scale-105 duration-200">
+      </a>
+
+      <!-- Direct In-Page Navigation -->
+      <nav class="hidden md:flex items-center gap-10 text-xs uppercase tracking-widest font-brand">
+        <a href="#espaciosTrack" class="nav-link text-white/70 hover:text-white transition-colors">Espacios</a>
+        <a href="#disciplinasTrack" class="nav-link text-white/70 hover:text-white transition-colors">Disciplinas</a>
+        <a href="#appSection" class="nav-link text-white/70 hover:text-white transition-colors">App</a>
+      </nav>
+
+      <!-- Action Button: Experiencia (Redes y Contacto) -->
+      <div class="hidden sm:flex items-center gap-3">
+        <a href="#contacto" class="px-5 py-2.5 rounded-full bg-white text-black hover:bg-white/90 font-brand text-xs uppercase tracking-wider transition-all duration-300 hover:scale-105 shadow-md flex items-center">
+          Experiencia
+        </a>
+      </div>
+
+      <!-- Mobile Button -->
+      <button id="mobileMenuBtn" class="md:hidden p-2 text-white/80 hover:text-white" aria-label="Menu">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+
+    </div>
+
+    <!-- FULLSCREEN MOBILE MENU OVERLAY -->
+    <div id="mobileMenu" class="hidden fixed inset-0 z-50 bg-[#080808]/98 backdrop-blur-2xl md:hidden flex-col justify-between px-6 py-6 sm:px-8">
+      <!-- Barra superior: Logo y botón de cerrar -->
+      <div class="flex items-center justify-between h-14 border-b border-white/10 pb-4">
+        <a href="index.html" onclick="closeMobileMenu()" class="flex items-center gap-3">
+          <img src="assets/brand/brand.svg" alt="FOR+ Formas" class="h-8 w-auto object-contain">
+        </a>
+        <button onclick="closeMobileMenu()" class="p-2.5 rounded-full bg-white/10 text-white/90 hover:text-white" aria-label="Cerrar Menú">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Navegación editorial a pantalla completa -->
+      <nav class="my-auto py-8 space-y-6">
+        <div>
+          <span class="text-[10px] font-brand tracking-widest uppercase text-white/40 block mb-3">Secciones</span>
+          <div class="space-y-4">
+            <a href="#espaciosTrack" class="block font-brand text-3xl sm:text-4xl uppercase tracking-wider text-white hover:text-[#0effc7] transition-colors" onclick="closeMobileMenu()">
+              Espacios
+            </a>
+            <a href="#disciplinasTrack" class="block font-brand text-3xl sm:text-4xl uppercase tracking-wider text-white hover:text-[#0effc7] transition-colors" onclick="closeMobileMenu()">
+              Disciplinas
+            </a>
+            <a href="#appSection" class="block font-brand text-3xl sm:text-4xl uppercase tracking-wider text-white hover:text-[#0effc7] transition-colors" onclick="closeMobileMenu()">
+              App
+            </a>
+          </div>
+        </div>
+
+        <div class="pt-2">
+          <a href="#contacto" class="inline-flex items-center justify-center gap-3 w-full py-4 rounded-xl bg-white text-black font-brand text-xs uppercase tracking-widest shadow-xl" onclick="closeMobileMenu()">
+            <span>Experiencia & Redes</span>
+            <span>→</span>
+          </a>
+        </div>
+      </nav>
+
+      <!-- Pie del menú móvil: Contacto y Redes -->
+      <div class="pt-6 border-t border-white/10 flex flex-col gap-4">
+        <a href="https://wa.me/" target="_blank" class="flex items-center justify-between text-xs font-brand uppercase tracking-wider text-white/80 hover:text-white" onclick="closeMobileMenu()">
+          <span>Consultas por WhatsApp</span>
+          <span class="text-[#0effc7]">↗</span>
+        </a>
+        <div class="flex items-center justify-between pt-1 text-white/50">
+          <span class="text-[10px] font-light">© 2026 FOR+ / Formas</span>
+          <div class="flex items-center gap-4">
+            <a href="https://www.tiktok.com/@fit.formas" target="_blank" class="hover:text-[#0effc7]"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1.04-.1z"/></svg></a>
+            <a href="https://www.instagram.com/fit.formas/" target="_blank" class="hover:text-[#faa0c3]"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+            <a href="https://www.facebook.com/formas.fitness" target="_blank" class="hover:text-[#fddb00]"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+  <main class="relative">
+
+    <!-- HERO SECTION: VIDEO CONTROLADO POR SCROLL CON PALABRAS EN 4 CUARTOS Y FUNDIDO A STATEMENT -->
+    <div id="heroTrack" class="relative h-[340vh]">
+      <section id="hero" class="sticky top-0 h-screen w-full flex items-center justify-center px-6 sm:px-8 pt-24 pb-16 overflow-hidden bg-[#080808]">
+        <!-- Video interactivo scroll-driven de fachada ampliado a 115% alineado arriba -->
+        <video id="heroVideo" src="videos/facade.mp4" playsinline muted preload="auto" class="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none" style="transform: scale(1.15); transform-origin: center top; object-position: center top;"></video>
+        
+        <!-- Fundido lateral izquierdo a desenfocado (blur máximo reducido al 70%: 20px) -->
+        <div class="hidden lg:block absolute inset-y-0 left-0 lg:w-[11%] xl:w-[13%] pointer-events-none z-[1]" style="-webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px); -webkit-mask-image: linear-gradient(to right, black 0%, rgba(0,0,0,0.85) 30%, rgba(0,0,0,0.3) 70%, transparent 100%); mask-image: linear-gradient(to right, black 0%, rgba(0,0,0,0.85) 30%, rgba(0,0,0,0.3) 70%, transparent 100%);"></div>
+
+        <!-- Fundido lateral derecho a desenfocado (blur máximo reducido al 70%: 20px) -->
+        <div class="hidden lg:block absolute inset-y-0 right-0 lg:w-[11%] xl:w-[13%] pointer-events-none z-[1]" style="-webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px); -webkit-mask-image: linear-gradient(to left, black 0%, rgba(0,0,0,0.85) 30%, rgba(0,0,0,0.3) 70%, transparent 100%); mask-image: linear-gradient(to left, black 0%, rgba(0,0,0,0.85) 30%, rgba(0,0,0,0.3) 70%, transparent 100%);"></div>
+
+        <!-- Sutil fade inferior para una transición limpia con la siguiente sección -->
+        <div class="absolute bottom-0 left-0 right-0 h-28 pointer-events-none z-[1]" style="background: linear-gradient(to top, #080808 0%, rgba(8,8,8,0.7) 50%, transparent 100%);"></div>
+
+        <!-- TEXTOS CINEMÁTICOS EN 4 CUARTOS: DEMUESTRA | DE QUÉ | ESTÁS | HECHO (En móvil en el primer tercio de altura) -->
+        <div class="absolute inset-0 flex items-start justify-center pt-[26vh] sm:pt-[28vh] md:items-center md:pt-0 pointer-events-none z-10 px-6">
+          <div id="wordDemuestra" class="absolute text-center uppercase font-brand text-4xl sm:text-6xl md:text-7xl lg:text-[5.5rem] tracking-wider text-white opacity-0 will-change-transform drop-shadow-[0_4px_30px_rgba(0,0,0,0.95)]" style="visibility: hidden;">
+            Demuestra
+          </div>
+          <div id="wordDeQue" class="absolute text-center uppercase font-brand text-4xl sm:text-6xl md:text-7xl lg:text-[5.5rem] tracking-wider text-white opacity-0 will-change-transform drop-shadow-[0_4px_30px_rgba(0,0,0,0.95)]" style="visibility: hidden;">
+            De qué
+          </div>
+          <div id="wordEstas" class="absolute text-center uppercase font-brand text-4xl sm:text-6xl md:text-7xl lg:text-[5.5rem] tracking-wider text-white opacity-0 will-change-transform drop-shadow-[0_4px_30px_rgba(0,0,0,0.95)]" style="visibility: hidden;">
+            Estás
+          </div>
+          <div id="wordHecho" class="absolute text-center uppercase font-brand text-4xl sm:text-6xl md:text-7xl lg:text-[5.5rem] tracking-wider text-white opacity-0 will-change-transform drop-shadow-[0_4px_30px_rgba(0,0,0,0.95)]" style="visibility: hidden;">
+            Hecho
+          </div>
+        </div>
+
+        <!-- TELÓN DE FUNDIDO A NEGRO TRAS EL VIDEO -->
+        <div id="heroBlackout" class="absolute inset-0 bg-[#080808] pointer-events-none z-[8] opacity-0 will-change-[opacity]" style="opacity: 0;"></div>
+
+        <!-- OVERLAY FUNDIDO STATEMENT: WHAT ARE YOU MADE OF -->
+        <div id="heroStatementOverlay" class="absolute inset-0 flex items-center justify-center pointer-events-none z-[12] px-6 sm:px-8 overflow-hidden opacity-0 will-change-[opacity,transform]" style="opacity: 0; transform: scale(0.96);">
+          <!-- Ambient texture & lighting -->
+          <div class="texture-canvas pointer-events-none opacity-25" style="background-image: url('assets/textures/steel.png');"></div>
+          <div class="hero-glow top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none opacity-30"></div>
+
+          <div class="relative z-10 max-w-5xl mx-auto text-center space-y-8 my-auto">
+            <!-- Michroma 2-Line Stacked Title (Matched Width) -->
+            <h2 class="font-brand font-normal uppercase leading-[0.95] flex flex-col items-center justify-center space-y-2 sm:space-y-4">
+              <span class="block text-3xl sm:text-5xl md:text-6xl lg:text-7xl tracking-[0.06em] text-white/95 drop-shadow-[0_4px_24px_rgba(0,0,0,0.8)]">
+                WHAT ARE YOU
+              </span>
+              <span class="block text-5xl sm:text-7xl md:text-8xl lg:text-[7.2rem] tracking-[-0.02em] text-transparent bg-clip-text bg-gradient-to-r from-white via-white/95 to-white/70 drop-shadow-[0_6px_32px_rgba(0,0,0,0.9)]">
+                MADE OF
+              </span>
+            </h2>
+
+            <p class="text-base sm:text-xl md:text-2xl text-white/80 font-light max-w-3xl mx-auto tracking-wide leading-relaxed">
+              Formas hechas con esfuerzo, capacidades con propósito.
+            </p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+
+    <!-- ======================================================== -->
+    <!-- PREVIEW 1: ESPACIOS (PLANO DE INFRAESTRUCTURA FOR+ - SCROLL DRIVEN) -->
+    <!-- ======================================================== -->
+    <div id="espaciosTrack" class="relative h-[380vh]">
+      <section id="espaciosPreview" class="sticky top-0 h-screen w-full px-6 sm:px-8 pt-20 sm:pt-24 pb-8 sm:pb-12 border-t border-white/10 bg-[#141416] overflow-hidden flex items-center justify-center">
+        <div class="max-w-7xl mx-auto relative z-10 w-full my-auto">
+          
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
+            
+            <!-- Columna Izquierda: Título y dibujo arquitectónico centrados a la mitad de altura -->
+            <div class="lg:col-span-7 flex flex-col items-start justify-center lg:-ml-10 xl:-ml-16 space-y-4 sm:space-y-6 my-auto">
+              
+              <!-- Título sobre el plano con aparición en fade in controlada por scroll -->
+              <div id="espaciosTitle" class="pl-2 sm:pl-4 lg:pl-10 xl:pl-16 will-change-[opacity,transform] opacity-0">
+                <h2 class="font-brand text-2xl sm:text-4xl lg:text-5xl font-normal uppercase tracking-tight text-white leading-tight">
+                  4 NIVELES DE <br>
+                  <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-white/95 to-white/60">
+                    ENTRENAMIENTO PURO
+                  </span>
+                </h2>
+              </div>
+
+              <!-- Contenedor del plano arquitectónico -->
+              <div id="blueprintContainer" class="relative w-full max-w-[720px] lg:max-w-[800px] aspect-[1366/675] select-none">
+                
+                <!-- Retícula técnica arquitectónica tenue de fondo -->
+                <div class="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.06)_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none opacity-40"></div>
+
+                <!-- Capa del dibujo vectorial con máscara vertical ascendente (de abajo hacia arriba) -->
+                <div id="blueprintDrawWrapper" class="relative w-full h-full overflow-hidden will-change-[clip-path]" style="clip-path: inset(100% 0 0 0);">
+                  <img id="blueprintSvg" src="assets/images/draw.svg" alt="Corte Arquitectónico Vectorial Edificio FOR+" class="w-full h-full object-contain object-bottom relative z-10 filter brightness-[1.05] contrast-[1.05]">
+                </div>
+
+                <!-- Línea horizontal de trazado CAD ascendente (cyan #0effc7) -->
+                <div id="blueprintLaserLine" class="absolute left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#0effc7] to-transparent shadow-[0_0_14px_#0effc7,0_0_28px_#0effc7] z-20 pointer-events-none will-change-[top,opacity] opacity-0" style="top: 100%;">
+                  <div class="absolute -top-[3px] left-4 w-2 h-2 rounded-full bg-[#0effc7] shadow-[0_0_8px_#0effc7]"></div>
+                  <div class="absolute -top-[3px] right-4 w-2 h-2 rounded-full bg-[#0effc7] shadow-[0_0_8px_#0effc7]"></div>
+                  <div class="absolute -top-6 right-8 px-2 py-0.5 rounded bg-black/90 border border-[#0effc7]/40 text-[#0effc7] text-[9px] font-brand tracking-widest uppercase shadow whitespace-nowrap">
+                    <span id="laserFloorText">SUBSUELO</span>
+                  </div>
+                </div>
+
+                <!-- Marcadores técnicos únicamente con el nombre de planta (Ocultos en móvil para no tapar el plano) -->
+                <div id="tagP2" class="blueprint-tag hidden md:block absolute top-[12%] left-2 sm:left-4 z-20 px-2.5 py-1 rounded bg-black/85 border border-white/20 text-[11px] font-brand uppercase tracking-wider text-white will-change-[opacity,transform] opacity-0">
+                  PLANTA 2
+                </div>
+                <div id="tagP1" class="blueprint-tag hidden md:block absolute top-[38%] left-2 sm:left-4 z-20 px-2.5 py-1 rounded bg-black/85 border border-white/20 text-[11px] font-brand uppercase tracking-wider text-white will-change-[opacity,transform] opacity-0">
+                  PLANTA 1
+                </div>
+                <div id="tagP0" class="blueprint-tag hidden md:block absolute top-[62%] left-2 sm:left-4 z-20 px-2.5 py-1 rounded bg-black/85 border border-white/20 text-[11px] font-brand uppercase tracking-wider text-white will-change-[opacity,transform] opacity-0">
+                  PLANTA 0
+                </div>
+                <div id="tagSub" class="blueprint-tag hidden md:block absolute bottom-[6%] left-2 sm:left-4 z-20 px-2.5 py-1 rounded bg-black/85 border border-white/20 text-[11px] font-brand uppercase tracking-wider text-white will-change-[opacity,transform] opacity-0">
+                  SUBSUELO
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Columna Derecha: Contenido descriptivo, detalle de plantas y CTA centrados a la mitad de altura -->
+            <div class="lg:col-span-5 space-y-4 sm:space-y-7 my-auto">
+              <!-- Descripción general (Oculta en móvil para priorizar el plano y las descripciones que se acumulan) -->
+              <div id="espaciosDesc" class="hidden md:block will-change-[opacity,transform] opacity-0">
+                <p class="text-base sm:text-lg text-white/75 font-light leading-relaxed">
+                  Un edificio vertical concebido para cumplir las demandas de espacio, acústicas y biomecánicas de cada disciplina. Desde el subsuelo hasta la segunda planta, son 4 niveles concebidos para entrenar.
+                </p>
+              </div>
+
+              <!-- Detalle limpio de las plantas: en móvil se acumulan abajo conforme aparecen; en desktop nivel +2 a -1 -->
+              <div id="floorRowsList" class="flex flex-col space-y-2 sm:space-y-3.5 pt-1">
+                <div id="rowSub" class="order-1 md:order-4 flex items-baseline justify-between border-b border-white/10 pb-2 will-change-[opacity,transform] opacity-0">
+                  <div>
+                    <span class="text-xs font-brand uppercase tracking-wider text-white">Subsuelo</span>
+                    <p class="text-xs sm:text-sm text-white/80 font-light mt-0.5">Underground & Vestidores</p>
+                  </div>
+                  <span class="text-[10px] font-brand tracking-widest text-white/40 uppercase">Nivel -1</span>
+                </div>
+
+                <div id="rowP0" class="order-2 md:order-3 flex items-baseline justify-between border-b border-white/10 pb-2 will-change-[opacity,transform] opacity-0">
+                  <div>
+                    <span class="text-xs font-brand uppercase tracking-wider text-white">Planta Baja</span>
+                    <p class="text-xs sm:text-sm text-white/80 font-light mt-0.5">Musculación & Recepción</p>
+                  </div>
+                  <span class="text-[10px] font-brand tracking-widest text-white/40 uppercase">Nivel 0</span>
+                </div>
+
+                <div id="rowP1" class="order-3 md:order-2 flex items-baseline justify-between border-b border-white/10 pb-2 will-change-[opacity,transform] opacity-0">
+                  <div>
+                    <span class="text-xs font-brand uppercase tracking-wider text-white">Planta 1</span>
+                    <p class="text-xs sm:text-sm text-white/80 font-light mt-0.5">Spinning & Aeróbicos 1</p>
+                  </div>
+                  <span class="text-[10px] font-brand tracking-widest text-white/40 uppercase">Nivel +1</span>
+                </div>
+
+                <div id="rowP2" class="order-4 md:order-1 flex items-baseline justify-between border-b border-white/10 pb-2 will-change-[opacity,transform] opacity-0">
+                  <div>
+                    <span class="text-xs font-brand uppercase tracking-wider text-white">Planta 2</span>
+                    <p class="text-xs sm:text-sm text-white/80 font-light mt-0.5">Cardio+GluteUp Zone y aeróbicos 2</p>
+                  </div>
+                  <span class="text-[10px] font-brand tracking-widest text-white/40 uppercase">Nivel +2</span>
+                </div>
+              </div>
+
+              <!-- Botón CTA con fade in -->
+              <div id="espaciosCta" class="pt-2 will-change-[opacity,transform] opacity-0">
+                <a href="#disciplinasTrack" class="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-white text-black font-brand text-xs uppercase tracking-widest hover:bg-white/90 hover:scale-105 transition-all shadow-xl group">
+                  <span>Conoce los espacios</span>
+                  <span class="group-hover:translate-x-1 transition-transform">→</span>
+                </a>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+    </div>
+
+
+    <!-- ======================================================== -->
+    <!-- PREVIEW 2: DISCIPLINAS (SCROLL-DRIVEN SLIDESHOW + PAGINADOR) -->
+    <!-- ======================================================== -->
+    <div id="disciplinasTrack" class="relative h-[440vh]">
+      <section id="disciplinasPreview" class="sticky top-0 h-screen w-full flex items-center justify-start py-20 px-6 sm:px-12 lg:px-16 border-t border-white/10 overflow-hidden bg-black">
+        
+        <!-- SLIDESHOW DE FOTOS DE FONDO: 100% VISIBLES Y CLARAS, PRIORIZANDO LA ACCIÓN A LA DERECHA Y ALINEADAS ARRIBA -->
+        <div id="discSlideshow" class="absolute inset-0 z-0">
+          <!-- Slide 1: Musculación -->
+          <div class="disc-slide absolute inset-0 z-0 will-change-[opacity]" style="opacity: 1;">
+            <img src="assets/images/disciplines/musculacion1.jpg" alt="Musculación FOR+" class="w-full h-full object-cover object-[right_top] sm:object-[80%_top] lg:object-[85%_top] origin-top filter brightness-100 contrast-[1.02]">
+          </div>
+          <!-- Slide 2: Spinning -->
+          <div class="disc-slide absolute inset-0 z-[1] will-change-[opacity]" style="opacity: 0;">
+            <img src="assets/images/disciplines/spinning1.jpg" alt="Spinning FOR+" class="w-full h-full object-cover object-[right_top] sm:object-[80%_top] lg:object-[85%_top] origin-top filter brightness-100 contrast-[1.02]">
+          </div>
+          <!-- Slide 3: Funcional / Underground -->
+          <div class="disc-slide absolute inset-0 z-[2] will-change-[opacity]" style="opacity: 0;">
+            <img src="assets/images/disciplines/funcional1.jpg" alt="Funcional Underground FOR+" class="w-full h-full object-cover object-[right_top] sm:object-[80%_top] lg:object-[85%_top] origin-top filter brightness-100 contrast-[1.02]">
+          </div>
+          <!-- Slide 4: Pilates -->
+          <div class="disc-slide absolute inset-0 z-[3] will-change-[opacity]" style="opacity: 0;">
+            <img src="assets/images/disciplines/pilates1.jpg" alt="Pilates FOR+" class="w-full h-full object-cover object-[right_top] sm:object-[80%_top] lg:object-[85%_top] origin-top filter brightness-100 contrast-[1.02]">
+          </div>
+          <!-- Slide 5: Aeróbicos -->
+          <div class="disc-slide absolute inset-0 z-[4] will-change-[opacity]" style="opacity: 0;">
+            <img src="assets/images/disciplines/aerobics1.jpg" alt="Aeróbicos FOR+" class="w-full h-full object-cover object-[right_top] sm:object-[80%_top] lg:object-[85%_top] origin-top filter brightness-100 contrast-[1.02]">
+          </div>
+        </div>
+
+        <!-- Sombra protectora de lectura ÚNICAMENTE en móvil y a TODO el ancho (en desktop se elimina por completo) -->
+        <div class="lg:hidden absolute inset-0 w-full bg-gradient-to-t from-black/90 via-black/55 to-black/30 z-[4] pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto relative z-10 w-full flex justify-start">
+          <div class="w-full max-w-lg lg:max-w-xl space-y-6 sm:space-y-8 text-left">
+            
+            <div class="space-y-4">
+              <h2 class="font-brand text-3xl sm:text-5xl lg:text-6xl font-normal uppercase tracking-tight text-white leading-tight drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)]">
+                DISTINTAS <br>
+                FORMAS DE <br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-white/95 to-white/60">
+                  ENTRENAR
+                </span>
+              </h2>
+
+              <p class="text-base sm:text-xl text-white font-light leading-relaxed drop-shadow-[0_2px_14px_rgba(0,0,0,0.95)]">
+                No existe una sola manera. Cada disciplina somete al cuerpo a un estímulo diferente: fuerza biomecánica pura, sincronía rítmica colectiva, cadencia cardiovascular o dinamismo funcional.
+              </p>
+            </div>
+
+            <!-- Paginador minimalista sincronizado con el scroll -->
+            <div class="flex items-center gap-4 pt-2">
+              <div class="flex items-center gap-3">
+                <button type="button" onclick="scrollDiscSlide(0)" class="disc-dot h-1.5 rounded-full transition-all duration-300 w-8 bg-white cursor-pointer" aria-label="Slide 1 Musculación"></button>
+                <button type="button" onclick="scrollDiscSlide(1)" class="disc-dot h-1.5 rounded-full transition-all duration-300 w-2.5 bg-white/30 hover:bg-white/60 cursor-pointer" aria-label="Slide 2 Spinning"></button>
+                <button type="button" onclick="scrollDiscSlide(2)" class="disc-dot h-1.5 rounded-full transition-all duration-300 w-2.5 bg-white/30 hover:bg-white/60 cursor-pointer" aria-label="Slide 3 Funcional"></button>
+                <button type="button" onclick="scrollDiscSlide(3)" class="disc-dot h-1.5 rounded-full transition-all duration-300 w-2.5 bg-white/30 hover:bg-white/60 cursor-pointer" aria-label="Slide 4 Pilates"></button>
+                <button type="button" onclick="scrollDiscSlide(4)" class="disc-dot h-1.5 rounded-full transition-all duration-300 w-2.5 bg-white/30 hover:bg-white/60 cursor-pointer" aria-label="Slide 5 Aeróbicos"></button>
+              </div>
+              <span id="discCurrentLabel" class="text-[11px] font-brand tracking-widest uppercase text-white/80 border-l border-white/20 pl-4 py-0.5">
+                01 / Musculación
+              </span>
+            </div>
+
+            <!-- Botón CTA único inferior -->
+            <div class="pt-4">
+              <a href="#appSection" class="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-white text-black font-brand text-xs uppercase tracking-widest hover:bg-white/90 hover:scale-105 transition-all shadow-xl group">
+                <span>Conocer todas las disciplinas</span>
+                <span class="group-hover:translate-x-1 transition-transform">→</span>
+              </a>
+            </div>
+
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- SECTION PREVIEW 5: APP FOR+ (COMPLEMENTO DIGITAL) (COLOR PLENO) -->
+    <section id="appSection" class="relative min-h-screen lg:h-screen flex items-center justify-center py-20 px-6 sm:px-8 border-t border-white/10 bg-[#0d0d0d]">
+      <div class="max-w-7xl mx-auto relative z-10 w-full">
+        
+        <div class="flex flex-col lg:grid lg:grid-cols-12 gap-8 lg:gap-16 items-center relative">
+          
+          <!-- 1. TITULAR (En móvil primero, en desktop columna izquierda arriba) -->
+          <div class="order-1 lg:col-span-7 space-y-4 w-full">
+            <h2 class="font-brand text-3xl sm:text-5xl font-normal uppercase tracking-tight leading-tight">
+              PRESENTAMOS NUESTRA <br>
+              <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-white/90 to-white/50">APP MÓVIL</span>
+            </h2>
+            <div class="pt-1">
+              <span class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#0effc7]/15 border border-[#0effc7]/40 text-[#0effc7] text-xs font-brand uppercase tracking-[0.25em] shadow-[0_0_20px_rgba(14,255,199,0.25)]">
+                <span class="w-2 h-2 rounded-full bg-[#0effc7] animate-pulse"></span>
+                <span>Pronto</span>
+              </span>
+            </div>
+          </div>
+
+          <!-- 2. VIDEO DEL TELÉFONO (phone.mp4) (En móvil segundo, en desktop columna derecha) -->
+          <div class="order-2 lg:col-span-5 lg:row-span-2 flex items-center justify-center relative min-h-[380px] sm:min-h-[480px] lg:min-h-[600px] w-full">
+            <div class="relative w-full max-w-[270px] sm:max-w-[320px] lg:max-w-[380px] aspect-[720/1280] flex items-center justify-center select-none">
+              <video id="phoneVideo" src="videos/phone.mp4" playsinline muted preload="auto" class="w-full h-full object-contain pointer-events-none"></video>
+            </div>
+          </div>
+
+          <!-- 3. DESCRIPCIÓN, CUALIDADES Y MENSAJE DE LANZAMIENTO (En móvil tercero, en desktop columna izquierda abajo) -->
+          <div class="order-3 lg:col-span-7 space-y-6 sm:space-y-8 w-full">
+            <p class="text-base sm:text-lg text-white/80 font-light leading-relaxed">
+              La App oficial de FOR+ es la forma más fácil de gestionar tu entrenamiento en el gimnasio: reserva tus clases, consulta los horarios en tiempo real y renueva tu suscripción desde cualquier lugar.
+            </p>
+
+            <!-- Cualidades presentadas con tipografía clara y espaciado de letras abierto -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-1">
+              <div>
+                <h3 class="text-xs uppercase tracking-widest text-white font-medium font-sans">Reserva de Clases</h3>
+                <p class="text-xs text-white/70 mt-1.5 leading-relaxed tracking-normal font-light font-sans">Asegura tu cupo en Spinning, Body Pump o Funcional.</p>
+              </div>
+
+              <div>
+                <h3 class="text-xs uppercase tracking-widest text-white font-medium font-sans">Horarios en Tiempo Real</h3>
+                <p class="text-xs text-white/70 mt-1.5 leading-relaxed tracking-normal font-light font-sans">Consulta la programación diaria y profesores de cada sala.</p>
+              </div>
+
+              <div>
+                <h3 class="text-xs uppercase tracking-widest text-white font-medium font-sans">Renovación de Membresía</h3>
+                <p class="text-xs text-white/70 mt-1.5 leading-relaxed tracking-normal font-light font-sans">Gestiona y renueva tu membresía de manera ágil.</p>
+              </div>
+            </div>
+
+            <!-- TEXTO DE LANZAMIENTO -->
+            <div class="pt-3 flex items-center gap-3">
+              <span class="w-2.5 h-2.5 rounded-full bg-[#0effc7] animate-pulse shadow-[0_0_12px_#0effc7]"></span>
+              <span class="font-brand text-xs sm:text-sm uppercase tracking-widest text-white/90">
+                Disponible en Noviembre 2026
+              </span>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- GLOBAL CONSTANT SCROLL INDICATOR (Móvil y Desktop) -->
+  <div id="globalScrollIndicator" class="fixed bottom-6 left-1/2 -translate-x-1/2 text-white/75 flex flex-col items-center gap-1.5 z-40 pointer-events-none transition-opacity duration-300 drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)]">
+    <span class="text-[10px] font-brand tracking-[0.25em] uppercase text-white/70">Scroll</span>
+    <svg class="w-4 h-4 animate-bounce text-white/90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+    </svg>
+  </div>
+
+
+    <!-- FOOTER / CONTACTO & REDES -->
+  <footer id="contacto" class="border-t border-white/10 bg-[#050505] pt-8 sm:pt-10 pb-[84px] sm:pb-[90px] px-6 sm:px-8">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
+      
+      <!-- Izquierda: Ícono ion-formas.svg + Copyright -->
+      <div class="flex items-center gap-3.5">
+        <img src="assets/icons/ion-formas.svg" alt="FOR+ Formas" class="h-6 w-auto opacity-75 hover:opacity-100 transition-opacity">
+        <span class="text-xs text-white/50 font-light">
+          © 2026 FOR+ / Gimnasio Formas. Todos los derechos reservados.
+        </span>
+      </div>
+
+      <!-- Derecha: Redes sociales oficiales (TikTok, Instagram, Facebook, WhatsApp) -->
+      <div class="flex items-center gap-5 text-white/50">
+        <a href="https://www.tiktok.com/@fit.formas" target="_blank" rel="noopener noreferrer" aria-label="TikTok @fit.formas" class="hover:text-[#0effc7] hover:scale-110 transition-all">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1.04-.1z"/></svg>
+        </a>
+        <a href="https://www.instagram.com/fit.formas/" target="_blank" rel="noopener noreferrer" aria-label="Instagram @fit.formas" class="hover:text-[#faa0c3] hover:scale-110 transition-all">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </a>
+        <a href="https://www.facebook.com/formas.fitness" target="_blank" rel="noopener noreferrer" aria-label="Facebook formas.fitness" class="hover:text-[#fddb00] hover:scale-110 transition-all">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        </a>
+        <a href="https://wa.me/?text=Hola%2C%20quisiera%20m%C3%A1s%20informaci%C3%B3n%20sobre%20FOR%2B" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp Contacto FOR+" class="hover:text-[#0effc7] hover:scale-110 transition-all">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        </a>
+      </div>
+
+    </div>
+  </footer>
+
+
+  <!-- SCRIPTS -->
+  <script>
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+
+    const header = document.getElementById('mainHeader');
+
+
+    // ==========================================
+    // ESPACIOS SCROLL-DRIVEN CONTROLLER (draw.svg)
+    // Trazado arquitectónico CAD 100% interactivo por scroll
+    // ==========================================
+    const espaciosTrack = document.getElementById('espaciosTrack');
+    const blueprintWrapper = document.getElementById('blueprintDrawWrapper');
+    const blueprintLaser = document.getElementById('blueprintLaserLine');
+    const laserFloorText = document.getElementById('laserFloorText');
+    const espaciosTitle = document.getElementById('espaciosTitle');
+    const espaciosDesc = document.getElementById('espaciosDesc');
+    const espaciosCta = document.getElementById('espaciosCta');
+
+    const blueprintTags = {
+      sub: document.getElementById('tagSub'),
+      p0: document.getElementById('tagP0'),
+      p1: document.getElementById('tagP1'),
+      p2: document.getElementById('tagP2')
+    };
+
+    const blueprintRows = {
+      sub: document.getElementById('rowSub'),
+      p0: document.getElementById('rowP0'),
+      p1: document.getElementById('rowP1'),
+      p2: document.getElementById('rowP2')
+    };
+
+    let espaciosTargetProgress = 0;
+    let espaciosCurrentProgress = 0;
+
+    function updateEspaciosScroll() {
+      if (!espaciosTrack) return;
+      const rect = espaciosTrack.getBoundingClientRect();
+      const scrollable = rect.height - window.innerHeight;
+      if (scrollable <= 0) return;
+      const progress = Math.max(0, Math.min(1.0, -rect.top / scrollable));
+      espaciosTargetProgress = progress;
+    }
+
+    function setFloorItem(tag, row, vis) {
+      if (tag) {
+        tag.style.opacity = vis.toFixed(3);
+        tag.style.transform = `translateX(${(vis - 1) * 14}px)`;
+      }
+      if (row) {
+        row.style.opacity = vis.toFixed(3);
+        row.style.transform = `translateY(${(1 - vis) * 10}px)`;
+        // En móvil, las descripciones se ocultan si no están activas para acumularse abajo conforme aparecen
+        if (window.innerWidth < 768) {
+          if (vis <= 0.01) {
+            row.style.display = 'none';
+          } else {
+            row.style.display = 'flex';
+          }
+        } else {
+          row.style.display = 'flex';
+        }
+      }
+    }
+
+    function applyEspaciosProgress(p) {
+      if (!blueprintWrapper || !blueprintLaser) return;
+
+      // ========================================================
+      // SECUENCIA DE APARICIÓN DE ESPACIOS
+      // 1. Va apareciendo planta a planta el edificio y sus descripciones (p: 0.00 -> 0.72)
+      // 2. Aparece el título por encima y el resto de texto a la derecha (p: 0.72 -> 0.90)
+      // 3. Recién se avanza a la siguiente sección (p: 0.90 -> 1.00)
+      // En reversa hacia arriba, se desarma como retrocediendo en el tiempo.
+      // ========================================================
+
+      // 1. Altura de corte vertical del láser y recorte SVG (planta a planta de abajo hacia arriba)
+      let currentTop = 100;
+      let currentFloor = 'SUBSUELO';
+      let laserOp = 1;
+
+      if (p < 0.18) {
+        const t = p / 0.18;
+        currentTop = 100 - t * 26;
+        currentFloor = 'SUBSUELO';
+        laserOp = Math.min(1.0, p / 0.04);
+      } else if (p < 0.36) {
+        const t = (p - 0.18) / 0.18;
+        currentTop = 74 - t * 21;
+        currentFloor = 'PLANTA BAJA';
+        laserOp = 1;
+      } else if (p < 0.54) {
+        const t = (p - 0.36) / 0.18;
+        currentTop = 53 - t * 25;
+        currentFloor = 'PLANTA 1';
+        laserOp = 1;
+      } else if (p < 0.72) {
+        const t = (p - 0.54) / 0.18;
+        currentTop = 28 - t * 28;
+        currentFloor = 'PLANTA 2';
+        laserOp = 1;
+      } else {
+        currentTop = 0;
+        currentFloor = 'COMPLETO';
+        laserOp = Math.max(0, 1 - (p - 0.72) / 0.08);
+      }
+
+      blueprintWrapper.style.clipPath = `inset(${currentTop.toFixed(2)}% 0 0 0)`;
+      blueprintLaser.style.top = `${currentTop.toFixed(2)}%`;
+      blueprintLaser.style.opacity = laserOp.toFixed(3);
+      if (laserFloorText) laserFloorText.textContent = currentFloor;
+
+      // Descripciones y marcadores de cada planta: aparecen y desaparecen en sincronía con el corte del plano
+      const subVis = Math.max(0, Math.min(1.0, (100 - currentTop) / 16.0));
+      const p0Vis  = Math.max(0, Math.min(1.0, (74 - currentTop) / 14.0));
+      const p1Vis  = Math.max(0, Math.min(1.0, (53 - currentTop) / 16.0));
+      const p2Vis  = Math.max(0, Math.min(1.0, (28 - currentTop) / 18.0));
+
+      setFloorItem(blueprintTags.sub, blueprintRows.sub, subVis);
+      setFloorItem(blueprintTags.p0, blueprintRows.p0, p0Vis);
+      setFloorItem(blueprintTags.p1, blueprintRows.p1, p1Vis);
+      setFloorItem(blueprintTags.p2, blueprintRows.p2, p2Vis);
+
+      // 2. Título por encima del plano y resto del texto a la derecha (aparecen DESPUÉS de armar las 4 plantas)
+      const titleVis = Math.max(0, Math.min(1.0, (p - 0.72) / 0.12));
+      const descVis  = Math.max(0, Math.min(1.0, (p - 0.74) / 0.12));
+      const ctaVis   = Math.max(0, Math.min(1.0, (p - 0.78) / 0.12));
+
+      if (espaciosTitle) {
+        espaciosTitle.style.opacity = titleVis.toFixed(3);
+        espaciosTitle.style.transform = `translateY(${(1 - titleVis) * 16}px)`;
+      }
+      if (espaciosDesc) {
+        espaciosDesc.style.opacity = descVis.toFixed(3);
+        espaciosDesc.style.transform = `translateY(${(1 - descVis) * 16}px)`;
+      }
+      if (espaciosCta) {
+        espaciosCta.style.opacity = ctaVis.toFixed(3);
+        espaciosCta.style.transform = `translateY(${(1 - ctaVis) * 16}px)`;
+        espaciosCta.style.pointerEvents = ctaVis > 0.4 ? 'auto' : 'none';
+      }
+    }
+
+    // ==========================================
+    // DISCIPLINAS SCROLL-DRIVEN CONTROLLER
+    // Recorrido de los 4 previews controlado por scroll
+    // ==========================================
+    const disciplinasTrack = document.getElementById('disciplinasTrack');
+    const discSlides = document.querySelectorAll('.disc-slide');
+    const discDots = document.querySelectorAll('.disc-dot');
+    const discCurrentLabel = document.getElementById('discCurrentLabel');
+
+    const discData = [
+      { name: '01 / Musculación' },
+      { name: '02 / Spinning' },
+      { name: '03 / Funcional' },
+      { name: '04 / Pilates' },
+      { name: '05 / Aeróbicos' }
+    ];
+
+    let discTargetProgress = 0;
+    let discCurrentProgress = 0;
+
+    function updateDisciplinasScroll() {
+      if (!disciplinasTrack) return;
+      const rect = disciplinasTrack.getBoundingClientRect();
+      const scrollable = rect.height - window.innerHeight;
+      if (scrollable <= 0) return;
+      const progress = Math.max(0, Math.min(1.0, -rect.top / scrollable));
+      discTargetProgress = progress;
+    }
+
+    function scrollDiscSlide(idx) {
+      if (!disciplinasTrack) return;
+      const rect = disciplinasTrack.getBoundingClientRect();
+      const currentScrollY = window.pageYOffset || document.documentElement.scrollTop;
+      const trackTop = currentScrollY + rect.top;
+      const scrollable = rect.height - window.innerHeight;
+      const targets = [0.05, 0.27, 0.50, 0.72, 0.94];
+      const targetScroll = trackTop + targets[idx] * scrollable;
+      window.scrollTo({ top: targetScroll, behavior: 'smooth' });
+    }
+
+    function setDiscSlide(idx) {
+      scrollDiscSlide(idx);
+    }
+
+    function applyDisciplinasProgress(p) {
+      if (!discSlides.length) return;
+
+      // Calcular opacidad continua de cada slide con capas z-index para 5 disciplinas
+      // Slide 0: base (opacidad 1)
+      // Slide 1: funde entre p = 0.16 y 0.24
+      // Slide 2: funde entre p = 0.38 y 0.46
+      // Slide 3: funde entre p = 0.60 y 0.68
+      // Slide 4: funde entre p = 0.82 y 0.90
+      const s1 = Math.max(0, Math.min(1.0, (p - 0.16) / 0.08));
+      const s2 = Math.max(0, Math.min(1.0, (p - 0.38) / 0.08));
+      const s3 = Math.max(0, Math.min(1.0, (p - 0.60) / 0.08));
+      const s4 = Math.max(0, Math.min(1.0, (p - 0.82) / 0.08));
+
+      if (discSlides[0]) discSlides[0].style.opacity = '1';
+      if (discSlides[1]) discSlides[1].style.opacity = s1.toFixed(3);
+      if (discSlides[2]) discSlides[2].style.opacity = s2.toFixed(3);
+      if (discSlides[3]) discSlides[3].style.opacity = s3.toFixed(3);
+      if (discSlides[4]) discSlides[4].style.opacity = s4.toFixed(3);
+
+      // Determinar slide activo dominante para dots y label
+      let activeIdx = 0;
+      if (p >= 0.85) {
+        activeIdx = 4;
+      } else if (p >= 0.63) {
+        activeIdx = 3;
+      } else if (p >= 0.41) {
+        activeIdx = 2;
+      } else if (p >= 0.19) {
+        activeIdx = 1;
+      } else {
+        activeIdx = 0;
+      }
+
+      discDots.forEach((dot, i) => {
+        if (i === activeIdx) {
+          dot.className = 'disc-dot h-1.5 rounded-full transition-all duration-300 w-8 bg-white cursor-pointer';
+        } else {
+          dot.className = 'disc-dot h-1.5 rounded-full transition-all duration-300 w-2.5 bg-white/30 hover:bg-white/60 cursor-pointer';
+        }
+      });
+
+      if (discCurrentLabel && discData[activeIdx]) {
+        discCurrentLabel.textContent = discData[activeIdx].name;
+      }
+    }
+
+
+    // ==========================================
+    // PHONE VIDEO SCROLL-DRIVEN CONTROLLER (phone.mp4)
+    // ==========================================
+    const phoneVideo = document.getElementById('phoneVideo');
+    let phoneTargetTime = 0;
+    let phoneCurrentTime = 0;
+    let isPhoneSeeking = false;
+    let pendingPhoneSeekTime = null;
+
+    function requestPhoneSeek(targetTime) {
+      if (!phoneVideo || isNaN(targetTime)) return;
+      const clamped = Math.max(0, Math.min(targetTime, phoneVideo.duration || 2.5));
+      if (Math.abs(phoneVideo.currentTime - clamped) < 0.02) return;
+
+      if (!isPhoneSeeking) {
+        isPhoneSeeking = true;
+        if ('fastSeek' in phoneVideo) {
+          try {
+            phoneVideo.fastSeek(clamped);
+          } catch (e) {
+            phoneVideo.currentTime = clamped;
+          }
+        } else {
+          phoneVideo.currentTime = clamped;
+        }
+      } else {
+        pendingPhoneSeekTime = clamped;
+      }
+    }
+
+    if (phoneVideo) {
+      phoneVideo.addEventListener('seeked', () => {
+        isPhoneSeeking = false;
+        if (pendingPhoneSeekTime !== null) {
+          const next = pendingPhoneSeekTime;
+          pendingPhoneSeekTime = null;
+          requestPhoneSeek(next);
+        }
+      });
+      phoneVideo.addEventListener('seeking', () => {
+        isPhoneSeeking = true;
+      });
+
+      const primePhoneVideo = () => {
+        phoneVideo.play().then(() => {
+          phoneVideo.pause();
+          updatePhoneVideoScroll();
+        }).catch(() => {
+          updatePhoneVideoScroll();
+        });
+      };
+
+      if (phoneVideo.readyState >= 2) {
+        primePhoneVideo();
+      } else {
+        phoneVideo.addEventListener('loadeddata', primePhoneVideo, { once: true });
+        phoneVideo.addEventListener('canplay', primePhoneVideo, { once: true });
+        phoneVideo.addEventListener('loadedmetadata', () => {
+          updatePhoneVideoScroll();
+        }, { once: true });
+      }
+    }
+
+    function updatePhoneVideoScroll() {
+      if (!phoneVideo || !phoneVideo.duration || isNaN(phoneVideo.duration)) return;
+      const appSec = document.getElementById('appSection');
+      if (!appSec) return;
+
+      const rect = appSec.getBoundingClientRect();
+      const vh = window.innerHeight;
+      
+      // La animación recorre suavemente el video conforme el usuario lee la sección
+      const startThreshold = vh * 0.85;
+      const totalDistance = vh * 0.70 + rect.height * 0.50;
+      const currentDistance = startThreshold - rect.top;
+      const progress = Math.max(0, Math.min(1.0, currentDistance / totalDistance));
+
+      phoneTargetTime = progress * phoneVideo.duration;
+    }
+
+    // ==========================================
+    // HERO SCROLL-DRIVEN VIDEO CONTROLLER & STATEMENT FADE
+    // ==========================================
+    const heroTrack = document.getElementById('heroTrack');
+    const heroVideo = document.getElementById('heroVideo');
+    const globalScrollIndicator = document.getElementById('globalScrollIndicator');
+    const heroBlackout = document.getElementById('heroBlackout');
+    const heroStatementOverlay = document.getElementById('heroStatementOverlay');
+
+    const wordDemuestra = document.getElementById('wordDemuestra');
+    const wordDeQue = document.getElementById('wordDeQue');
+    const wordEstas = document.getElementById('wordEstas');
+    const wordHecho = document.getElementById('wordHecho');
+
+    let heroTargetTime = 0;
+    let heroCurrentTime = 0;
+    let isSeeking = false;
+    let pendingSeekTime = null;
+    let lastSeekTimestamp = 0;
+
+    function getPhaseStyle(progress, start, end) {
+      if (progress < start || progress > end) {
+        return { opacity: 0, scale: 0.88, visible: false };
+      }
+      const t = (progress - start) / (end - start);
+      
+      let opacity = 0;
+      if (t < 0.28) {
+        opacity = t / 0.28;
+      } else if (t <= 0.72) {
+        opacity = 1;
+      } else {
+        opacity = (1 - t) / 0.28;
+      }
+
+      const scale = 0.88 + t * 0.30;
+      return { opacity, scale, visible: true };
+    }
+
+    function updateKineticWords(progress) {
+      const p1 = getPhaseStyle(progress, 0.02, 0.15);
+      if (wordDemuestra) {
+        wordDemuestra.style.opacity = p1.opacity;
+        wordDemuestra.style.transform = `scale(${p1.scale})`;
+        wordDemuestra.style.visibility = p1.visible ? 'visible' : 'hidden';
+      }
+
+      const p2 = getPhaseStyle(progress, 0.16, 0.29);
+      if (wordDeQue) {
+        wordDeQue.style.opacity = p2.opacity;
+        wordDeQue.style.transform = `scale(${p2.scale})`;
+        wordDeQue.style.visibility = p2.visible ? 'visible' : 'hidden';
+      }
+
+      const p3 = getPhaseStyle(progress, 0.30, 0.43);
+      if (wordEstas) {
+        wordEstas.style.opacity = p3.opacity;
+        wordEstas.style.transform = `scale(${p3.scale})`;
+        wordEstas.style.visibility = p3.visible ? 'visible' : 'hidden';
+      }
+
+      const p4 = getPhaseStyle(progress, 0.44, 0.57);
+      if (wordHecho) {
+        wordHecho.style.opacity = p4.opacity;
+        wordHecho.style.transform = `scale(${p4.scale})`;
+        wordHecho.style.visibility = p4.visible ? 'visible' : 'hidden';
+      }
+    }
+
+    function requestVideoSeek(targetTime) {
+      if (!heroVideo || isNaN(heroVideo.duration) || heroVideo.duration <= 0) return;
+      const clamped = Math.max(0, Math.min(heroVideo.duration - 0.05, targetTime));
+      const now = performance.now();
+
+      if ((!heroVideo.seeking && !isSeeking) || (now - lastSeekTimestamp > 120)) {
+        isSeeking = true;
+        lastSeekTimestamp = now;
+        heroVideo.currentTime = clamped;
+      } else {
+        pendingSeekTime = clamped;
+      }
+    }
+
+    if (heroVideo) {
+      heroVideo.addEventListener('seeked', () => {
+        isSeeking = false;
+        if (pendingSeekTime !== null) {
+          const next = pendingSeekTime;
+          pendingSeekTime = null;
+          requestVideoSeek(next);
+        }
+      });
+      heroVideo.addEventListener('seeking', () => {
+        isSeeking = true;
+      });
+
+      const primeVideo = () => {
+        heroVideo.play().then(() => {
+          heroVideo.pause();
+          updateHeroVideoScroll();
+      updatePhoneVideoScroll();
+        }).catch(() => {
+          updateHeroVideoScroll();
+      updatePhoneVideoScroll();
+        });
+      };
+
+      if (heroVideo.readyState >= 2) {
+        primeVideo();
+      } else {
+        heroVideo.addEventListener('loadeddata', primeVideo, { once: true });
+        heroVideo.addEventListener('canplay', primeVideo, { once: true });
+        heroVideo.addEventListener('loadedmetadata', () => {
+          updateHeroVideoScroll();
+      updatePhoneVideoScroll();
+        }, { once: true });
+      }
+    }
+
+    function updateHeroVideoScroll() {
+      if (!heroTrack || !heroVideo || !heroVideo.duration || isNaN(heroVideo.duration)) return;
+      const rect = heroTrack.getBoundingClientRect();
+      const scrollableDist = rect.height - window.innerHeight;
+      if (scrollableDist <= 0) return;
+
+      const progress = Math.max(0, Math.min(1.0, -rect.top / scrollableDist));
+      
+      const videoProgress = Math.min(1.0, progress / 0.60);
+      heroTargetTime = videoProgress * heroVideo.duration;
+
+      updateKineticWords(progress);
+
+      if (heroBlackout) {
+        const blackoutP = Math.max(0, Math.min(1.0, (progress - 0.58) / 0.14));
+        heroBlackout.style.opacity = blackoutP;
+      }
+
+      if (heroStatementOverlay) {
+        const stmtP = Math.max(0, Math.min(1.0, (progress - 0.64) / 0.16));
+        heroStatementOverlay.style.opacity = stmtP;
+        const scale = 0.95 + stmtP * 0.05;
+        heroStatementOverlay.style.transform = `scale(${scale})`;
+      }
+    }
+
+    function renderHeroVideoScrub() {
+      if (heroVideo && !isNaN(heroVideo.duration) && heroVideo.duration > 0) {
+        const diff = heroTargetTime - heroCurrentTime;
+        if (Math.abs(diff) > 0.015) {
+          heroCurrentTime += diff * 0.28;
+          requestVideoSeek(heroCurrentTime);
+        } else if (pendingSeekTime !== null && !isSeeking && !heroVideo.seeking) {
+          const next = pendingSeekTime;
+          pendingSeekTime = null;
+          requestVideoSeek(next);
+        }
+      }
+
+      // Scrubbing interactivo para el video del teléfono
+      if (phoneVideo && !isNaN(phoneVideo.duration) && phoneVideo.duration > 0) {
+        const pDiff = phoneTargetTime - phoneCurrentTime;
+        if (Math.abs(pDiff) > 0.015) {
+          phoneCurrentTime += pDiff * 0.28;
+          requestPhoneSeek(phoneCurrentTime);
+        } else if (pendingPhoneSeekTime !== null && !isPhoneSeeking && !phoneVideo.seeking) {
+          const next = pendingPhoneSeekTime;
+          pendingPhoneSeekTime = null;
+          requestPhoneSeek(next);
+        }
+      }
+
+      // Scrubbing interactivo para el plano arquitectónico
+      const eDiff = espaciosTargetProgress - espaciosCurrentProgress;
+      if (Math.abs(eDiff) > 0.0005) {
+        espaciosCurrentProgress += eDiff * 0.28;
+        applyEspaciosProgress(espaciosCurrentProgress);
+      } else if (espaciosCurrentProgress !== espaciosTargetProgress) {
+        espaciosCurrentProgress = espaciosTargetProgress;
+        applyEspaciosProgress(espaciosCurrentProgress);
+      }
+
+      // Scrubbing interactivo para disciplinas
+      const dDiff = discTargetProgress - discCurrentProgress;
+      if (Math.abs(dDiff) > 0.0005) {
+        discCurrentProgress += dDiff * 0.22;
+        applyDisciplinasProgress(discCurrentProgress);
+      } else if (discCurrentProgress !== discTargetProgress) {
+        discCurrentProgress = discTargetProgress;
+        applyDisciplinasProgress(discCurrentProgress);
+      }
+
+      requestAnimationFrame(renderHeroVideoScrub);
+    }
+    requestAnimationFrame(renderHeroVideoScrub);
+
+    function updateGlobalScrollIndicator() {
+      if (!globalScrollIndicator) return;
+      const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+      const docHeight = document.documentElement.scrollHeight;
+      const winHeight = window.innerHeight;
+      // Se mantiene constante al pie del viewport; solo se oculta suavemente al llegar al pie de página (footer)
+      if (scrollY + winHeight >= docHeight - 140) {
+        globalScrollIndicator.style.opacity = '0';
+      } else {
+        globalScrollIndicator.style.opacity = '1';
+      }
+    }
+
+    function onPageScroll() {
+      const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+
+      if (heroTrack) {
+        const rect = heroTrack.getBoundingClientRect();
+        const scrollableDist = rect.height - window.innerHeight;
+        const progress = Math.max(0, Math.min(1.0, -rect.top / scrollableDist));
+        if (progress >= 0.68) {
+          header.classList.remove('header-hero');
+          header.classList.add('header-scrolled');
+        } else {
+          header.classList.add('header-hero');
+          header.classList.remove('header-scrolled');
+        }
+      } else {
+        if (scrollY > 15) {
+          header.classList.remove('header-hero');
+          header.classList.add('header-scrolled');
+        } else {
+          header.classList.add('header-hero');
+          header.classList.remove('header-scrolled');
+        }
+      }
+
+      updateHeroVideoScroll();
+      updateEspaciosScroll();
+      updateDisciplinasScroll();
+      updatePhoneVideoScroll();
+      updateGlobalScrollIndicator();
+    }
+
+    window.addEventListener('scroll', onPageScroll, { passive: true });
+    window.addEventListener('resize', onPageScroll, { passive: true });
+    window.addEventListener('DOMContentLoaded', () => {
+      onPageScroll();
+    });
+
+    const mobileBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    function openMobileMenu() {
+      if (mobileMenu) {
+        mobileMenu.classList.remove('hidden');
+        mobileMenu.classList.add('flex');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+    function closeMobileMenu() {
+      if (mobileMenu) {
+        mobileMenu.classList.add('hidden');
+        mobileMenu.classList.remove('flex');
+        document.body.style.overflow = '';
+      }
+    }
+    if (mobileBtn && mobileMenu) {
+      mobileBtn.addEventListener('click', () => {
+        if (mobileMenu.classList.contains('hidden')) {
+          openMobileMenu();
+        } else {
+          closeMobileMenu();
+        }
+      });
+    }
+  </script>
+</body>
+</html>

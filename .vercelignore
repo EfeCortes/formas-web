@@ -1,0 +1,9 @@
+*.ai
+*.psd
+*.pdf
+*.tmp
+movil/
+pandemia/
+2026/Iconos/
+2026/bgs/
+.DS_Store
