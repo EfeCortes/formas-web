@@ -18,6 +18,7 @@ movil/
 videos/*
 !videos/facade.mp4
 !videos/facade-new.mp4
+!videos/comp1.mp4
 !videos/phone.mp4
 
 # Assets: Textures (Only steel.jpg used in Hero overlay)
