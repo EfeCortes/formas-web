@@ -572,46 +572,96 @@
           </div>
         </div>
 
-        <!-- Sombra protectora de lectura ÚNICAMENTE en móvil y a TODO el ancho (en desktop se elimina por completo) -->
-        <div class="lg:hidden absolute inset-0 w-full bg-gradient-to-t from-black/90 via-black/55 to-black/30 z-[4] pointer-events-none"></div>
+        <!-- Capas protectoras de contraste para lectura impecable en cualquier dispositivo -->
+        <div class="hidden lg:block absolute inset-y-0 left-0 w-[55%] bg-gradient-to-r from-black/95 via-black/75 to-transparent z-[4] pointer-events-none"></div>
+        <div class="lg:hidden absolute inset-0 w-full bg-gradient-to-t from-black/95 via-black/80 to-black/35 z-[4] pointer-events-none"></div>
 
-        <div class="max-w-7xl mx-auto relative z-10 w-full flex justify-start">
-          <div class="w-full max-w-lg lg:max-w-xl space-y-6 sm:space-y-8 text-left">
+        <div class="max-w-7xl mx-auto relative z-10 w-full flex justify-start my-auto">
+          <div class="w-full max-w-xl lg:max-w-2xl space-y-4 sm:space-y-6 text-left">
             
-            <div class="space-y-4">
-              <h2 class="font-brand text-3xl sm:text-5xl lg:text-6xl font-normal uppercase tracking-tight text-white leading-tight drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)]">
-                DISTINTAS <br>
-                FORMAS DE <br>
+            <!-- Encabezado de Sección -->
+            <div class="space-y-1.5 sm:space-y-2">
+              <span class="text-[10px] sm:text-[11px] font-brand tracking-[0.25em] text-[#0effc7] uppercase block">
+                Disciplinas FOR+
+              </span>
+              <h2 class="font-brand text-2xl sm:text-4xl lg:text-5xl font-normal uppercase tracking-tight text-white leading-tight drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)]">
+                DISTINTAS FORMAS <br>
                 <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-white/95 to-white/60">
-                  ENTRENAR
+                  DE ENTRENAR
                 </span>
               </h2>
-
-              <p class="text-base sm:text-xl text-white font-light leading-relaxed drop-shadow-[0_2px_14px_rgba(0,0,0,0.95)]">
-                No existe una sola manera. Cada disciplina somete al cuerpo a un estímulo diferente: fuerza biomecánica pura, sincronía rítmica colectiva, cadencia cardiovascular o dinamismo funcional.
-              </p>
             </div>
 
-            <!-- Paginador minimalista sincronizado con el scroll -->
-            <div class="flex items-center gap-4 pt-2">
-              <div class="flex items-center gap-3">
-                <button type="button" onclick="scrollDiscSlide(0)" class="disc-dot h-1.5 rounded-full transition-all duration-300 w-8 bg-white cursor-pointer" aria-label="Slide 1 Musculación"></button>
-                <button type="button" onclick="scrollDiscSlide(1)" class="disc-dot h-1.5 rounded-full transition-all duration-300 w-2.5 bg-white/30 hover:bg-white/60 cursor-pointer" aria-label="Slide 2 Spinning"></button>
-                <button type="button" onclick="scrollDiscSlide(2)" class="disc-dot h-1.5 rounded-full transition-all duration-300 w-2.5 bg-white/30 hover:bg-white/60 cursor-pointer" aria-label="Slide 3 Funcional"></button>
-                <button type="button" onclick="scrollDiscSlide(3)" class="disc-dot h-1.5 rounded-full transition-all duration-300 w-2.5 bg-white/30 hover:bg-white/60 cursor-pointer" aria-label="Slide 4 Pilates"></button>
-                <button type="button" onclick="scrollDiscSlide(4)" class="disc-dot h-1.5 rounded-full transition-all duration-300 w-2.5 bg-white/30 hover:bg-white/60 cursor-pointer" aria-label="Slide 5 Aeróbicos"></button>
+            <!-- Paginador interactivo con los iconos oficiales de las disciplinas -->
+            <div class="space-y-1.5 pt-0.5">
+              <span class="text-[10px] font-brand tracking-widest text-white/40 uppercase block">Selecciona o haz scroll:</span>
+              <div class="flex items-center gap-2 sm:gap-3">
+                <button type="button" onclick="scrollDiscSlide(0)" id="discIconBtn-0" class="disc-icon-btn group relative p-2.5 sm:p-3 rounded-xl border border-[#0effc7] bg-[#0effc7]/20 shadow-[0_0_16px_rgba(14,255,199,0.35)] transition-all duration-300 cursor-pointer" aria-label="Musculación">
+                  <img src="assets/icons/musculacion.svg" alt="Musculación" class="w-5 h-5 sm:w-6 sm:h-6 object-contain transition-transform group-hover:scale-110">
+                </button>
+                <button type="button" onclick="scrollDiscSlide(1)" id="discIconBtn-1" class="disc-icon-btn group relative p-2.5 sm:p-3 rounded-xl border border-white/15 bg-black/50 opacity-40 hover:opacity-85 hover:border-white/30 transition-all duration-300 cursor-pointer" aria-label="Spinning">
+                  <img src="assets/icons/spinning.svg" alt="Spinning" class="w-5 h-5 sm:w-6 sm:h-6 object-contain transition-transform group-hover:scale-110">
+                </button>
+                <button type="button" onclick="scrollDiscSlide(2)" id="discIconBtn-2" class="disc-icon-btn group relative p-2.5 sm:p-3 rounded-xl border border-white/15 bg-black/50 opacity-40 hover:opacity-85 hover:border-white/30 transition-all duration-300 cursor-pointer" aria-label="Funcional Underground">
+                  <img src="assets/icons/funcional.svg" alt="Funcional Underground" class="w-5 h-5 sm:w-6 sm:h-6 object-contain transition-transform group-hover:scale-110">
+                </button>
+                <button type="button" onclick="scrollDiscSlide(3)" id="discIconBtn-3" class="disc-icon-btn group relative p-2.5 sm:p-3 rounded-xl border border-white/15 bg-black/50 opacity-40 hover:opacity-85 hover:border-white/30 transition-all duration-300 cursor-pointer" aria-label="Pilates y Control">
+                  <img src="assets/icons/control.svg" alt="Pilates y Control" class="w-5 h-5 sm:w-6 sm:h-6 object-contain transition-transform group-hover:scale-110">
+                </button>
+                <button type="button" onclick="scrollDiscSlide(4)" id="discIconBtn-4" class="disc-icon-btn group relative p-2.5 sm:p-3 rounded-xl border border-white/15 bg-black/50 opacity-40 hover:opacity-85 hover:border-white/30 transition-all duration-300 cursor-pointer" aria-label="Aeróbicos">
+                  <img src="assets/icons/aerobics.svg" alt="Aeróbicos" class="w-5 h-5 sm:w-6 sm:h-6 object-contain transition-transform group-hover:scale-110">
+                </button>
               </div>
-              <span id="discCurrentLabel" class="text-[11px] font-brand tracking-widest uppercase text-white/80 border-l border-white/20 pl-4 py-0.5">
-                01 / Musculación
-              </span>
             </div>
 
-            <!-- Botón CTA único inferior -->
-            <div class="pt-4">
-              <a href="#appSection" class="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-white text-black font-brand text-xs uppercase tracking-widest hover:bg-white/90 hover:scale-105 transition-all shadow-xl group">
-                <span>Conocer todas las disciplinas</span>
-                <span class="group-hover:translate-x-1 transition-transform">→</span>
-              </a>
+            <!-- Ficha técnica dinámica de la disciplina activa (descripción, tipo de trabajo y exigencia) -->
+            <div id="discDetailBox" class="space-y-3.5 pt-1 will-change-[opacity,transform] transition-opacity duration-300">
+              
+              <!-- Título de Disciplina y Subtítulo de Estímulo -->
+              <div class="space-y-0.5">
+                <div class="flex items-center gap-2">
+                  <span id="discNum" class="text-xs font-brand tracking-widest text-[#0effc7] uppercase">01 / 05</span>
+                  <span class="text-white/30">•</span>
+                  <span id="discSubtitle" class="text-xs font-brand tracking-wider text-white/70 uppercase">Fuerza · Tensión y Sobrecarga</span>
+                </div>
+                <h3 id="discName" class="font-brand text-2xl sm:text-3xl lg:text-4xl font-normal uppercase tracking-tight text-white leading-tight drop-shadow-[0_2px_14px_rgba(0,0,0,0.95)]">
+                  MUSCULACIÓN
+                </h3>
+              </div>
+
+              <!-- Descripción de la disciplina -->
+              <p id="discDesc" class="text-sm sm:text-base text-white/90 font-light leading-relaxed max-w-xl drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)]">
+                Equipamiento biomecánico de precisión con ángulos convergentes y amplia zona de peso libre. Asesoría técnica permanente de piso para progresar de manera segura.
+              </p>
+
+              <!-- Resumen de Tipo de Trabajo y Exigencia -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1 max-w-xl">
+                <!-- Tarjeta: Tipo de Trabajo -->
+                <div class="p-3.5 rounded-xl bg-black/75 border border-white/15 backdrop-blur-md space-y-1">
+                  <span class="text-[10px] font-brand tracking-widest text-white/45 uppercase block">Tipo de Trabajo</span>
+                  <p id="discWorkType" class="text-xs sm:text-sm text-white font-medium leading-snug">
+                    Fuerza biomecánica, hipertrofia y potencia muscular
+                  </p>
+                </div>
+
+                <!-- Tarjeta: Exigencia & Nivel -->
+                <div class="p-3.5 rounded-xl bg-black/75 border border-white/15 backdrop-blur-md space-y-2 flex flex-col justify-between">
+                  <div>
+                    <div class="flex items-center justify-between">
+                      <span class="text-[10px] font-brand tracking-widest text-white/45 uppercase">Exigencia Física</span>
+                      <span id="discLocation" class="text-[10px] font-brand text-white/60 uppercase">Planta Baja</span>
+                    </div>
+                    <span id="discExigencia" class="text-xs sm:text-sm text-[#0effc7] font-brand tracking-wider uppercase block mt-0.5">
+                      Alta · Sobrecarga Progresiva
+                    </span>
+                  </div>
+                  <!-- Barra visual de nivel de exigencia -->
+                  <div class="w-full h-1.5 bg-white/15 rounded-full overflow-hidden">
+                    <div id="discExigenciaBar" class="h-full bg-gradient-to-r from-[#0effc7] to-[#faa0c3] rounded-full transition-all duration-500" style="width: 85%;"></div>
+                  </div>
+                </div>
+              </div>
+
             </div>
 
           </div>
@@ -1118,23 +1168,97 @@
 
     // ==========================================
     // DISCIPLINAS SCROLL-DRIVEN CONTROLLER
-    // Recorrido de los 4 previews controlado por scroll
+    // Recorrido de las 5 disciplinas con paginador de iconos y ficha técnica
     // ==========================================
     const disciplinasTrack = document.getElementById('disciplinasTrack');
     const discSlides = document.querySelectorAll('.disc-slide');
-    const discDots = document.querySelectorAll('.disc-dot');
-    const discCurrentLabel = document.getElementById('discCurrentLabel');
+    const discIconBtns = [0, 1, 2, 3, 4].map(i => document.getElementById('discIconBtn-' + i));
+    const discNum = document.getElementById('discNum');
+    const discSubtitle = document.getElementById('discSubtitle');
+    const discName = document.getElementById('discName');
+    const discDesc = document.getElementById('discDesc');
+    const discWorkType = document.getElementById('discWorkType');
+    const discExigencia = document.getElementById('discExigencia');
+    const discExigenciaBar = document.getElementById('discExigenciaBar');
+    const discLocation = document.getElementById('discLocation');
 
-    const discData = [
-      { name: '01 / Musculación' },
-      { name: '02 / Spinning' },
-      { name: '03 / Funcional' },
-      { name: '04 / Pilates' },
-      { name: '05 / Aeróbicos' }
+    const discDetails = [
+      {
+        id: 'musculacion',
+        num: '01',
+        name: 'MUSCULACIÓN',
+        subtitle: 'Fuerza · Tensión y Sobrecarga',
+        desc: 'Equipamiento biomecánico de precisión con ángulos convergentes y amplia zona de peso libre. Asesoría técnica permanente de piso para progresar de manera segura.',
+        workType: 'Fuerza biomecánica, hipertrofia y potencia muscular',
+        exigencia: 'Alta · Sobrecarga Progresiva',
+        exigenciaLevel: '85%',
+        location: 'Planta Baja'
+      },
+      {
+        id: 'spinning',
+        num: '02',
+        name: 'SPINNING',
+        subtitle: 'Cardio · Cadencia y Potencia',
+        desc: 'Ciclismo indoor estructurado por zonas de potencia y resistencia controlada. Una experiencia acústica y visual inmersiva para llevar el consumo de oxígeno al máximo.',
+        workType: 'Resistencia cardiovascular, potencia por intervalos y cadencia rítmica',
+        exigencia: 'Muy Alta · Consumo de Oxígeno',
+        exigenciaLevel: '95%',
+        location: 'Planta 1 (Studio)'
+      },
+      {
+        id: 'funcional',
+        num: '03',
+        name: 'FUNCIONAL UNDERGROUND',
+        subtitle: 'Potencia · Movimiento Tridimensional',
+        desc: 'Entrenamiento atlético sin artificios en nuestro subsuelo. Movimientos poliarticulares con peso libre, calistenia, trineos, kettlebells y dinámicas de alta demanda física.',
+        workType: 'Fuerza útil, agilidad tridimensional y circuitos metabólicos HIIT',
+        exigencia: 'Intensa · Dinamismo Tridimensional',
+        exigenciaLevel: '90%',
+        location: 'Subsuelo Underground'
+      },
+      {
+        id: 'control',
+        num: '04',
+        name: 'PILATES & CONTROL',
+        subtitle: 'Control · Eje y Alineación',
+        desc: 'Enfoque en la biomecánica postural, respiración consciente, fortalecimiento de la faja lumbo-abdominal y elongación articular profunda.',
+        workType: 'Estabilidad de core, alineación postural, flexibilidad y control motor',
+        exigencia: 'Técnica · Precisión Postural',
+        exigenciaLevel: '70%',
+        location: 'Planta 2 & Planta 1'
+      },
+      {
+        id: 'aerobicos',
+        num: '05',
+        name: 'AERÓBICOS',
+        subtitle: 'Ritmo · Coreografía y Sincronía',
+        desc: 'Programas de alta frecuencia cardiaca, coreografía y sincronía grupal bajo metodologías internacionales como LesMills y formatos de acondicionamiento continuo.',
+        workType: 'Coordinación neuromotora, resistencia aeróbica y gasto calórico colectivo',
+        exigencia: 'Alta · Frecuencia Cardíaca Elevada',
+        exigenciaLevel: '80%',
+        location: 'Planta 1 & Planta 2'
+      }
     ];
 
     let discTargetProgress = 0;
     let discCurrentProgress = 0;
+    let currentDiscActiveIdx = -1;
+
+    function updateDiscCardContent(idx) {
+      if (currentDiscActiveIdx === idx) return;
+      currentDiscActiveIdx = idx;
+      const data = discDetails[idx];
+      if (!data) return;
+
+      if (discNum) discNum.textContent = `${data.num} / 05`;
+      if (discSubtitle) discSubtitle.textContent = data.subtitle;
+      if (discName) discName.textContent = data.name;
+      if (discDesc) discDesc.textContent = data.desc;
+      if (discWorkType) discWorkType.textContent = data.workType;
+      if (discExigencia) discExigencia.textContent = data.exigencia;
+      if (discExigenciaBar) discExigenciaBar.style.width = data.exigenciaLevel;
+      if (discLocation) discLocation.textContent = data.location;
+    }
 
     function updateDisciplinasScroll() {
       if (!disciplinasTrack) return;
@@ -1180,7 +1304,7 @@
       if (discSlides[3]) discSlides[3].style.opacity = s3.toFixed(3);
       if (discSlides[4]) discSlides[4].style.opacity = s4.toFixed(3);
 
-      // Determinar slide activo dominante para dots y label
+      // Determinar slide activo dominante para iconos y ficha técnica
       let activeIdx = 0;
       if (p >= 0.85) {
         activeIdx = 4;
@@ -1194,17 +1318,18 @@
         activeIdx = 0;
       }
 
-      discDots.forEach((dot, i) => {
+      // Actualizar estado activo en los botones de iconos
+      discIconBtns.forEach((btn, i) => {
+        if (!btn) return;
         if (i === activeIdx) {
-          dot.className = 'disc-dot h-1.5 rounded-full transition-all duration-300 w-8 bg-white cursor-pointer';
+          btn.className = 'disc-icon-btn group relative p-2.5 sm:p-3 rounded-xl border border-[#0effc7] bg-[#0effc7]/20 shadow-[0_0_16px_rgba(14,255,199,0.35)] transition-all duration-300 cursor-pointer scale-105 opacity-100';
         } else {
-          dot.className = 'disc-dot h-1.5 rounded-full transition-all duration-300 w-2.5 bg-white/30 hover:bg-white/60 cursor-pointer';
+          btn.className = 'disc-icon-btn group relative p-2.5 sm:p-3 rounded-xl border border-white/15 bg-black/50 opacity-40 hover:opacity-85 hover:border-white/30 transition-all duration-300 cursor-pointer scale-100';
         }
       });
 
-      if (discCurrentLabel && discData[activeIdx]) {
-        discCurrentLabel.textContent = discData[activeIdx].name;
-      }
+      // Actualizar contenido de la ficha técnica
+      updateDiscCardContent(activeIdx);
     }
 
 
