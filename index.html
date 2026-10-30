@@ -393,8 +393,8 @@
                 </h2>
               </div>
 
-              <!-- Contenedor del plano arquitectónico: En el recorrido se desliza a la izquierda mostrando solo su mitad derecha -->
-              <div id="blueprintContainer" class="relative w-full max-w-[720px] lg:max-w-[780px] aspect-[1366/675] select-none will-change-[transform] transition-transform duration-300 ease-out origin-left">
+              <!-- Contenedor del plano arquitectónico: En el recorrido se desliza a la izquierda y se amplía a mayor escala -->
+              <div id="blueprintContainer" class="relative w-full max-w-[720px] lg:max-w-[840px] xl:max-w-[920px] aspect-[1366/675] select-none will-change-[transform] transition-transform duration-300 ease-out origin-center">
                 
                 <!-- Retícula técnica arquitectónica tenue de fondo -->
                 <div class="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.06)_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none opacity-40"></div>
@@ -899,8 +899,8 @@
       // El plano está centrado, el láser sube revelando las plantas de abajo a arriba.
       // ========================================================
       if (p <= 0.26) {
-        // Asegurar que el plano está en su posición inicial centrada
-        blueprintContainer.style.transform = 'translateX(0%)';
+        // Asegurar que el plano está en su posición inicial centrada y escala 1
+        blueprintContainer.style.transform = 'translateX(0%) scale(1)';
 
         // Ocultar recorrido y capas de fotos
         if (spacesTourBg) spacesTourBg.style.opacity = '0';
@@ -992,10 +992,13 @@
         // El plano está 100% revelado internamente
         blueprintWrapper.style.clipPath = 'inset(0% 0 0 0)';
 
-        // Desplazamiento a la izquierda: en desktop -50%, en móvil -38%
-        const maxShift = window.innerWidth < 1024 ? 38 : 50;
+        // Desplazamiento a la izquierda y ampliación de escala del plano
+        const isMobile = window.innerWidth < 1024;
+        const maxShift = isMobile ? 38 : 48;
+        const scaleTarget = isMobile ? 1.25 : 1.48;
+        const currentScale = 1.0 + t * (scaleTarget - 1.0);
         const shiftX = -t * maxShift;
-        blueprintContainer.style.transform = `translateX(${shiftX.toFixed(2)}%)`;
+        blueprintContainer.style.transform = `translateX(${shiftX.toFixed(2)}%) scale(${currentScale.toFixed(3)})`;
 
         // Desvanecimiento del contenido del preview
         const fadeOut = (1 - t);
@@ -1035,8 +1038,10 @@
       // Planta 2 -> Planta 1 -> Planta Baja -> Subsuelo.
       // ========================================================
       blueprintWrapper.style.clipPath = 'inset(0% 0 0 0)';
-      const maxShift = window.innerWidth < 1024 ? 38 : 50;
-      blueprintContainer.style.transform = `translateX(-${maxShift}%)`;
+      const isMobile = window.innerWidth < 1024;
+      const maxShift = isMobile ? 38 : 48;
+      const scaleTarget = isMobile ? 1.25 : 1.48;
+      blueprintContainer.style.transform = `translateX(-${maxShift}%) scale(${scaleTarget})`;
 
       // Preview 100% oculto
       if (espaciosTitle) espaciosTitle.style.opacity = '0';
