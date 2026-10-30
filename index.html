@@ -312,11 +312,14 @@
         <!-- Video interactivo scroll-driven de fachada al 100% sin zoom y sin blurs laterales -->
         <video id="heroVideo" src="videos/facade-new.mp4" playsinline muted preload="auto" class="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none" style="object-position: center top;"></video>
         
+        <!-- Capa oscurecedora al 10% en modo multiplicar sobre el video -->
+        <div class="absolute inset-0 pointer-events-none z-[1]" style="background-color: #000000; opacity: 0.10; mix-blend-mode: multiply;"></div>
+
         <!-- Difuminado a blur en la parte superior de la imagen (extendido 40px hacia abajo con transición progresiva) -->
-        <div class="absolute top-0 left-0 right-0 h-[184px] sm:h-[232px] pointer-events-none z-[1]" style="-webkit-backdrop-filter: blur(24px); backdrop-filter: blur(24px); -webkit-mask-image: linear-gradient(to bottom, black 0%, rgba(0,0,0,0.85) 30%, rgba(0,0,0,0.45) 60%, rgba(0,0,0,0.15) 82%, transparent 100%); mask-image: linear-gradient(to bottom, black 0%, rgba(0,0,0,0.85) 30%, rgba(0,0,0,0.45) 60%, rgba(0,0,0,0.15) 82%, transparent 100%); background: linear-gradient(to bottom, rgba(8,8,8,0.55) 0%, rgba(8,8,8,0.2) 45%, transparent 100%);"></div>
+        <div class="absolute top-0 left-0 right-0 h-[184px] sm:h-[232px] pointer-events-none z-[2]" style="-webkit-backdrop-filter: blur(24px); backdrop-filter: blur(24px); -webkit-mask-image: linear-gradient(to bottom, black 0%, rgba(0,0,0,0.85) 30%, rgba(0,0,0,0.45) 60%, rgba(0,0,0,0.15) 82%, transparent 100%); mask-image: linear-gradient(to bottom, black 0%, rgba(0,0,0,0.85) 30%, rgba(0,0,0,0.45) 60%, rgba(0,0,0,0.15) 82%, transparent 100%); background: linear-gradient(to bottom, rgba(8,8,8,0.55) 0%, rgba(8,8,8,0.2) 45%, transparent 100%);"></div>
 
         <!-- Sutil fade inferior para una transición limpia con la siguiente sección -->
-        <div class="absolute bottom-0 left-0 right-0 h-28 pointer-events-none z-[1]" style="background: linear-gradient(to top, #080808 0%, rgba(8,8,8,0.7) 50%, transparent 100%);"></div>
+        <div class="absolute bottom-0 left-0 right-0 h-28 pointer-events-none z-[2]" style="background: linear-gradient(to top, #080808 0%, rgba(8,8,8,0.7) 50%, transparent 100%);"></div>
 
         <!-- TEXTOS CINEMÁTICOS EN 4 CUARTOS: DEMUESTRA | DE QUÉ | ESTÁS | HECHO (En móvil en el primer tercio de altura) -->
         <div class="absolute inset-0 flex items-start justify-center pt-[26vh] sm:pt-[28vh] md:items-center md:pt-0 pointer-events-none z-10 px-6">
