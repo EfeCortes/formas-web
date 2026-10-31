@@ -647,10 +647,9 @@
               
               <!-- TÍTULO PROMINENTE Y CLARO DE LA DISCIPLINA -->
               <div class="space-y-1">
-                <div class="flex items-center gap-2.5">
-                  <span id="discNum" class="text-xs font-mono tracking-widest text-[#0effc7] uppercase font-semibold">01 / 05</span>
+                <div class="flex items-center gap-2">
                   <span class="w-1.5 h-1.5 rounded-full bg-[#0effc7]"></span>
-                  <span id="discSubtitle" class="text-xs font-brand tracking-[0.2em] text-white/60 uppercase">Fuerza Biomecánica · Sobrecarga</span>
+                  <span id="discSubtitle" class="text-xs font-brand tracking-[0.2em] text-[#0effc7] uppercase font-medium">Fuerza Biomecánica · Sobrecarga</span>
                 </div>
                 <h3 id="discName" class="font-brand text-3xl sm:text-5xl lg:text-6xl font-normal uppercase tracking-tight text-white leading-none drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)]">
                   MUSCULACIÓN
@@ -662,26 +661,54 @@
                 Equipamiento biomecánico de precisión con ángulos convergentes y amplia zona de peso libre. Asesoría técnica permanente de piso para progresar de manera segura.
               </p>
 
-              <!-- Resumen esencial: Tipo de Trabajo y Exigencia Física -->
+              <!-- Resumen esencial: Tipo de Trabajo y Aspectos de Rendimiento -->
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1 max-w-xl">
                 <!-- Tarjeta: Tipo de Trabajo -->
-                <div class="p-3.5 rounded-xl bg-black/75 border border-white/15 backdrop-blur-md space-y-1">
+                <div class="p-3.5 sm:p-4 rounded-xl bg-black/75 border border-white/15 backdrop-blur-md flex flex-col justify-between space-y-2">
                   <span class="text-[10px] font-brand tracking-widest text-white/45 uppercase block">Tipo de Trabajo</span>
-                  <p id="discWorkType" class="text-xs sm:text-sm text-white font-medium leading-snug">
+                  <p id="discWorkType" class="text-xs sm:text-sm text-white font-medium leading-relaxed my-auto">
                     Fuerza máxima, hipertrofia y potencia muscular
                   </p>
+                  <span class="text-[10px] font-brand tracking-wider text-white/30 uppercase">Enfoque principal</span>
                 </div>
 
-                <!-- Tarjeta: Exigencia Física -->
-                <div class="p-3.5 rounded-xl bg-black/75 border border-white/15 backdrop-blur-md space-y-2 flex flex-col justify-between">
-                  <div class="flex items-center justify-between">
-                    <span class="text-[10px] font-brand tracking-widest text-white/45 uppercase">Exigencia Física</span>
-                    <span id="discExigencia" class="text-xs text-[#0effc7] font-brand tracking-wider uppercase font-medium">85% · Intensidad Alta</span>
+                <!-- Tarjeta: Aspectos de Rendimiento (Desarrollo muscular, Resistencia, Flexibilidad) -->
+                <div class="p-3.5 sm:p-4 rounded-xl bg-black/75 border border-white/15 backdrop-blur-md space-y-2.5">
+                  <span class="text-[10px] font-brand tracking-widest text-white/45 uppercase block">Demanda de la Disciplina</span>
+                  
+                  <!-- Aspecto 1: Desarrollo muscular -->
+                  <div class="space-y-1">
+                    <div class="flex items-center justify-between text-[11px]">
+                      <span class="text-white/70">Desarrollo muscular</span>
+                      <span id="discAspectMuscular" class="text-[#0effc7] font-brand uppercase tracking-wider text-[10px] font-medium">Alto</span>
+                    </div>
+                    <div class="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
+                      <div id="discBarMuscular" class="h-full bg-gradient-to-r from-[#0effc7] to-[#faa0c3] rounded-full transition-all duration-500 shadow-[0_0_8px_rgba(14,255,199,0.4)]" style="width: 90%;"></div>
+                    </div>
                   </div>
-                  <!-- Barra visual de nivel de exigencia -->
-                  <div class="w-full h-1.5 bg-white/15 rounded-full overflow-hidden">
-                    <div id="discExigenciaBar" class="h-full bg-gradient-to-r from-[#0effc7] to-[#faa0c3] rounded-full transition-all duration-500 shadow-[0_0_8px_#0effc7]" style="width: 85%;"></div>
+
+                  <!-- Aspecto 2: Resistencia -->
+                  <div class="space-y-1">
+                    <div class="flex items-center justify-between text-[11px]">
+                      <span class="text-white/70">Resistencia</span>
+                      <span id="discAspectResistencia" class="text-[#0effc7] font-brand uppercase tracking-wider text-[10px] font-medium">Media</span>
+                    </div>
+                    <div class="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
+                      <div id="discBarResistencia" class="h-full bg-gradient-to-r from-[#0effc7] to-[#faa0c3] rounded-full transition-all duration-500 shadow-[0_0_8px_rgba(14,255,199,0.4)]" style="width: 50%;"></div>
+                    </div>
                   </div>
+
+                  <!-- Aspecto 3: Flexibilidad -->
+                  <div class="space-y-1">
+                    <div class="flex items-center justify-between text-[11px]">
+                      <span class="text-white/70">Flexibilidad</span>
+                      <span id="discAspectFlexibilidad" class="text-[#0effc7] font-brand uppercase tracking-wider text-[10px] font-medium">Media</span>
+                    </div>
+                    <div class="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
+                      <div id="discBarFlexibilidad" class="h-full bg-gradient-to-r from-[#0effc7] to-[#faa0c3] rounded-full transition-all duration-500 shadow-[0_0_8px_rgba(14,255,199,0.4)]" style="width: 45%;"></div>
+                    </div>
+                  </div>
+
                 </div>
               </div>
 
@@ -1284,64 +1311,77 @@
     const discSlides = document.querySelectorAll('.disc-slide');
     const discDockIcons = [0, 1, 2, 3, 4].map(i => document.getElementById('discDockIcon-' + i));
     const discDockDots = [0, 1, 2, 3, 4].map(i => document.getElementById('discDockDot-' + i));
-    const discNum = document.getElementById('discNum');
     const discSubtitle = document.getElementById('discSubtitle');
     const discName = document.getElementById('discName');
     const discDesc = document.getElementById('discDesc');
     const discWorkType = document.getElementById('discWorkType');
-    const discExigencia = document.getElementById('discExigencia');
-    const discExigenciaBar = document.getElementById('discExigenciaBar');
+    const discAspectMuscular = document.getElementById('discAspectMuscular');
+    const discBarMuscular = document.getElementById('discBarMuscular');
+    const discAspectResistencia = document.getElementById('discAspectResistencia');
+    const discBarResistencia = document.getElementById('discBarResistencia');
+    const discAspectFlexibilidad = document.getElementById('discAspectFlexibilidad');
+    const discBarFlexibilidad = document.getElementById('discBarFlexibilidad');
 
     const discDetails = [
       {
         id: 'musculacion',
-        num: '01',
         name: 'MUSCULACIÓN',
         subtitle: 'Fuerza Biomecánica · Sobrecarga',
         desc: 'Equipamiento biomecánico de precisión con ángulos convergentes y amplia zona de peso libre. Asesoría técnica permanente de piso para progresar de manera segura.',
         workType: 'Fuerza máxima, hipertrofia y potencia muscular',
-        exigencia: '85% · Intensidad Alta',
-        exigenciaLevel: '85%'
+        aspects: {
+          muscular: { label: 'Alto', bar: '90%' },
+          resistencia: { label: 'Media', bar: '50%' },
+          flexibilidad: { label: 'Media', bar: '45%' }
+        }
       },
       {
         id: 'spinning',
-        num: '02',
         name: 'SPINNING',
         subtitle: 'Cardio & Cadencia · Potencia',
         desc: 'Ciclismo indoor estructurado por zonas de potencia y resistencia controlada. Una experiencia acústica y visual inmersiva para llevar el consumo de oxígeno al máximo.',
         workType: 'Resistencia cardiovascular y potencia por intervalos',
-        exigencia: '95% · Demanda Aeróbica Máxima',
-        exigenciaLevel: '95%'
+        aspects: {
+          muscular: { label: 'Medio', bar: '55%' },
+          resistencia: { label: 'Alta', bar: '95%' },
+          flexibilidad: { label: 'Baja', bar: '25%' }
+        }
       },
       {
         id: 'funcional',
-        num: '03',
         name: 'FUNCIONAL UNDERGROUND',
         subtitle: 'Potencia Atlética · Dinamismo',
         desc: 'Entrenamiento atlético sin artificios en nuestro subsuelo. Movimientos poliarticulares con peso libre, calistenia, trineos, kettlebells y dinámicas metabólicas de alta demanda.',
         workType: 'Fuerza útil, agilidad tridimensional y circuitos HIIT',
-        exigencia: '90% · Intensidad Dinámica',
-        exigenciaLevel: '90%'
+        aspects: {
+          muscular: { label: 'Alto', bar: '85%' },
+          resistencia: { label: 'Alta', bar: '85%' },
+          flexibilidad: { label: 'Media', bar: '60%' }
+        }
       },
       {
         id: 'control',
-        num: '04',
         name: 'PILATES & CONTROL',
         subtitle: 'Control Motor · Eje y Alineación',
         desc: 'Enfoque en la biomecánica postural, respiración consciente, fortalecimiento de la faja lumbo-abdominal y elongación articular profunda.',
-        workType: 'Estabilidad de core, alineación postural y flexibilidad',
-        exigencia: '70% · Precisión y Control Técnico',
-        exigenciaLevel: '70%'
+        workType: 'Estabilidad de core, alineación postural y movilidad',
+        aspects: {
+          muscular: { label: 'Medio', bar: '55%' },
+          resistencia: { label: 'Media', bar: '45%' },
+          flexibilidad: { label: 'Alta', bar: '95%' }
+        }
       },
       {
         id: 'aerobicos',
-        num: '05',
         name: 'AERÓBICOS',
         subtitle: 'Ritmo & Coordinación · Sincronía',
         desc: 'Programas de alta frecuencia cardiaca, coreografía y sincronía grupal bajo metodologías internacionales y formatos de acondicionamiento continuo.',
-        workType: 'Coordinación neuromotora y resistencia cardiovascular',
-        exigencia: '80% · Frecuencia Cardíaca Elevada',
-        exigenciaLevel: '80%'
+        workType: 'Coordinación neuromotora y acondicionamiento aeróbico',
+        aspects: {
+          muscular: { label: 'Bajo', bar: '30%' },
+          resistencia: { label: 'Alta', bar: '90%' },
+          flexibilidad: { label: 'Media', bar: '65%' }
+        }
       }
     ];
 
@@ -1410,13 +1450,21 @@
       const data = discDetails[idx];
       if (!data) return;
 
-      if (discNum) discNum.textContent = `${data.num} / 05`;
       if (discSubtitle) discSubtitle.textContent = data.subtitle;
       if (discName) discName.textContent = data.name;
       if (discDesc) discDesc.textContent = data.desc;
       if (discWorkType) discWorkType.textContent = data.workType;
-      if (discExigencia) discExigencia.textContent = data.exigencia;
-      if (discExigenciaBar) discExigenciaBar.style.width = data.exigenciaLevel;
+
+      if (data.aspects) {
+        if (discAspectMuscular) discAspectMuscular.textContent = data.aspects.muscular.label;
+        if (discBarMuscular) discBarMuscular.style.width = data.aspects.muscular.bar;
+
+        if (discAspectResistencia) discAspectResistencia.textContent = data.aspects.resistencia.label;
+        if (discBarResistencia) discBarResistencia.style.width = data.aspects.resistencia.bar;
+
+        if (discAspectFlexibilidad) discAspectFlexibilidad.textContent = data.aspects.flexibilidad.label;
+        if (discBarFlexibilidad) discBarFlexibilidad.style.width = data.aspects.flexibilidad.bar;
+      }
     }
 
     function updateDiscCardContent(idx) {
