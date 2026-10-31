@@ -1665,44 +1665,56 @@
     function applyDisciplinasProgress(p) {
       if (!discSlides.length) return;
 
-      // Transición progresiva y continua entre el reposo inicial y el recorrido
-      // (interpolación continua entre p = 0.0 y p = 0.09)
-      const t = Math.max(0, Math.min(1.0, p / 0.09));
+      // -----------------------------------------------------------------
+      // COREOGRAFÍA SECUENCIAL ESTRICTA (3 FASES EN ORDEN):
+      // 1) Primero los textos iniciales desaparecen (fade out)
+      // 2) Luego los iconos se reacomodan (desplazamiento centro -> izquierda)
+      // 3) Luego aparece el nuevo texto (fade in a la izquierda)
+      // -----------------------------------------------------------------
 
-      // 1. Fondo negro pleno inicial: cubre las fotos en reposo y se desvanece suavemente
+      // Fase 1: Desaparición de textos iniciales (p: 0.000 a 0.035)
+      const tFadeOut = Math.max(0, Math.min(1.0, p / 0.035));
+
+      // Fondo negro pleno inicial: se desvanece durante la Fase 1 y 2 (p: 0.000 a 0.075)
+      const tBg = Math.max(0, Math.min(1.0, p / 0.075));
       if (discSolidBlackBg) {
-        discSolidBlackBg.style.opacity = (1 - t).toFixed(3);
+        discSolidBlackBg.style.opacity = (1 - tBg).toFixed(3);
       }
 
-      // 2. Reacomodación horizontal de la franja de iconos (centrada en inicio, se desplaza a la izquierda en recorrido)
+      // Fase 2: Reacomodación de los iconos (p: 0.035 a 0.080)
+      const tIconsRaw = Math.max(0, Math.min(1.0, (p - 0.035) / 0.045));
+      // Curva suave de aceleración/desaceleración (smoothstep)
+      const tIcons = tIconsRaw * tIconsRaw * (3 - 2 * tIconsRaw);
+
       if (discDockWrapper && discMasterContainer) {
         const stageWidth = discMasterContainer.clientWidth;
         const dockWidth = discDockBar ? discDockBar.offsetWidth : 280;
         const maxDockShift = Math.max(0, (stageWidth - dockWidth) / 2);
-        const dockShift = -t * maxDockShift;
+        const dockShift = -tIcons * maxDockShift;
         discDockWrapper.style.transform = `translateX(${dockShift.toFixed(1)}px)`;
       }
 
-      // 3. Titulares: Grande centrado se desvanece; Compacto a la izquierda aparece (SIN moverse)
+      // Fase 3: Aparición del nuevo texto (p: 0.080 a 0.115)
+      const tFadeIn = Math.max(0, Math.min(1.0, (p - 0.080) / 0.035));
+
+      // 1. Textos iniciales desaparecen sin moverse (Fase 1)
       if (discIntroHeader) {
-        discIntroHeader.style.opacity = (1 - t).toFixed(3);
-        discIntroHeader.style.pointerEvents = t < 0.3 ? 'auto' : 'none';
+        discIntroHeader.style.opacity = (1 - tFadeOut).toFixed(3);
+        discIntroHeader.style.pointerEvents = tFadeOut < 0.2 ? 'auto' : 'none';
       }
-      if (discTourHeader) {
-        discTourHeader.style.opacity = t.toFixed(3);
-        discTourHeader.style.pointerEvents = t > 0.4 ? 'auto' : 'none';
+      if (discIntroBottom) {
+        discIntroBottom.style.opacity = (1 - tFadeOut).toFixed(3);
+        discIntroBottom.style.pointerEvents = tFadeOut < 0.2 ? 'auto' : 'none';
       }
 
-      // 4. Zona inferior: Intro (texto descriptivo + botón) se desvanece; Ficha técnica aparece a la izquierda (SIN moverse)
-      if (discIntroBottom) {
-        const introOpacity = Math.max(0, 1 - t * 1.5);
-        discIntroBottom.style.opacity = introOpacity.toFixed(3);
-        discIntroBottom.style.pointerEvents = t < 0.2 ? 'auto' : 'none';
+      // 3. Nuevos textos del recorrido aparecen sin moverse (Fase 3)
+      if (discTourHeader) {
+        discTourHeader.style.opacity = tFadeIn.toFixed(3);
+        discTourHeader.style.pointerEvents = tFadeIn > 0.4 ? 'auto' : 'none';
       }
       if (discDetailBox) {
-        const detailOpacity = Math.max(0, (t - 0.25) / 0.75);
-        discDetailBox.style.opacity = detailOpacity.toFixed(3);
-        discDetailBox.style.pointerEvents = t > 0.35 ? 'auto' : 'none';
+        discDetailBox.style.opacity = tFadeIn.toFixed(3);
+        discDetailBox.style.pointerEvents = tFadeIn > 0.4 ? 'auto' : 'none';
       }
 
       // 5. Calcular opacidad continua de cada fotografía de fondo en el recorrido
@@ -1735,7 +1747,7 @@
           weight = 0.5 * (1 + Math.cos(Math.PI * norm));
         }
 
-        const activeWeight = weight * t;
+        const activeWeight = weight * tIcons;
         const scale = (1.0 + 0.48 * activeWeight).toFixed(3);
         const translateY = (-8 * activeWeight).toFixed(1);
         const opacity = (0.35 + 0.65 * weight).toFixed(3);
@@ -1743,7 +1755,7 @@
         const iconEl = discDockIcons[i];
         const dotEl = discDockDots[i];
 
-        if (t < 0.15) {
+        if (tIcons < 0.3) {
           // Vista inicial centrada: todos los iconos nítidos y uniformes
           if (iconEl) {
             iconEl.style.transform = 'scale(1) translateY(0)';
