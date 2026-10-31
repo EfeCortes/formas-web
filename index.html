@@ -608,7 +608,7 @@
     <!-- PREVIEW 2: DISCIPLINAS (SCROLL-DRIVEN SLIDESHOW + PAGINADOR) -->
     <!-- ======================================================== -->
     <div id="disciplinasTrack" class="relative h-[440vh]">
-      <section id="disciplinasPreview" class="sticky top-0 h-screen w-full flex items-center justify-start py-20 px-6 sm:px-12 lg:px-16 border-t border-white/10 overflow-hidden bg-black">
+      <section id="disciplinasPreview" class="sticky top-0 h-screen w-full flex items-center justify-center py-20 px-4 sm:px-6 lg:px-8 border-t border-white/10 overflow-hidden bg-black">
         
         <!-- SLIDESHOW DE FOTOS DE FONDO: 100% VISIBLES Y CLARAS, PRIORIZANDO LA ACCIÓN A LA DERECHA Y ALINEADAS ARRIBA -->
         <div id="discSlideshow" class="absolute inset-0 z-0">
@@ -672,8 +672,8 @@
 
             </div>
 
-            <!-- 2. FRANJA DE ICONOS FLOTANTE (Sin contenedor, flotan en el espacio; es lo único que se desplaza horizontalmente) -->
-            <div id="discDockWrapper" class="pt-0 pb-1.5 will-change-transform">
+            <!-- 2. FRANJA DE ICONOS FLOTANTE (Centrada en reposo, viaja a la izquierda en el recorrido) -->
+            <div id="discDockWrapper" class="w-full flex justify-center pt-0 pb-1.5 will-change-transform">
               <div id="discDockBar" class="inline-flex items-end gap-4 sm:gap-6 py-1 select-none">
                 
                 <!-- Icono 0: Musculación -->
@@ -1674,12 +1674,12 @@
         discSolidBlackBg.style.opacity = (1 - t).toFixed(3);
       }
 
-      // 2. Reacomodación horizontal de la franja de iconos (lo ÚNICO que se desplaza horizontalmente)
+      // 2. Reacomodación horizontal de la franja de iconos (centrada en inicio, se desplaza a la izquierda en recorrido)
       if (discDockWrapper && discMasterContainer) {
         const stageWidth = discMasterContainer.clientWidth;
         const dockWidth = discDockBar ? discDockBar.offsetWidth : 280;
         const maxDockShift = Math.max(0, (stageWidth - dockWidth) / 2);
-        const dockShift = (1 - t) * maxDockShift;
+        const dockShift = -t * maxDockShift;
         discDockWrapper.style.transform = `translateX(${dockShift.toFixed(1)}px)`;
       }
 
@@ -2335,10 +2335,12 @@
     window.addEventListener('resize', () => {
       measureBlueprintShift();
       onPageScroll();
+      applyDisciplinasProgress(discCurrentProgress);
     }, { passive: true });
     window.addEventListener('DOMContentLoaded', () => {
       measureBlueprintShift();
       onPageScroll();
+      applyDisciplinasProgress(0);
     });
 
     const mobileBtn = document.getElementById('mobileMenuBtn');
