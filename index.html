@@ -905,8 +905,12 @@
   </div>
 
 
-    <!-- FOOTER / EXPERIENCIA FORMAS & REDES -->
-  <footer id="contacto" class="border-t border-white/10 bg-[#060608] relative transition-all duration-700 ease-out overflow-hidden is-collapsed">
+    <!-- ======================================================== -->
+    <!-- FOOTER / EXPERIENCIA FORMAS & REDES (SCROLL-DRIVEN TRACK) -->
+    <!-- ======================================================== -->
+    <div id="contactoTrack" class="relative h-[150vh] bg-[#060608] border-t border-white/10 select-none">
+      <div id="contactoSticky" class="sticky top-20 w-full overflow-hidden">
+        <footer id="contacto" class="relative transition-all duration-700 ease-out overflow-hidden is-collapsed">
     <div class="max-w-7xl mx-auto px-6 sm:px-12 lg:px-16 transition-all duration-500">
       
       <!-- BARRA SUPERIOR ("EL FOOTER SE QUEDA ARRIBA") -->
@@ -1000,13 +1004,6 @@
               <span class="social-arrow text-white/40 group-hover:text-[#25D366] group-hover:translate-x-0.5 transition-all text-sm">↗</span>
             </a>
           </div>
-
-          <!-- Botón sutil de expandir/contraer con chevron -->
-          <button type="button" onclick="toggleFooterExperience()" class="p-2 text-white/50 hover:text-white transition-colors cursor-pointer" aria-label="Desplegar Experiencia">
-            <svg id="footerChevron" class="w-4 h-4 text-[#0effc7] transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-            </svg>
-          </button>
         </div>
 
       </div>
@@ -1046,6 +1043,8 @@
 
     </div>
   </footer>
+      </div>
+    </div>
 
 
   <!-- SCRIPTS -->
@@ -2174,7 +2173,6 @@
       const contacto = document.getElementById('contacto');
       const rowAnchor = document.getElementById('footerRowAnchor');
       const colSlot = document.getElementById('footerColumnSlot');
-      const chevron = document.getElementById('footerChevron');
       const items = [
         document.getElementById('socialItem-0'),
         document.getElementById('socialItem-1'),
@@ -2196,12 +2194,10 @@
           contacto.classList.remove('is-collapsed');
           contacto.classList.add('is-expanded');
           items.forEach(el => colSlot.appendChild(el));
-          if (chevron) chevron.style.transform = 'rotate(180deg)';
         } else {
           contacto.classList.remove('is-expanded');
           contacto.classList.add('is-collapsed');
           items.forEach(el => rowAnchor.appendChild(el));
-          if (chevron) chevron.style.transform = '';
         }
 
         // FLIP Last: record new coordinates
@@ -2219,13 +2215,13 @@
           // Play: animate smoothly back to origin
           requestAnimationFrame(() => {
             items.forEach((el, i) => {
-              el.style.transition = `transform 0.55s cubic-bezier(0.16, 1, 0.3, 1) ${i * 0.03}s`;
+              el.style.transition = `transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) ${i * 0.025}s`;
               el.style.transform = '';
             });
 
             setTimeout(() => {
               isFooterTransitioning = false;
-            }, 650);
+            }, 550);
           });
         });
       } else {
@@ -2233,19 +2229,32 @@
           contacto.classList.remove('is-collapsed');
           contacto.classList.add('is-expanded');
           items.forEach(el => colSlot.appendChild(el));
-          if (chevron) chevron.style.transform = 'rotate(180deg)';
         } else {
           contacto.classList.remove('is-expanded');
           contacto.classList.add('is-collapsed');
           items.forEach(el => rowAnchor.appendChild(el));
-          if (chevron) chevron.style.transform = '';
         }
         isFooterTransitioning = false;
       }
     }
 
-    function toggleFooterExperience() {
-      setFooterExpanded(!isFooterExpanded, true);
+    function updateContactoScroll() {
+      const track = document.getElementById('contactoTrack');
+      if (!track) return;
+      const rect = track.getBoundingClientRect();
+      const scrollable = rect.height - window.innerHeight;
+      if (scrollable <= 0) return;
+
+      // Progreso a lo largo del track del footer (0 = inicio, 1 = fondo)
+      const progress = Math.max(0, Math.min(1.0, -rect.top / scrollable));
+
+      // Al hacer scroll hacia abajo se despliega naturalmente
+      // Al hacer scroll hacia arriba regresa a su lugar
+      if (progress >= 0.20 && !isFooterExpanded) {
+        setFooterExpanded(true, true);
+      } else if (progress < 0.14 && isFooterExpanded) {
+        setFooterExpanded(false, true);
+      }
     }
 
     function openExperienciaFromNav(e) {
@@ -2253,13 +2262,15 @@
         e.preventDefault();
       }
       closeMobileMenu();
-      setFooterExpanded(true, true);
-      setTimeout(() => {
-        const target = document.getElementById('contacto');
-        if (target) {
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      }, 50);
+      const track = document.getElementById('contactoTrack');
+      if (track) {
+        const rect = track.getBoundingClientRect();
+        const currentScrollY = window.pageYOffset || document.documentElement.scrollTop;
+        const trackTop = currentScrollY + rect.top;
+        const scrollable = rect.height - window.innerHeight;
+        const targetScroll = trackTop + 0.45 * scrollable;
+        window.scrollTo({ top: targetScroll, behavior: 'smooth' });
+      }
     }
 
     function onPageScroll() {
@@ -2290,18 +2301,8 @@
       updateEspaciosScroll();
       updateDisciplinasScroll();
       updatePhoneVideoScroll();
+      updateContactoScroll();
       updateGlobalScrollIndicator();
-
-      // Detección de scroll para desplegar la experiencia en el footer
-      const docHeight = document.documentElement.scrollHeight;
-      const winHeight = window.innerHeight;
-      const distFromBottom = docHeight - (scrollY + winHeight);
-
-      if (distFromBottom <= 50) {
-        if (!isFooterExpanded) setFooterExpanded(true, true);
-      } else if (distFromBottom > 420 && isFooterExpanded) {
-        setFooterExpanded(false, true);
-      }
     }
 
     window.addEventListener('scroll', onPageScroll, { passive: true });
@@ -2313,35 +2314,6 @@
       measureBlueprintShift();
       onPageScroll();
     });
-
-    window.addEventListener('wheel', (e) => {
-      if (e.deltaY > 10 && !isFooterExpanded) {
-        const scrollY = window.pageYOffset || document.documentElement.scrollTop;
-        const docHeight = document.documentElement.scrollHeight;
-        const winHeight = window.innerHeight;
-        if (docHeight - (scrollY + winHeight) <= 150) {
-          setFooterExpanded(true, true);
-        }
-      }
-    }, { passive: true });
-
-    let footerTouchStartY = 0;
-    window.addEventListener('touchstart', (e) => {
-      if (e.touches && e.touches[0]) footerTouchStartY = e.touches[0].clientY;
-    }, { passive: true });
-    window.addEventListener('touchend', (e) => {
-      if (!e.changedTouches || !e.changedTouches[0]) return;
-      const touchEndY = e.changedTouches[0].clientY;
-      const dy = footerTouchStartY - touchEndY;
-      if (dy > 35 && !isFooterExpanded) {
-        const scrollY = window.pageYOffset || document.documentElement.scrollTop;
-        const docHeight = document.documentElement.scrollHeight;
-        const winHeight = window.innerHeight;
-        if (docHeight - (scrollY + winHeight) <= 180) {
-          setFooterExpanded(true, true);
-        }
-      }
-    }, { passive: true });
 
     const mobileBtn = document.getElementById('mobileMenuBtn');
     const mobileMenu = document.getElementById('mobileMenu');
