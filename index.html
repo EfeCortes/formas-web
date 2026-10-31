@@ -477,19 +477,15 @@
                 <!-- Retícula técnica arquitectónica tenue de fondo -->
                 <div class="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.06)_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none opacity-40"></div>
 
-                <!-- Capa del dibujo vectorial con máscara vertical ascendente (de abajo hacia arriba) -->
+                <!-- Capa del dibujo vectorial: Base translúcida en el recorrido + Capa activa al 100% con clip-path dinámico -->
                 <div id="blueprintDrawWrapper" class="relative w-full h-full overflow-hidden will-change-[clip-path]" style="clip-path: inset(100% 0 0 0);">
-                  <img id="blueprintSvg" src="assets/images/draw.svg" alt="Corte Arquitectónico Vectorial Edificio FOR+" decoding="async" class="w-full h-full object-contain object-bottom relative z-10 filter brightness-[1.05] contrast-[1.05]">
-                </div>
-
-                <!-- Resaltado iluminado de la Planta Activa ("se pinta toda la planta de línea a línea") -->
-                <div id="blueprintFloorHighlight" class="absolute left-0 right-0 z-20 pointer-events-none will-change-[top,height,opacity] opacity-0 transition-[opacity] duration-400 ease-out" style="top: 2.5%; height: 25.5%;">
-                  <!-- Relleno luminoso con gradiente y tinte verde agua FOR+ -->
-                  <div class="absolute inset-0 bg-gradient-to-r from-[#0effc7]/32 via-[#0effc7]/20 to-[#0effc7]/08 border-y-2 border-[#0effc7] shadow-[0_0_28px_rgba(14,255,199,0.35),inset_0_0_22px_rgba(14,255,199,0.20)]"></div>
+                  <!-- Dibujo base: En reposo al 100%, en el recorrido baja a ~22% para que las plantas inactivas sean transparentes -->
+                  <img id="blueprintSvg" src="assets/images/draw.svg" alt="Corte Arquitectónico Vectorial Edificio FOR+" decoding="async" class="w-full h-full object-contain object-bottom relative z-10 filter brightness-[1.05] contrast-[1.05] transition-opacity duration-300">
                   
-                  <!-- Líneas brillantes en las losas de entrepiso (superior e inferior) -->
-                  <div class="absolute -top-[1px] left-0 right-0 h-[2px] bg-gradient-to-r from-[#0effc7]/40 via-[#0effc7] to-[#0effc7]/60 shadow-[0_0_12px_#0effc7]"></div>
-                  <div class="absolute -bottom-[1px] left-0 right-0 h-[2px] bg-gradient-to-r from-[#0effc7]/40 via-[#0effc7] to-[#0effc7]/60 shadow-[0_0_12px_#0effc7]"></div>
+                  <!-- Capa de la Planta Activa: Mismo dibujo vectorial pero aislado con clip-path dinámico, al 100% de nitidez y brillo -->
+                  <div id="blueprintActiveWrapper" class="absolute inset-0 z-20 pointer-events-none will-change-[clip-path,opacity] transition-opacity duration-300 opacity-0 overflow-hidden" style="clip-path: inset(2.5% 0 72% 0);">
+                    <img id="blueprintSvgActive" src="assets/images/draw.svg" alt="Planta Activa FOR+" decoding="async" class="w-full h-full object-contain object-bottom filter brightness-[1.25] contrast-[1.1] drop-shadow-[0_0_14px_rgba(255,255,255,0.45)]">
+                  </div>
                 </div>
 
                 <!-- Línea horizontal de trazado CAD / Señalización de escaneo inicial (FASE 1) -->
@@ -1043,7 +1039,16 @@
     const blueprintWrapper = document.getElementById('blueprintDrawWrapper');
     const blueprintLaser = document.getElementById('blueprintLaserLine');
     const laserFloorText = document.getElementById('laserFloorText');
-    const blueprintFloorHighlight = document.getElementById('blueprintFloorHighlight');
+    const blueprintSvg = document.getElementById('blueprintSvg');
+    const blueprintActiveWrapper = document.getElementById('blueprintActiveWrapper');
+
+    function setFloorFocus(topVal, heightVal, opacityVal = 1) {
+      if (blueprintActiveWrapper) {
+        const bottomVal = Math.max(0, 100 - (topVal + heightVal));
+        blueprintActiveWrapper.style.clipPath = `inset(${topVal.toFixed(2)}% 0% ${bottomVal.toFixed(2)}% 0%)`;
+        blueprintActiveWrapper.style.opacity = opacityVal.toString();
+      }
+    }
     const espaciosTitle = document.getElementById('espaciosTitle');
     const espaciosDesc = document.getElementById('espaciosDesc');
     const espaciosCta = document.getElementById('espaciosCta');
@@ -1227,8 +1232,9 @@
           espaciosPreviewContent.style.pointerEvents = 'auto';
         }
 
-        // Ocultar el resaltado de planta completa durante el escaneo inicial
-        if (blueprintFloorHighlight) blueprintFloorHighlight.style.opacity = '0';
+        // En el escaneo inicial el dibujo está al 100% y la capa enfocada oculta
+        if (blueprintSvg) blueprintSvg.style.opacity = '1';
+        setFloorFocus(0, 100, 0);
 
         currentFloorContentIndex = -1;
 
@@ -1339,13 +1345,10 @@
           espaciosTourContent.style.pointerEvents = t > 0.5 ? 'auto' : 'none';
         }
 
-        // Ocultar la línea individual y pintar toda la Planta 2 ("de línea a línea")
+        // Ocultar la línea individual y enfocar Planta 2 al 100%, volviendo las demás transparentes
         blueprintLaser.style.opacity = '0';
-        if (blueprintFloorHighlight) {
-          blueprintFloorHighlight.style.top = '2.5%';
-          blueprintFloorHighlight.style.height = '25.5%';
-          blueprintFloorHighlight.style.opacity = t.toFixed(3);
-        }
+        if (blueprintSvg) blueprintSvg.style.opacity = (1 - t * 0.78).toFixed(3);
+        setFloorFocus(2.5, 25.5, t);
         hideBlueprintTags();
         return;
       }
@@ -1353,7 +1356,7 @@
       // ========================================================
       // FASE 3: RECORRIDO PLANTA POR PLANTA (p: 0.36 -> 0.94)
       // Plano fijo a la izquierda, más grande y ubicado más a la derecha.
-      // Se pinta toda la planta activa de línea a línea conforme se recorre.
+      // La planta activa se mantiene nítida al 100% y las demás transparentes.
       // ========================================================
       blueprintWrapper.style.clipPath = 'inset(0% 0 0 0)';
       if (cachedBlueprintShift <= 0) measureBlueprintShift();
@@ -1377,9 +1380,9 @@
         espaciosTourContent.style.pointerEvents = 'auto';
       }
 
-      // Ocultar la línea láser individual y mostrar el pintado completo de planta
+      // En el recorrido, las plantas inactivas se mantienen a 0.22 de opacidad (78% transparentes)
+      if (blueprintSvg) blueprintSvg.style.opacity = '0.22';
       blueprintLaser.style.opacity = '0';
-      if (blueprintFloorHighlight) blueprintFloorHighlight.style.opacity = '1';
       hideBlueprintTags();
 
       // 4 tramos de scroll desde Planta 2 hasta Subsuelo:
@@ -1393,20 +1396,14 @@
         updateTourFloorContent(0);
 
         if (p < 0.46) {
-          if (blueprintFloorHighlight) {
-            blueprintFloorHighlight.style.top = '2.5%';
-            blueprintFloorHighlight.style.height = '25.5%';
-          }
+          setFloorFocus(2.5, 25.5, 1);
           setTourBackgroundOpacities(0, 0);
         } else {
           // Desplazamiento progresivo hacia Planta 1
           const cross = (p - 0.46) / 0.04;
           const top = 2.5 + cross * (28.0 - 2.5);
           const h = 25.5 + cross * (24.8 - 25.5);
-          if (blueprintFloorHighlight) {
-            blueprintFloorHighlight.style.top = `${top.toFixed(2)}%`;
-            blueprintFloorHighlight.style.height = `${h.toFixed(2)}%`;
-          }
+          setFloorFocus(top, h, 1);
           setTourBackgroundOpacities(0, cross);
         }
       } else if (p < 0.65) {
@@ -1414,20 +1411,14 @@
         updateTourFloorContent(1);
 
         if (p < 0.61) {
-          if (blueprintFloorHighlight) {
-            blueprintFloorHighlight.style.top = '28.0%';
-            blueprintFloorHighlight.style.height = '24.8%';
-          }
+          setFloorFocus(28.0, 24.8, 1);
           setTourBackgroundOpacities(1, 0);
         } else {
           // Desplazamiento progresivo hacia Planta Baja
           const cross = (p - 0.61) / 0.04;
           const top = 28.0 + cross * (52.8 - 28.0);
           const h = 24.8 + cross * (21.7 - 24.8);
-          if (blueprintFloorHighlight) {
-            blueprintFloorHighlight.style.top = `${top.toFixed(2)}%`;
-            blueprintFloorHighlight.style.height = `${h.toFixed(2)}%`;
-          }
+          setFloorFocus(top, h, 1);
           setTourBackgroundOpacities(1, cross);
         }
       } else if (p < 0.80) {
@@ -1435,29 +1426,20 @@
         updateTourFloorContent(2);
 
         if (p < 0.76) {
-          if (blueprintFloorHighlight) {
-            blueprintFloorHighlight.style.top = '52.8%';
-            blueprintFloorHighlight.style.height = '21.7%';
-          }
+          setFloorFocus(52.8, 21.7, 1);
           setTourBackgroundOpacities(2, 0);
         } else {
           // Desplazamiento progresivo hacia Subsuelo
           const cross = (p - 0.76) / 0.04;
           const top = 52.8 + cross * (74.5 - 52.8);
           const h = 21.7 + cross * (23.0 - 21.7);
-          if (blueprintFloorHighlight) {
-            blueprintFloorHighlight.style.top = `${top.toFixed(2)}%`;
-            blueprintFloorHighlight.style.height = `${h.toFixed(2)}%`;
-          }
+          setFloorFocus(top, h, 1);
           setTourBackgroundOpacities(2, cross);
         }
       } else {
         // SUBSUELO (Underground & Vestidores)
         updateTourFloorContent(3);
-        if (blueprintFloorHighlight) {
-          blueprintFloorHighlight.style.top = '74.5%';
-          blueprintFloorHighlight.style.height = '23.0%';
-        }
+        setFloorFocus(74.5, 23.0, 1);
         setTourBackgroundOpacities(3, 0);
 
         // Desvanecimiento suave al salir hacia Disciplinas (p > 0.95)
@@ -1465,7 +1447,8 @@
           const exitT = Math.max(0, 1 - (p - 0.95) / 0.05);
           if (espaciosTourContent) espaciosTourContent.style.opacity = exitT.toFixed(3);
           if (spacesTourBg) spacesTourBg.style.opacity = exitT.toFixed(3);
-          if (blueprintFloorHighlight) blueprintFloorHighlight.style.opacity = exitT.toFixed(3);
+          setFloorFocus(74.5, 23.0, exitT);
+          if (blueprintSvg) blueprintSvg.style.opacity = (0.22 * exitT).toFixed(3);
         }
       }
     }
