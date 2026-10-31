@@ -288,7 +288,7 @@
 
       <!-- Direct In-Page Navigation -->
       <nav class="hidden md:flex items-center gap-10 text-xs uppercase tracking-widest font-brand">
-        <a href="#espaciosTrack" class="nav-link text-white/70 hover:text-white transition-colors">Espacios</a>
+        <a href="#espaciosTrack" onclick="openEspaciosFromNav(event)" class="nav-link text-white/70 hover:text-white transition-colors">Espacios</a>
         <a href="#disciplinasTrack" class="nav-link text-white/70 hover:text-white transition-colors">Disciplinas</a>
         <a href="#appSection" class="nav-link text-white/70 hover:text-white transition-colors">App</a>
       </nav>
@@ -328,7 +328,7 @@
         <div>
           <span class="text-[10px] font-brand tracking-widest uppercase text-white/40 block mb-3">Secciones</span>
           <div class="space-y-4">
-            <a href="#espaciosTrack" class="block font-brand text-3xl sm:text-4xl uppercase tracking-wider text-white hover:text-[#0effc7] transition-colors" onclick="closeMobileMenu()">
+            <a href="#espaciosTrack" class="block font-brand text-3xl sm:text-4xl uppercase tracking-wider text-white hover:text-[#0effc7] transition-colors" onclick="openEspaciosFromNav(event)">
               Espacios
             </a>
             <a href="#disciplinasTrack" class="block font-brand text-3xl sm:text-4xl uppercase tracking-wider text-white hover:text-[#0effc7] transition-colors" onclick="closeMobileMenu()">
@@ -1157,6 +1157,23 @@
       espaciosTargetProgress = progress;
     }
 
+    function openEspaciosFromNav(e) {
+      if (e) {
+        e.preventDefault();
+      }
+      if (typeof closeMobileMenu === 'function') {
+        closeMobileMenu();
+      }
+      if (!espaciosTrack) return;
+      const rect = espaciosTrack.getBoundingClientRect();
+      const currentScrollY = window.pageYOffset || document.documentElement.scrollTop;
+      const trackTop = currentScrollY + rect.top;
+      const scrollable = rect.height - window.innerHeight;
+      // p = 0.24 sitúa el scroll directamente en la vista del plano completo con el titular y descripción al 100%
+      const targetScroll = trackTop + 0.24 * scrollable;
+      window.scrollTo({ top: targetScroll, behavior: 'smooth' });
+    }
+
     function scrollEspaciosToTour() {
       if (!espaciosTrack) return;
       const rect = espaciosTrack.getBoundingClientRect();
@@ -1274,7 +1291,7 @@
         } else {
           currentTop = 0;
           currentFloor = 'COMPLETO';
-          laserOp = Math.max(0, 1 - (p - 0.22) / 0.04);
+          laserOp = Math.max(0, 1 - (p - 0.22) / 0.018);
         }
 
         blueprintWrapper.style.clipPath = `inset(${currentTop.toFixed(2)}% 0 0 0)`;
