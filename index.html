@@ -370,11 +370,11 @@
     <!-- HERO SECTION: VIDEO CONTROLADO POR SCROLL CON PALABRAS EN 4 CUARTOS Y FUNDIDO A STATEMENT -->
     <div id="heroTrack" class="relative h-[340vh]">
       <section id="hero" class="sticky top-0 h-screen w-full flex items-center justify-center px-6 sm:px-8 pt-24 pb-16 overflow-hidden bg-[#080808]">
-        <!-- Imagen de alta fidelidad que se muestra inicialmente en reposo y como respaldo inmediato -->
-        <img id="heroFallback" src="assets/images/hero.jpg" alt="Fachada FOR+" class="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none will-change-[opacity]" style="object-position: center top;" fetchpriority="high" decoding="async">
+        <!-- Imagen de alta fidelidad que se muestra inicialmente en reposo y como respaldo inmediato mientras carga el video -->
+        <img id="heroFallback" src="assets/images/hero.jpg" alt="Fachada FOR+" class="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none transition-opacity duration-700 ease-out" style="object-position: center top;" fetchpriority="high" decoding="async">
 
-        <!-- Video interactivo scroll-driven de fachada: inicia en opacity-0 y se activa suavemente al scrollear -->
-        <video id="heroVideo" src="videos/comp1.mp4" playsinline muted preload="auto" class="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none will-change-[opacity] opacity-0" style="object-position: center top;"></video>
+        <!-- Video interactivo scroll-driven de fachada: continuo, fluido y sin parpadeos -->
+        <video id="heroVideo" src="videos/comp1.mp4" playsinline muted preload="auto" class="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none transition-opacity duration-700 ease-out opacity-0" style="object-position: center top;"></video>
         
         <!-- Capa oscurecedora al 10% en modo multiplicar sobre el video -->
         <div class="absolute inset-0 pointer-events-none z-[1]" style="background-color: #000000; opacity: 0.10; mix-blend-mode: multiply;"></div>
@@ -1984,12 +1984,13 @@
 
     function requestVideoSeek(targetTime) {
       if (!heroVideo || isNaN(heroVideo.duration) || heroVideo.duration <= 0) return;
-      const clamped = Math.max(0, Math.min(heroVideo.duration - 0.05, targetTime));
-      const now = performance.now();
+      const clamped = Math.max(0, Math.min(heroVideo.duration - 0.04, targetTime));
 
-      if ((!heroVideo.seeking && !isSeeking) || (now - lastSeekTimestamp > 120)) {
+      // Evitar seeks microscópicos que saturan el decodificador
+      if (Math.abs(heroVideo.currentTime - clamped) < 0.02) return;
+
+      if (!heroVideo.seeking && !isSeeking) {
         isSeeking = true;
-        lastSeekTimestamp = now;
         heroVideo.currentTime = clamped;
       } else {
         pendingSeekTime = clamped;
@@ -2008,15 +2009,32 @@
       heroVideo.addEventListener('seeking', () => {
         isSeeking = true;
       });
+      heroVideo.addEventListener('error', () => {
+        if (heroFallback) {
+          heroFallback.style.opacity = '1';
+          heroFallback.style.display = '';
+        }
+        heroVideo.style.opacity = '0';
+      });
 
       const primeVideo = () => {
         heroVideo.play().then(() => {
           heroVideo.pause();
+          heroVideo.currentTime = 0;
+          heroCurrentTime = 0;
+          heroTargetTime = 0;
+          heroVideo.style.opacity = '1';
+          if (heroFallback) heroFallback.style.opacity = '0';
           updateHeroVideoScroll();
-      updatePhoneVideoScroll();
+          updatePhoneVideoScroll();
         }).catch(() => {
+          heroVideo.currentTime = 0;
+          heroCurrentTime = 0;
+          heroTargetTime = 0;
+          heroVideo.style.opacity = '1';
+          if (heroFallback) heroFallback.style.opacity = '0';
           updateHeroVideoScroll();
-      updatePhoneVideoScroll();
+          updatePhoneVideoScroll();
         });
       };
 
@@ -2027,7 +2045,7 @@
         heroVideo.addEventListener('canplay', primeVideo, { once: true });
         heroVideo.addEventListener('loadedmetadata', () => {
           updateHeroVideoScroll();
-      updatePhoneVideoScroll();
+          updatePhoneVideoScroll();
         }, { once: true });
       }
     }
@@ -2041,24 +2059,21 @@
       const progress = Math.max(0, Math.min(1.0, -rect.top / scrollableDist));
       const isVideoReady = heroVideo && !isNaN(heroVideo.duration) && heroVideo.duration > 0 && heroVideo.readyState >= 2;
 
-      // Transición fluida: Foto fija en reposo (calidad master) -> Video interactivo al scrollear (si ya cargó)
-      if (heroFallback) {
-        if (!isVideoReady || progress <= 0.005) {
-          heroFallback.style.opacity = '1';
-          if (heroVideo) heroVideo.style.opacity = '0';
-        } else if (progress < 0.04) {
-          const t = (progress - 0.005) / 0.035;
-          heroFallback.style.opacity = (1 - t).toFixed(3);
-          if (heroVideo) heroVideo.style.opacity = t.toFixed(3);
-        } else {
-          heroFallback.style.opacity = '0';
-          if (heroVideo) heroVideo.style.opacity = '1';
-        }
-      }
-
+      // Una vez que el video cargó, se mantiene visible en todo momento para evitar parpadeos
       if (isVideoReady) {
+        if (heroVideo.style.opacity !== '1') {
+          heroVideo.style.opacity = '1';
+          if (heroFallback) heroFallback.style.opacity = '0';
+        }
         const videoProgress = Math.min(1.0, progress / 0.60);
         heroTargetTime = videoProgress * heroVideo.duration;
+      } else {
+        if (heroFallback && heroFallback.style.opacity !== '1') {
+          heroFallback.style.opacity = '1';
+        }
+        if (heroVideo && heroVideo.style.opacity !== '0') {
+          heroVideo.style.opacity = '0';
+        }
       }
 
       updateKineticWords(progress);
@@ -2079,7 +2094,7 @@
     function renderHeroVideoScrub() {
       if (heroVideo && !isNaN(heroVideo.duration) && heroVideo.duration > 0) {
         const diff = heroTargetTime - heroCurrentTime;
-        if (Math.abs(diff) > 0.015) {
+        if (Math.abs(diff) > 0.008) {
           heroCurrentTime += diff * 0.28;
           requestVideoSeek(heroCurrentTime);
         } else if (pendingSeekTime !== null && !isSeeking && !heroVideo.seeking) {
