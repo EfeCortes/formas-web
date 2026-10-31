@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" class="scroll-smooth bg-[#080808] text-white">
+<html lang="es" class="bg-[#080808] text-white">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -282,20 +282,20 @@
     <div class="max-w-7xl mx-auto px-6 sm:px-8 h-20 flex items-center justify-between">
       
       <!-- Brand Logo -->
-      <a href="index.html" class="flex items-center gap-3 group">
+      <a href="index.html" onclick="navigateToSection(event, 'hero')" class="flex items-center gap-3 group">
         <img src="assets/brand/brand.svg" alt="FOR+ Formas" class="h-9 w-auto object-contain transition-transform group-hover:scale-105 duration-200">
       </a>
 
       <!-- Direct In-Page Navigation -->
       <nav class="hidden md:flex items-center gap-10 text-xs uppercase tracking-widest font-brand">
-        <a href="#espaciosTrack" onclick="openEspaciosFromNav(event)" class="nav-link text-white/70 hover:text-white transition-colors">Espacios</a>
-        <a href="#disciplinasTrack" class="nav-link text-white/70 hover:text-white transition-colors">Disciplinas</a>
-        <a href="#appSection" class="nav-link text-white/70 hover:text-white transition-colors">App</a>
+        <a href="#espaciosTrack" onclick="navigateToSection(event, 'espacios')" class="nav-link text-white/70 hover:text-white transition-colors">Espacios</a>
+        <a href="#disciplinasTrack" onclick="navigateToSection(event, 'disciplinas')" class="nav-link text-white/70 hover:text-white transition-colors">Disciplinas</a>
+        <a href="#appSection" onclick="navigateToSection(event, 'app')" class="nav-link text-white/70 hover:text-white transition-colors">App</a>
       </nav>
 
       <!-- Action Button: Experiencia (Redes y Contacto) -->
       <div class="hidden sm:flex items-center gap-3">
-        <a href="#contacto" id="headerExperienciaBtn" onclick="openExperienciaFromNav(event)" class="px-5 py-2.5 rounded-full bg-white text-black hover:bg-white/90 font-brand text-xs uppercase tracking-wider transition-all duration-300 hover:scale-105 shadow-md flex items-center cursor-pointer">
+        <a href="#contacto" id="headerExperienciaBtn" onclick="navigateToSection(event, 'experiencia')" class="px-5 py-2.5 rounded-full bg-white text-black hover:bg-white/90 font-brand text-xs uppercase tracking-wider transition-all duration-300 hover:scale-105 shadow-md flex items-center cursor-pointer">
           Experiencia
         </a>
       </div>
@@ -313,7 +313,7 @@
     <div id="mobileMenu" class="hidden fixed inset-0 z-50 bg-[#080808]/98 backdrop-blur-2xl md:hidden flex-col justify-between px-6 py-6 sm:px-8">
       <!-- Barra superior: Logo y botón de cerrar -->
       <div class="flex items-center justify-between h-14 border-b border-white/10 pb-4">
-        <a href="index.html" onclick="closeMobileMenu()" class="flex items-center gap-3">
+        <a href="index.html" onclick="navigateToSection(event, 'hero')" class="flex items-center gap-3">
           <img src="assets/brand/brand.svg" alt="FOR+ Formas" class="h-8 w-auto object-contain">
         </a>
         <button onclick="closeMobileMenu()" class="p-2.5 rounded-full bg-white/10 text-white/90 hover:text-white" aria-label="Cerrar Menú">
@@ -328,20 +328,20 @@
         <div>
           <span class="text-[10px] font-brand tracking-widest uppercase text-white/40 block mb-3">Secciones</span>
           <div class="space-y-4">
-            <a href="#espaciosTrack" class="block font-brand text-3xl sm:text-4xl uppercase tracking-wider text-white hover:text-[#0effc7] transition-colors" onclick="openEspaciosFromNav(event)">
+            <a href="#espaciosTrack" class="block font-brand text-3xl sm:text-4xl uppercase tracking-wider text-white hover:text-[#0effc7] transition-colors" onclick="navigateToSection(event, 'espacios')">
               Espacios
             </a>
-            <a href="#disciplinasTrack" class="block font-brand text-3xl sm:text-4xl uppercase tracking-wider text-white hover:text-[#0effc7] transition-colors" onclick="closeMobileMenu()">
+            <a href="#disciplinasTrack" class="block font-brand text-3xl sm:text-4xl uppercase tracking-wider text-white hover:text-[#0effc7] transition-colors" onclick="navigateToSection(event, 'disciplinas')">
               Disciplinas
             </a>
-            <a href="#appSection" class="block font-brand text-3xl sm:text-4xl uppercase tracking-wider text-white hover:text-[#0effc7] transition-colors" onclick="closeMobileMenu()">
+            <a href="#appSection" class="block font-brand text-3xl sm:text-4xl uppercase tracking-wider text-white hover:text-[#0effc7] transition-colors" onclick="navigateToSection(event, 'app')">
               App
             </a>
           </div>
         </div>
 
         <div class="pt-2">
-          <a href="#contacto" id="mobileExperienciaBtn" onclick="openExperienciaFromNav(event)" class="inline-flex items-center justify-center gap-3 w-full py-4 rounded-xl bg-white text-black font-brand text-xs uppercase tracking-widest shadow-xl cursor-pointer">
+          <a href="#contacto" id="mobileExperienciaBtn" onclick="navigateToSection(event, 'experiencia')" class="inline-flex items-center justify-center gap-3 w-full py-4 rounded-xl bg-white text-black font-brand text-xs uppercase tracking-widest shadow-xl cursor-pointer">
             <span>Experiencia & Redes</span>
             <span>→</span>
           </a>
@@ -1158,20 +1158,7 @@
     }
 
     function openEspaciosFromNav(e) {
-      if (e) {
-        e.preventDefault();
-      }
-      if (typeof closeMobileMenu === 'function') {
-        closeMobileMenu();
-      }
-      if (!espaciosTrack) return;
-      const rect = espaciosTrack.getBoundingClientRect();
-      const currentScrollY = window.pageYOffset || document.documentElement.scrollTop;
-      const trackTop = currentScrollY + rect.top;
-      const scrollable = rect.height - window.innerHeight;
-      // p = 0.24 sitúa el scroll directamente en la vista del plano completo con el titular y descripción al 100%
-      const targetScroll = trackTop + 0.24 * scrollable;
-      window.scrollTo({ top: targetScroll, behavior: 'smooth' });
+      navigateToSection(e, 'espacios');
     }
 
     function scrollEspaciosToTour() {
@@ -2311,20 +2298,76 @@
       }
     }
 
-    function openExperienciaFromNav(e) {
+    function navigateToSection(e, section) {
       if (e) {
         e.preventDefault();
       }
-      closeMobileMenu();
-      const track = document.getElementById('contactoTrack');
-      if (track) {
-        const rect = track.getBoundingClientRect();
-        const currentScrollY = window.pageYOffset || document.documentElement.scrollTop;
-        const trackTop = currentScrollY + rect.top;
-        const scrollable = rect.height - window.innerHeight;
-        const targetScroll = trackTop + 0.35 * scrollable;
-        window.scrollTo({ top: targetScroll, behavior: 'smooth' });
+      if (typeof closeMobileMenu === 'function') {
+        closeMobileMenu();
       }
+
+      const currentScrollY = window.pageYOffset || document.documentElement.scrollTop;
+
+      if (section === 'hero') {
+        window.scrollTo({ top: 0, behavior: 'auto' });
+      } else if (section === 'espacios') {
+        const track = document.getElementById('espaciosTrack');
+        if (track) {
+          const rect = track.getBoundingClientRect();
+          const trackTop = currentScrollY + rect.top;
+          const scrollable = rect.height - window.innerHeight;
+          // Salto directo a la vista completa del plano con titular y descripción (sin recorrido intermedio)
+          const targetScroll = trackTop + 0.24 * scrollable;
+          window.scrollTo({ top: targetScroll, behavior: 'auto' });
+          espaciosTargetProgress = 0.24;
+          espaciosCurrentProgress = 0.24;
+          if (typeof applyEspaciosProgress === 'function') {
+            applyEspaciosProgress(0.24);
+          }
+        }
+      } else if (section === 'disciplinas') {
+        const track = document.getElementById('disciplinasTrack');
+        if (track) {
+          const rect = track.getBoundingClientRect();
+          const trackTop = currentScrollY + rect.top;
+          // Salto directo al inicio de disciplinas
+          window.scrollTo({ top: trackTop, behavior: 'auto' });
+          discTargetProgress = 0;
+          discCurrentProgress = 0;
+          if (typeof applyDisciplinasProgress === 'function') {
+            applyDisciplinasProgress(0);
+          }
+        }
+      } else if (section === 'app') {
+        const sec = document.getElementById('appSection');
+        if (sec) {
+          const rect = sec.getBoundingClientRect();
+          const targetScroll = currentScrollY + rect.top;
+          // Salto directo a la sección de la App
+          window.scrollTo({ top: targetScroll, behavior: 'auto' });
+        }
+      } else if (section === 'experiencia') {
+        const track = document.getElementById('contactoTrack');
+        if (track) {
+          const rect = track.getBoundingClientRect();
+          const trackTop = currentScrollY + rect.top;
+          const scrollable = rect.height - window.innerHeight;
+          const targetScroll = trackTop + 0.35 * scrollable;
+          // Salto directo a experiencia con el footer desplegado
+          window.scrollTo({ top: targetScroll, behavior: 'auto' });
+          if (typeof setFooterExpanded === 'function') {
+            setFooterExpanded(true, false);
+          }
+        }
+      }
+
+      if (typeof onPageScroll === 'function') {
+        onPageScroll();
+      }
+    }
+
+    function openExperienciaFromNav(e) {
+      navigateToSection(e, 'experiencia');
     }
 
     function onPageScroll() {
