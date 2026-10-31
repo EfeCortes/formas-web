@@ -219,14 +219,14 @@
       max-height: 0;
       opacity: 0;
       overflow: hidden;
-      transform: translateY(28px);
-      transition: max-height 1.15s cubic-bezier(0.22, 1, 0.36, 1), 
-                  opacity 0.95s cubic-bezier(0.22, 1, 0.36, 1) 0.08s, 
-                  transform 1.05s cubic-bezier(0.22, 1, 0.36, 1);
+      transform: translateY(24px);
+      transition: max-height 1.25s cubic-bezier(0.16, 1, 0.3, 1), 
+                  opacity 1.05s cubic-bezier(0.16, 1, 0.3, 1) 0.08s, 
+                  transform 1.15s cubic-bezier(0.16, 1, 0.3, 1);
       will-change: max-height, opacity, transform;
     }
     #contacto.is-expanded #footerExperienceWrapper {
-      max-height: 420px;
+      max-height: 480px;
       opacity: 1;
       transform: translateY(0);
     }
@@ -898,7 +898,7 @@
     <!-- ======================================================== -->
     <!-- FOOTER / EXPERIENCIA FORMAS & REDES (SCROLL-DRIVEN TRACK) -->
     <!-- ======================================================== -->
-    <div id="contactoTrack" class="relative h-[175vh] bg-[#060608] border-t border-white/10 select-none">
+    <div id="contactoTrack" class="relative h-[135vh] bg-[#060608] border-t border-white/10 select-none">
       <div id="contactoSticky" class="sticky top-20 w-full overflow-hidden">
         <footer id="contacto" class="relative transition-all duration-700 ease-out overflow-hidden is-collapsed">
     <div class="max-w-7xl mx-auto px-6 sm:px-12 lg:px-16 transition-all duration-500">
@@ -2245,13 +2245,13 @@
           // Play: animate smoothly back to origin con cadencia gradual y fluida
           requestAnimationFrame(() => {
             items.forEach((el, i) => {
-              el.style.transition = `transform 0.9s cubic-bezier(0.22, 1, 0.36, 1) ${i * 0.05}s`;
+              el.style.transition = `transform 1.05s cubic-bezier(0.16, 1, 0.3, 1) ${i * 0.07}s`;
               el.style.transform = '';
             });
 
             setTimeout(() => {
               isFooterTransitioning = false;
-            }, 950);
+            }, 1200);
           });
         });
       } else {
@@ -2278,14 +2278,15 @@
       // Actualizar visibilidad de la flecha de scroll
       updateGlobalScrollIndicator();
 
-      // Progreso a lo largo del track del footer (0 = inicio, 1 = fondo)
-      const progress = Math.max(0, Math.min(1.0, -rect.top / scrollable));
+      // Despliegue gradual y natural:
+      // Se activa en cuanto el footer entra en la zona media-superior del viewport (rect.top <= 280px)
+      // sin obligar al usuario a desplazarse hasta el fondo extremo de la página.
+      const triggerExpand = rect.top <= Math.min(280, window.innerHeight * 0.35);
+      const triggerCollapse = rect.top > Math.min(360, window.innerHeight * 0.45);
 
-      // Al hacer scroll hacia abajo se despliega gradualmente y con suavidad
-      // Al hacer scroll hacia arriba regresa a su lugar
-      if (progress >= 0.10 && !isFooterExpanded) {
+      if (triggerExpand && !isFooterExpanded) {
         setFooterExpanded(true, true);
-      } else if (progress < 0.05 && isFooterExpanded) {
+      } else if (triggerCollapse && isFooterExpanded) {
         setFooterExpanded(false, true);
       }
     }
@@ -2301,7 +2302,7 @@
         const currentScrollY = window.pageYOffset || document.documentElement.scrollTop;
         const trackTop = currentScrollY + rect.top;
         const scrollable = rect.height - window.innerHeight;
-        const targetScroll = trackTop + 0.45 * scrollable;
+        const targetScroll = trackTop + 0.35 * scrollable;
         window.scrollTo({ top: targetScroll, behavior: 'smooth' });
       }
     }
