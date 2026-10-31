@@ -641,14 +641,14 @@
         <!-- CAPA DE FONDO NEGRO PLENO INICIAL: Cubre fotos y gradientes en reposo (p=0), se desvanece al hacer scroll o presionar el botón -->
         <div id="discSolidBlackBg" class="absolute inset-0 bg-[#060608] z-[5] pointer-events-none will-change-[opacity] transition-opacity duration-300" style="opacity: 1;"></div>
 
-        <div id="discMasterContainer" class="max-w-7xl mx-auto relative z-10 w-full my-auto flex justify-start">
-          <div id="discMainColumn" class="w-full max-w-xl lg:max-w-2xl relative my-auto min-h-[460px] sm:min-h-[500px] will-change-transform flex flex-col justify-center">
+        <div id="discMasterContainer" class="max-w-7xl mx-auto relative z-10 w-full my-auto px-4 sm:px-6 lg:px-8">
+          <div id="discMainColumn" class="w-full relative my-auto min-h-[460px] sm:min-h-[500px] flex flex-col justify-center">
 
-            <!-- 1. ZONA DE TITULARES -->
-            <div id="discHeaderZone" class="relative min-h-[90px] sm:min-h-[115px] flex items-center">
+            <!-- 1. ZONA DE TITULARES (Espacio reducido entre antetítulo e iconos) -->
+            <div id="discHeaderZone" class="relative pb-1 sm:pb-1.5 min-h-[64px] sm:min-h-[80px] flex flex-col justify-end">
               
-              <!-- A. Titular Grande Inicial (Centrado, 'DIFERENTES FORMAS DE ENTRENAR') -->
-              <div id="discBigTitle" class="w-full space-y-1.5 text-center will-change-[opacity,transform] transition-all duration-300">
+              <!-- A. Titular Grande Inicial (Centrado, desaparece sin moverse) -->
+              <div id="discIntroHeader" class="w-full max-w-2xl mx-auto space-y-1 text-center transition-opacity duration-300">
                 <span class="text-[10px] sm:text-[11px] font-brand tracking-[0.25em] text-[#0effc7] uppercase block">
                   Disciplinas FOR+
                 </span>
@@ -660,8 +660,8 @@
                 </h2>
               </div>
 
-              <!-- B. Titular Compacto del Recorrido (Alineado a la izquierda, aparece durante el recorrido) -->
-              <div id="discCompactTitle" class="absolute inset-0 flex flex-col justify-center space-y-0.5 text-left will-change-[opacity,transform] transition-all duration-300 opacity-0 pointer-events-none">
+              <!-- B. Titular Compacto del Recorrido (Alineado a la izquierda, pegado sobre los iconos sin espacio vacío) -->
+              <div id="discTourHeader" class="absolute bottom-1 left-0 space-y-0.5 text-left transition-opacity duration-300 opacity-0 pointer-events-none">
                 <span class="text-[10px] sm:text-[11px] font-brand tracking-[0.25em] text-[#0effc7] uppercase block">
                   Disciplinas FOR+
                 </span>
@@ -672,46 +672,46 @@
 
             </div>
 
-            <!-- 2. DOCK INTERACTIVO DE ICONOS (Se desplaza fluidamente de centro a izquierda) -->
-            <div id="discDockWrapper" class="pt-2 pb-2 will-change-transform transition-all duration-300">
-              <div id="discDockBar" class="inline-flex items-end gap-3 sm:gap-4.5 px-3.5 sm:px-5 py-2.5 rounded-2xl bg-black/60 backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.6)]">
+            <!-- 2. FRANJA DE ICONOS FLOTANTE (Sin contenedor, flotan en el espacio; es lo único que se desplaza horizontalmente) -->
+            <div id="discDockWrapper" class="pt-0 pb-1.5 will-change-transform">
+              <div id="discDockBar" class="inline-flex items-end gap-4 sm:gap-6 py-1 select-none">
                 
                 <!-- Icono 0: Musculación -->
-                <button type="button" onclick="scrollDiscSlide(0)" id="discDockItem-0" class="disc-dock-item group relative flex flex-col items-center justify-end cursor-pointer origin-bottom select-none p-1" aria-label="Musculación">
-                  <div id="discDockIcon-0" class="w-7 h-7 sm:w-9 sm:h-9 flex items-center justify-center transition-transform duration-75">
-                    <img src="assets/icons/musculacion.svg" alt="Musculación" class="w-full h-full object-contain filter drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
+                <button type="button" onclick="scrollDiscSlide(0)" id="discDockItem-0" class="disc-dock-item group relative flex flex-col items-center justify-end cursor-pointer origin-bottom select-none p-1 hover:scale-105 transition-transform" aria-label="Musculación">
+                  <div id="discDockIcon-0" class="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center transition-transform duration-75">
+                    <img src="assets/icons/musculacion.svg" alt="Musculación" class="w-full h-full object-contain filter drop-shadow-[0_2px_10px_rgba(0,0,0,0.9)]">
                   </div>
                   <span id="discDockDot-0" class="h-1 rounded-full bg-[#0effc7] mt-1.5 transition-all duration-150 shadow-[0_0_8px_#0effc7]" style="width: 20px;"></span>
                 </button>
 
                 <!-- Icono 1: Spinning -->
-                <button type="button" onclick="scrollDiscSlide(1)" id="discDockItem-1" class="disc-dock-item group relative flex flex-col items-center justify-end cursor-pointer origin-bottom select-none p-1" aria-label="Spinning">
-                  <div id="discDockIcon-1" class="w-7 h-7 sm:w-9 sm:h-9 flex items-center justify-center transition-transform duration-75">
-                    <img src="assets/icons/spinning.svg" alt="Spinning" class="w-full h-full object-contain filter drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
+                <button type="button" onclick="scrollDiscSlide(1)" id="discDockItem-1" class="disc-dock-item group relative flex flex-col items-center justify-end cursor-pointer origin-bottom select-none p-1 hover:scale-105 transition-transform" aria-label="Spinning">
+                  <div id="discDockIcon-1" class="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center transition-transform duration-75">
+                    <img src="assets/icons/spinning.svg" alt="Spinning" class="w-full h-full object-contain filter drop-shadow-[0_2px_10px_rgba(0,0,0,0.9)]">
                   </div>
                   <span id="discDockDot-1" class="h-1 rounded-full bg-white/20 mt-1.5 transition-all duration-150" style="width: 5px;"></span>
                 </button>
 
                 <!-- Icono 2: Funcional Underground -->
-                <button type="button" onclick="scrollDiscSlide(2)" id="discDockItem-2" class="disc-dock-item group relative flex flex-col items-center justify-end cursor-pointer origin-bottom select-none p-1" aria-label="Funcional Underground">
-                  <div id="discDockIcon-2" class="w-7 h-7 sm:w-9 sm:h-9 flex items-center justify-center transition-transform duration-75">
-                    <img src="assets/icons/funcional.svg" alt="Funcional Underground" class="w-full h-full object-contain filter drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
+                <button type="button" onclick="scrollDiscSlide(2)" id="discDockItem-2" class="disc-dock-item group relative flex flex-col items-center justify-end cursor-pointer origin-bottom select-none p-1 hover:scale-105 transition-transform" aria-label="Funcional Underground">
+                  <div id="discDockIcon-2" class="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center transition-transform duration-75">
+                    <img src="assets/icons/funcional.svg" alt="Funcional Underground" class="w-full h-full object-contain filter drop-shadow-[0_2px_10px_rgba(0,0,0,0.9)]">
                   </div>
                   <span id="discDockDot-2" class="h-1 rounded-full bg-white/20 mt-1.5 transition-all duration-150" style="width: 5px;"></span>
                 </button>
 
                 <!-- Icono 3: Pilates & Control -->
-                <button type="button" onclick="scrollDiscSlide(3)" id="discDockItem-3" class="disc-dock-item group relative flex flex-col items-center justify-end cursor-pointer origin-bottom select-none p-1" aria-label="Pilates y Control">
-                  <div id="discDockIcon-3" class="w-7 h-7 sm:w-9 sm:h-9 flex items-center justify-center transition-transform duration-75">
-                    <img src="assets/icons/control.svg" alt="Pilates y Control" class="w-full h-full object-contain filter drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
+                <button type="button" onclick="scrollDiscSlide(3)" id="discDockItem-3" class="disc-dock-item group relative flex flex-col items-center justify-end cursor-pointer origin-bottom select-none p-1 hover:scale-105 transition-transform" aria-label="Pilates y Control">
+                  <div id="discDockIcon-3" class="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center transition-transform duration-75">
+                    <img src="assets/icons/control.svg" alt="Pilates y Control" class="w-full h-full object-contain filter drop-shadow-[0_2px_10px_rgba(0,0,0,0.9)]">
                   </div>
                   <span id="discDockDot-3" class="h-1 rounded-full bg-white/20 mt-1.5 transition-all duration-150" style="width: 5px;"></span>
                 </button>
 
                 <!-- Icono 4: Aeróbicos -->
-                <button type="button" onclick="scrollDiscSlide(4)" id="discDockItem-4" class="disc-dock-item group relative flex flex-col items-center justify-end cursor-pointer origin-bottom select-none p-1" aria-label="Aeróbicos">
-                  <div id="discDockIcon-4" class="w-7 h-7 sm:w-9 sm:h-9 flex items-center justify-center transition-transform duration-75">
-                    <img src="assets/icons/aerobics.svg" alt="Aeróbicos" class="w-full h-full object-contain filter drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
+                <button type="button" onclick="scrollDiscSlide(4)" id="discDockItem-4" class="disc-dock-item group relative flex flex-col items-center justify-end cursor-pointer origin-bottom select-none p-1 hover:scale-105 transition-transform" aria-label="Aeróbicos">
+                  <div id="discDockIcon-4" class="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center transition-transform duration-75">
+                    <img src="assets/icons/aerobics.svg" alt="Aeróbicos" class="w-full h-full object-contain filter drop-shadow-[0_2px_10px_rgba(0,0,0,0.9)]">
                   </div>
                   <span id="discDockDot-4" class="h-1 rounded-full bg-white/20 mt-1.5 transition-all duration-150" style="width: 5px;"></span>
                 </button>
@@ -719,19 +719,25 @@
               </div>
             </div>
 
-            <!-- 3. ZONA INFERIOR DINÁMICA (Botón en reposo inicial vs Ficha Técnica en recorrido) -->
-            <div id="discBottomZone" class="relative min-h-[260px] flex items-start">
+            <!-- 3. ZONA INFERIOR (Texto descriptivo + Botón en intro vs Ficha técnica en tour) -->
+            <div id="discBottomZone" class="relative min-h-[280px] pt-1">
 
-              <!-- A. Botón Inicial (Centrado, desaparece al hacer scroll o al ser presionado) -->
-              <div id="discButtonWrapper" class="w-full pt-4 flex justify-center will-change-[opacity,transform] transition-all duration-300">
-                <button type="button" onclick="scrollDiscToTour()" class="inline-flex items-center gap-3 px-8 sm:px-10 py-4 rounded-xl bg-white text-black font-brand text-xs uppercase tracking-widest hover:bg-white/90 hover:scale-105 transition-all shadow-xl group cursor-pointer">
-                  <span>Conoce las disciplinas</span>
-                  <span class="group-hover:translate-x-1 transition-transform">→</span>
-                </button>
+              <!-- A. Parte Inferior Inicial: Texto descriptivo original y botón (Centrado, desaparece sin moverse) -->
+              <div id="discIntroBottom" class="w-full space-y-4 sm:space-y-5 pt-1.5 flex flex-col items-center text-center transition-opacity duration-300">
+                <p class="text-sm sm:text-base lg:text-lg text-white/90 font-light leading-relaxed max-w-xl mx-auto drop-shadow-[0_2px_14px_rgba(0,0,0,0.95)]">
+                  No existe una sola manera. Cada disciplina somete al cuerpo a un estímulo diferente: fuerza biomecánica pura, sincronía rítmica colectiva, cadencia cardiovascular o dinamismo funcional.
+                </p>
+
+                <div class="pt-1">
+                  <button type="button" onclick="scrollDiscToTour()" class="inline-flex items-center gap-3 px-8 sm:px-10 py-4 rounded-xl bg-white text-black font-brand text-xs uppercase tracking-widest hover:bg-white/90 hover:scale-105 transition-all shadow-xl group cursor-pointer">
+                    <span>Conoce las disciplinas</span>
+                    <span class="group-hover:translate-x-1 transition-transform">→</span>
+                  </button>
+                </div>
               </div>
 
-              <!-- B. Ficha Técnica Dinámica de la Disciplina Activa (Aparece en el recorrido a la izquierda) -->
-              <div id="discDetailBox" class="w-full space-y-3 pt-0.5 transition-all duration-300 ease-out will-change-[opacity,transform] opacity-0 pointer-events-none absolute inset-x-0 top-0">
+              <!-- B. Ficha Técnica Dinámica de la Disciplina Activa (Aparece en el recorrido a la izquierda sin moverse) -->
+              <div id="discDetailBox" class="w-full max-w-xl lg:max-w-2xl space-y-3 pt-0.5 transition-opacity duration-300 ease-out opacity-0 pointer-events-none absolute left-0 top-0 text-left">
                 
                 <!-- TÍTULO PROMINENTE Y CLARO DE LA DISCIPLINA -->
                 <div class="space-y-0.5">
@@ -1460,11 +1466,11 @@
     const disciplinasTrack = document.getElementById('disciplinasTrack');
     const discMasterContainer = document.getElementById('discMasterContainer');
     const discMainColumn = document.getElementById('discMainColumn');
-    const discBigTitle = document.getElementById('discBigTitle');
-    const discCompactTitle = document.getElementById('discCompactTitle');
+    const discIntroHeader = document.getElementById('discIntroHeader');
+    const discTourHeader = document.getElementById('discTourHeader');
     const discDockWrapper = document.getElementById('discDockWrapper');
     const discDockBar = document.getElementById('discDockBar');
-    const discButtonWrapper = document.getElementById('discButtonWrapper');
+    const discIntroBottom = document.getElementById('discIntroBottom');
     const discSolidBlackBg = document.getElementById('discSolidBlackBg');
     const discDetailBox = document.getElementById('discDetailBox');
     const discSlides = document.querySelectorAll('.disc-slide');
@@ -1590,10 +1596,9 @@
       isTransitioningDisc = true;
       currentDiscActiveIdx = idx;
 
-      // 1. El contenido saliente desaparece suavemente si estamos en el recorrido
+      // 1. El contenido saliente desaparece suavemente si estamos en el recorrido (sin desplazamiento)
       if (discDetailBox && discCurrentProgress > 0.08) {
         discDetailBox.style.opacity = '0';
-        discDetailBox.style.transform = 'translateY(12px)';
       }
 
       // 2. Tras breve lapso perceptible, actualizar e introducir el nuevo contenido
@@ -1604,10 +1609,9 @@
 
         renderDiscContent(targetIdx);
 
-        // 3. El nuevo contenido aparece claramente si estamos en el recorrido
+        // 3. El nuevo contenido aparece claramente si estamos en el recorrido (sin desplazamiento)
         if (discDetailBox && discCurrentProgress > 0.08) {
           discDetailBox.style.opacity = '1';
-          discDetailBox.style.transform = 'translateY(0)';
         }
 
         setTimeout(() => {
@@ -1670,46 +1674,34 @@
         discSolidBlackBg.style.opacity = (1 - t).toFixed(3);
       }
 
-      // 2. Reacomodación horizontal fluida: el titular y los iconos se desplazan del centro a la izquierda
-      if (discMasterContainer && discMainColumn) {
+      // 2. Reacomodación horizontal de la franja de iconos (lo ÚNICO que se desplaza horizontalmente)
+      if (discDockWrapper && discMasterContainer) {
         const stageWidth = discMasterContainer.clientWidth;
-        const colWidth = discMainColumn.clientWidth;
-        const maxColShift = Math.max(0, (stageWidth - colWidth) / 2);
-        const colShift = (1 - t) * maxColShift;
-        discMainColumn.style.transform = `translateX(${colShift.toFixed(1)}px)`;
-      }
-
-      if (discDockWrapper && discDockBar && discMainColumn) {
-        const colWidth = discMainColumn.clientWidth;
-        const dockWidth = discDockBar.offsetWidth || 280;
-        const maxDockShift = Math.max(0, (colWidth - dockWidth) / 2);
+        const dockWidth = discDockBar ? discDockBar.offsetWidth : 280;
+        const maxDockShift = Math.max(0, (stageWidth - dockWidth) / 2);
         const dockShift = (1 - t) * maxDockShift;
         discDockWrapper.style.transform = `translateX(${dockShift.toFixed(1)}px)`;
       }
 
-      // 3. Titular: Grande centrado se desvanece; Compacto a la izquierda aparece
-      if (discBigTitle) {
-        discBigTitle.style.opacity = (1 - t).toFixed(3);
-        discBigTitle.style.transform = `translateY(${(-t * 24).toFixed(1)}px)`;
-        discBigTitle.style.pointerEvents = t < 0.3 ? 'auto' : 'none';
+      // 3. Titulares: Grande centrado se desvanece; Compacto a la izquierda aparece (SIN moverse)
+      if (discIntroHeader) {
+        discIntroHeader.style.opacity = (1 - t).toFixed(3);
+        discIntroHeader.style.pointerEvents = t < 0.3 ? 'auto' : 'none';
       }
-      if (discCompactTitle) {
-        discCompactTitle.style.opacity = t.toFixed(3);
-        discCompactTitle.style.transform = `translateY(${((1 - t) * 16).toFixed(1)}px)`;
-        discCompactTitle.style.pointerEvents = t > 0.4 ? 'auto' : 'none';
+      if (discTourHeader) {
+        discTourHeader.style.opacity = t.toFixed(3);
+        discTourHeader.style.pointerEvents = t > 0.4 ? 'auto' : 'none';
       }
 
-      // 4. Zona inferior: Botón desaparece; Ficha técnica aparece a la izquierda
-      if (discButtonWrapper) {
-        const btnOpacity = Math.max(0, 1 - t * 2.5);
-        discButtonWrapper.style.opacity = btnOpacity.toFixed(3);
-        discButtonWrapper.style.transform = `translateY(${(t * 20).toFixed(1)}px)`;
-        discButtonWrapper.style.pointerEvents = t < 0.2 ? 'auto' : 'none';
+      // 4. Zona inferior: Intro (texto descriptivo + botón) se desvanece; Ficha técnica aparece a la izquierda (SIN moverse)
+      if (discIntroBottom) {
+        const introOpacity = Math.max(0, 1 - t * 1.5);
+        discIntroBottom.style.opacity = introOpacity.toFixed(3);
+        discIntroBottom.style.pointerEvents = t < 0.2 ? 'auto' : 'none';
       }
       if (discDetailBox) {
         const detailOpacity = Math.max(0, (t - 0.25) / 0.75);
         discDetailBox.style.opacity = detailOpacity.toFixed(3);
-        discDetailBox.style.transform = `translateY(${((1 - t) * 20).toFixed(1)}px)`;
         discDetailBox.style.pointerEvents = t > 0.35 ? 'auto' : 'none';
       }
 
