@@ -573,146 +573,172 @@
         <div class="lg:hidden absolute inset-0 w-full bg-gradient-to-t from-black/95 via-black/80 to-black/35 z-[4] pointer-events-none"></div>
 
         <div class="max-w-7xl mx-auto relative z-10 w-full flex justify-start my-auto">
-          <div class="w-full max-w-xl lg:max-w-2xl space-y-4 sm:space-y-6 text-left">
+          <div class="w-full max-w-xl lg:max-w-2xl relative my-auto min-h-[440px] sm:min-h-[480px] flex items-center">
             
-            <!-- Encabezado de Sección Dinámico -->
-            <div id="discHeaderContainer" class="space-y-1.5 transition-all duration-500 ease-out">
-              <span id="discHeaderBadge" class="text-[10px] sm:text-[11px] font-brand tracking-[0.25em] text-[#0effc7] uppercase block transition-all duration-300">
-                Disciplinas FOR+
-              </span>
-              <h2 id="discMainHeading" class="font-brand uppercase tracking-tight text-white transition-all duration-500 ease-out origin-left leading-tight drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)] text-3xl sm:text-5xl lg:text-6xl">
-                DISTINTAS FORMAS <br class="disc-break">
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-white/95 to-white/60">
-                  DE ENTRENAR
+            <!-- 1. BLOQUE DE INTRODUCCIÓN GENERAL (Visible en carga inicial, con botón para ver las disciplinas) -->
+            <div id="discIntroContainer" class="w-full space-y-4 sm:space-y-6 will-change-[opacity,transform] transition-all duration-300">
+              <div class="space-y-1.5">
+                <span class="text-[10px] sm:text-[11px] font-brand tracking-[0.25em] text-[#0effc7] uppercase block">
+                  Disciplinas FOR+
                 </span>
-              </h2>
-
-              <!-- Descripción introductoria que se esconde al hacer el primer scroll -->
-              <div id="discIntroDescWrapper" class="transition-all duration-500 ease-out overflow-hidden max-h-[220px] opacity-100 pt-1">
-                <p id="discIntroDesc" class="text-sm sm:text-base lg:text-lg text-white/90 font-light leading-relaxed max-w-lg drop-shadow-[0_2px_14px_rgba(0,0,0,0.95)]">
-                  No existe una sola manera. Cada disciplina somete al cuerpo a un estímulo diferente: fuerza biomecánica pura, sincronía rítmica colectiva, cadencia cardiovascular o dinamismo funcional.
-                </p>
-              </div>
-            </div>
-
-            <!-- Dock interactivo de iconos estilo Apple (crecen conforme se recorren las disciplinas) -->
-            <div class="pt-0.5 pb-1">
-              <div class="inline-flex items-end gap-3 sm:gap-4.5 px-3.5 sm:px-5 py-2.5 rounded-2xl bg-black/45 backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.6)]">
-                
-                <!-- Icono 0: Musculación -->
-                <button type="button" onclick="scrollDiscSlide(0)" id="discDockItem-0" class="disc-dock-item group relative flex flex-col items-center justify-end cursor-pointer origin-bottom select-none p-1" aria-label="Musculación">
-                  <div id="discDockIcon-0" class="w-7 h-7 sm:w-9 sm:h-9 flex items-center justify-center transition-transform duration-75">
-                    <img src="assets/icons/musculacion.svg" alt="Musculación" class="w-full h-full object-contain filter drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
-                  </div>
-                  <span id="discDockDot-0" class="h-1 rounded-full bg-[#0effc7] mt-1.5 transition-all duration-150 shadow-[0_0_8px_#0effc7]" style="width: 20px;"></span>
-                </button>
-
-                <!-- Icono 1: Spinning -->
-                <button type="button" onclick="scrollDiscSlide(1)" id="discDockItem-1" class="disc-dock-item group relative flex flex-col items-center justify-end cursor-pointer origin-bottom select-none p-1" aria-label="Spinning">
-                  <div id="discDockIcon-1" class="w-7 h-7 sm:w-9 sm:h-9 flex items-center justify-center transition-transform duration-75">
-                    <img src="assets/icons/spinning.svg" alt="Spinning" class="w-full h-full object-contain filter drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
-                  </div>
-                  <span id="discDockDot-1" class="h-1 rounded-full bg-white/20 mt-1.5 transition-all duration-150" style="width: 5px;"></span>
-                </button>
-
-                <!-- Icono 2: Funcional Underground -->
-                <button type="button" onclick="scrollDiscSlide(2)" id="discDockItem-2" class="disc-dock-item group relative flex flex-col items-center justify-end cursor-pointer origin-bottom select-none p-1" aria-label="Funcional Underground">
-                  <div id="discDockIcon-2" class="w-7 h-7 sm:w-9 sm:h-9 flex items-center justify-center transition-transform duration-75">
-                    <img src="assets/icons/funcional.svg" alt="Funcional Underground" class="w-full h-full object-contain filter drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
-                  </div>
-                  <span id="discDockDot-2" class="h-1 rounded-full bg-white/20 mt-1.5 transition-all duration-150" style="width: 5px;"></span>
-                </button>
-
-                <!-- Icono 3: Pilates & Control -->
-                <button type="button" onclick="scrollDiscSlide(3)" id="discDockItem-3" class="disc-dock-item group relative flex flex-col items-center justify-end cursor-pointer origin-bottom select-none p-1" aria-label="Pilates y Control">
-                  <div id="discDockIcon-3" class="w-7 h-7 sm:w-9 sm:h-9 flex items-center justify-center transition-transform duration-75">
-                    <img src="assets/icons/control.svg" alt="Pilates y Control" class="w-full h-full object-contain filter drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
-                  </div>
-                  <span id="discDockDot-3" class="h-1 rounded-full bg-white/20 mt-1.5 transition-all duration-150" style="width: 5px;"></span>
-                </button>
-
-                <!-- Icono 4: Aeróbicos -->
-                <button type="button" onclick="scrollDiscSlide(4)" id="discDockItem-4" class="disc-dock-item group relative flex flex-col items-center justify-end cursor-pointer origin-bottom select-none p-1" aria-label="Aeróbicos">
-                  <div id="discDockIcon-4" class="w-7 h-7 sm:w-9 sm:h-9 flex items-center justify-center transition-transform duration-75">
-                    <img src="assets/icons/aerobics.svg" alt="Aeróbicos" class="w-full h-full object-contain filter drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
-                  </div>
-                  <span id="discDockDot-4" class="h-1 rounded-full bg-white/20 mt-1.5 transition-all duration-150" style="width: 5px;"></span>
-                </button>
-
-              </div>
-            </div>
-
-            <!-- Ficha técnica dinámica de la disciplina activa (aparece al hacer scroll y cambia por disciplina) -->
-            <div id="discDetailBox" class="space-y-3.5 pt-1 transition-all duration-500 ease-out will-change-[opacity,transform] max-h-0 opacity-0 overflow-hidden transform translate-y-6 pointer-events-none">
-              
-              <!-- TÍTULO PROMINENTE Y CLARO DE LA DISCIPLINA -->
-              <div class="space-y-1">
-                <div class="flex items-center gap-2">
-                  <span class="w-1.5 h-1.5 rounded-full bg-[#0effc7]"></span>
-                  <span id="discSubtitle" class="text-xs font-brand tracking-[0.2em] text-[#0effc7] uppercase font-medium">Fuerza Biomecánica · Sobrecarga</span>
-                </div>
-                <h3 id="discName" class="font-brand text-3xl sm:text-5xl lg:text-6xl font-normal uppercase tracking-tight text-white leading-none drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)]">
-                  MUSCULACIÓN
-                </h3>
+                <h2 class="font-brand uppercase tracking-tight text-white leading-tight drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)] text-3xl sm:text-5xl lg:text-6xl">
+                  DISTINTAS FORMAS <br class="disc-break">
+                  <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-white/95 to-white/60">
+                    DE ENTRENAR
+                  </span>
+                </h2>
               </div>
 
-              <!-- Descripción concisa de la disciplina -->
-              <p id="discDesc" class="text-sm sm:text-base text-white/85 font-light leading-relaxed max-w-xl drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)]">
-                Equipamiento biomecánico de precisión con ángulos convergentes y amplia zona de peso libre. Asesoría técnica permanente de piso para progresar de manera segura.
+              <!-- Descripción introductoria -->
+              <p class="text-sm sm:text-base lg:text-lg text-white/90 font-light leading-relaxed max-w-lg drop-shadow-[0_2px_14px_rgba(0,0,0,0.95)]">
+                No existe una sola manera. Cada disciplina somete al cuerpo a un estímulo diferente: fuerza biomecánica pura, sincronía rítmica colectiva, cadencia cardiovascular o dinamismo funcional.
               </p>
 
-              <!-- Resumen esencial: Tipo de Trabajo y Aspectos de Rendimiento -->
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1 max-w-xl">
-                <!-- Tarjeta: Tipo de Trabajo -->
-                <div class="p-3.5 sm:p-4 rounded-xl bg-black/75 border border-white/15 backdrop-blur-md flex flex-col justify-between space-y-2">
-                  <span class="text-[10px] font-brand tracking-widest text-white/45 uppercase block">Tipo de Trabajo</span>
-                  <p id="discWorkType" class="text-xs sm:text-sm text-white font-medium leading-relaxed my-auto">
-                    Fuerza máxima, hipertrofia y potencia muscular
-                  </p>
-                  <span class="text-[10px] font-brand tracking-wider text-white/30 uppercase">Enfoque principal</span>
-                </div>
+              <!-- Botón para iniciar el recorrido de las disciplinas -->
+              <div class="pt-2 sm:pt-3">
+                <button type="button" onclick="scrollDiscToTour()" class="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-white text-black font-brand text-xs uppercase tracking-widest hover:bg-white/90 hover:scale-105 transition-all shadow-xl group cursor-pointer">
+                  <span>Conoce las disciplinas</span>
+                  <span class="group-hover:translate-x-1 transition-transform">→</span>
+                </button>
+              </div>
+            </div>
 
-                <!-- Tarjeta: Aspectos de Rendimiento (Desarrollo muscular, Resistencia, Flexibilidad) -->
-                <div class="p-3.5 sm:p-4 rounded-xl bg-black/75 border border-white/15 backdrop-blur-md space-y-2.5">
-                  <span class="text-[10px] font-brand tracking-widest text-white/45 uppercase block">Demanda de la Disciplina</span>
+            <!-- 2. BLOQUE DEL RECORRIDO DE DISCIPLINAS (Aparece de forma progresiva con el scroll o al presionar el botón) -->
+            <div id="discTourContainer" class="w-full space-y-3.5 sm:space-y-4 will-change-[opacity,transform] opacity-0 pointer-events-none absolute inset-0 my-auto flex flex-col justify-center">
+              
+              <!-- Titular compacto superior durante el recorrido -->
+              <div class="space-y-0.5">
+                <span class="text-[10px] sm:text-[11px] font-brand tracking-[0.25em] text-[#0effc7] uppercase block">
+                  Disciplinas FOR+
+                </span>
+                <h4 class="font-brand uppercase tracking-[0.22em] text-white/50 text-xs sm:text-sm">
+                  DISTINTAS FORMAS DE ENTRENAR
+                </h4>
+              </div>
+
+              <!-- Dock interactivo de iconos estilo Apple (crecen conforme se recorren las disciplinas) -->
+              <div class="pt-0.5 pb-0.5">
+                <div class="inline-flex items-end gap-3 sm:gap-4.5 px-3.5 sm:px-5 py-2.5 rounded-2xl bg-black/45 backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.6)]">
                   
-                  <!-- Aspecto 1: Desarrollo muscular -->
-                  <div class="space-y-1">
-                    <div class="flex items-center justify-between text-[11px]">
-                      <span class="text-white/70">Desarrollo muscular</span>
-                      <span id="discAspectMuscular" class="text-[#0effc7] font-brand uppercase tracking-wider text-[10px] font-medium">Alto</span>
+                  <!-- Icono 0: Musculación -->
+                  <button type="button" onclick="scrollDiscSlide(0)" id="discDockItem-0" class="disc-dock-item group relative flex flex-col items-center justify-end cursor-pointer origin-bottom select-none p-1" aria-label="Musculación">
+                    <div id="discDockIcon-0" class="w-7 h-7 sm:w-9 sm:h-9 flex items-center justify-center transition-transform duration-75">
+                      <img src="assets/icons/musculacion.svg" alt="Musculación" class="w-full h-full object-contain filter drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
                     </div>
-                    <div class="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
-                      <div id="discBarMuscular" class="h-full bg-gradient-to-r from-[#0effc7] to-[#faa0c3] rounded-full transition-all duration-500 shadow-[0_0_8px_rgba(14,255,199,0.4)]" style="width: 90%;"></div>
-                    </div>
-                  </div>
+                    <span id="discDockDot-0" class="h-1 rounded-full bg-[#0effc7] mt-1.5 transition-all duration-150 shadow-[0_0_8px_#0effc7]" style="width: 20px;"></span>
+                  </button>
 
-                  <!-- Aspecto 2: Resistencia -->
-                  <div class="space-y-1">
-                    <div class="flex items-center justify-between text-[11px]">
-                      <span class="text-white/70">Resistencia</span>
-                      <span id="discAspectResistencia" class="text-[#0effc7] font-brand uppercase tracking-wider text-[10px] font-medium">Media</span>
+                  <!-- Icono 1: Spinning -->
+                  <button type="button" onclick="scrollDiscSlide(1)" id="discDockItem-1" class="disc-dock-item group relative flex flex-col items-center justify-end cursor-pointer origin-bottom select-none p-1" aria-label="Spinning">
+                    <div id="discDockIcon-1" class="w-7 h-7 sm:w-9 sm:h-9 flex items-center justify-center transition-transform duration-75">
+                      <img src="assets/icons/spinning.svg" alt="Spinning" class="w-full h-full object-contain filter drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
                     </div>
-                    <div class="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
-                      <div id="discBarResistencia" class="h-full bg-gradient-to-r from-[#0effc7] to-[#faa0c3] rounded-full transition-all duration-500 shadow-[0_0_8px_rgba(14,255,199,0.4)]" style="width: 50%;"></div>
-                    </div>
-                  </div>
+                    <span id="discDockDot-1" class="h-1 rounded-full bg-white/20 mt-1.5 transition-all duration-150" style="width: 5px;"></span>
+                  </button>
 
-                  <!-- Aspecto 3: Flexibilidad -->
-                  <div class="space-y-1">
-                    <div class="flex items-center justify-between text-[11px]">
-                      <span class="text-white/70">Flexibilidad</span>
-                      <span id="discAspectFlexibilidad" class="text-[#0effc7] font-brand uppercase tracking-wider text-[10px] font-medium">Media</span>
+                  <!-- Icono 2: Funcional Underground -->
+                  <button type="button" onclick="scrollDiscSlide(2)" id="discDockItem-2" class="disc-dock-item group relative flex flex-col items-center justify-end cursor-pointer origin-bottom select-none p-1" aria-label="Funcional Underground">
+                    <div id="discDockIcon-2" class="w-7 h-7 sm:w-9 sm:h-9 flex items-center justify-center transition-transform duration-75">
+                      <img src="assets/icons/funcional.svg" alt="Funcional Underground" class="w-full h-full object-contain filter drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
                     </div>
-                    <div class="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
-                      <div id="discBarFlexibilidad" class="h-full bg-gradient-to-r from-[#0effc7] to-[#faa0c3] rounded-full transition-all duration-500 shadow-[0_0_8px_rgba(14,255,199,0.4)]" style="width: 45%;"></div>
+                    <span id="discDockDot-2" class="h-1 rounded-full bg-white/20 mt-1.5 transition-all duration-150" style="width: 5px;"></span>
+                  </button>
+
+                  <!-- Icono 3: Pilates & Control -->
+                  <button type="button" onclick="scrollDiscSlide(3)" id="discDockItem-3" class="disc-dock-item group relative flex flex-col items-center justify-end cursor-pointer origin-bottom select-none p-1" aria-label="Pilates y Control">
+                    <div id="discDockIcon-3" class="w-7 h-7 sm:w-9 sm:h-9 flex items-center justify-center transition-transform duration-75">
+                      <img src="assets/icons/control.svg" alt="Pilates y Control" class="w-full h-full object-contain filter drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
                     </div>
-                  </div>
+                    <span id="discDockDot-3" class="h-1 rounded-full bg-white/20 mt-1.5 transition-all duration-150" style="width: 5px;"></span>
+                  </button>
+
+                  <!-- Icono 4: Aeróbicos -->
+                  <button type="button" onclick="scrollDiscSlide(4)" id="discDockItem-4" class="disc-dock-item group relative flex flex-col items-center justify-end cursor-pointer origin-bottom select-none p-1" aria-label="Aeróbicos">
+                    <div id="discDockIcon-4" class="w-7 h-7 sm:w-9 sm:h-9 flex items-center justify-center transition-transform duration-75">
+                      <img src="assets/icons/aerobics.svg" alt="Aeróbicos" class="w-full h-full object-contain filter drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
+                    </div>
+                    <span id="discDockDot-4" class="h-1 rounded-full bg-white/20 mt-1.5 transition-all duration-150" style="width: 5px;"></span>
+                  </button>
 
                 </div>
               </div>
 
+              <!-- Ficha técnica dinámica de la disciplina activa -->
+              <div id="discDetailBox" class="space-y-3 pt-0.5 transition-all duration-300 ease-out will-change-[opacity,transform]">
+                
+                <!-- TÍTULO PROMINENTE Y CLARO DE LA DISCIPLINA -->
+                <div class="space-y-0.5">
+                  <div class="flex items-center gap-2">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#0effc7]"></span>
+                    <span id="discSubtitle" class="text-xs font-brand tracking-[0.2em] text-[#0effc7] uppercase font-medium">Fuerza Biomecánica · Sobrecarga</span>
+                  </div>
+                  <h3 id="discName" class="font-brand text-3xl sm:text-5xl lg:text-6xl font-normal uppercase tracking-tight text-white leading-none drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)]">
+                    MUSCULACIÓN
+                  </h3>
+                </div>
+
+                <!-- Descripción concisa de la disciplina -->
+                <p id="discDesc" class="text-sm sm:text-base text-white/85 font-light leading-relaxed max-w-xl drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)]">
+                  Equipamiento biomecánico de precisión con ángulos convergentes y amplia zona de peso libre. Asesoría técnica permanente de piso para progresar de manera segura.
+                </p>
+
+                <!-- Resumen esencial: Tipo de Trabajo y Aspectos de Rendimiento -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-0.5 max-w-xl">
+                  <!-- Tarjeta: Tipo de Trabajo -->
+                  <div class="p-3.5 sm:p-4 rounded-xl bg-black/75 border border-white/15 backdrop-blur-md flex flex-col justify-between space-y-2">
+                    <span class="text-[10px] font-brand tracking-widest text-white/45 uppercase block">Tipo de Trabajo</span>
+                    <p id="discWorkType" class="text-xs sm:text-sm text-white font-medium leading-relaxed my-auto">
+                      Fuerza máxima, hipertrofia y potencia muscular
+                    </p>
+                    <span class="text-[10px] font-brand tracking-wider text-white/30 uppercase">Enfoque principal</span>
+                  </div>
+
+                  <!-- Tarjeta: Aspectos de Rendimiento (Desarrollo muscular, Resistencia, Flexibilidad) -->
+                  <div class="p-3.5 sm:p-4 rounded-xl bg-black/75 border border-white/15 backdrop-blur-md space-y-2.5">
+                    <span class="text-[10px] font-brand tracking-widest text-white/45 uppercase block">Demanda de la Disciplina</span>
+                    
+                    <!-- Aspecto 1: Desarrollo muscular -->
+                    <div class="space-y-1">
+                      <div class="flex items-center justify-between text-[11px]">
+                        <span class="text-white/70">Desarrollo muscular</span>
+                        <span id="discAspectMuscular" class="text-[#0effc7] font-brand uppercase tracking-wider text-[10px] font-medium">Alto</span>
+                      </div>
+                      <div class="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
+                        <div id="discBarMuscular" class="h-full bg-gradient-to-r from-[#0effc7] to-[#faa0c3] rounded-full transition-all duration-500 shadow-[0_0_8px_rgba(14,255,199,0.4)]" style="width: 90%;"></div>
+                      </div>
+                    </div>
+
+                    <!-- Aspecto 2: Resistencia -->
+                    <div class="space-y-1">
+                      <div class="flex items-center justify-between text-[11px]">
+                        <span class="text-white/70">Resistencia</span>
+                        <span id="discAspectResistencia" class="text-[#0effc7] font-brand uppercase tracking-wider text-[10px] font-medium">Media</span>
+                      </div>
+                      <div class="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
+                        <div id="discBarResistencia" class="h-full bg-gradient-to-r from-[#0effc7] to-[#faa0c3] rounded-full transition-all duration-500 shadow-[0_0_8px_rgba(14,255,199,0.4)]" style="width: 50%;"></div>
+                      </div>
+                    </div>
+
+                    <!-- Aspecto 3: Flexibilidad -->
+                    <div class="space-y-1">
+                      <div class="flex items-center justify-between text-[11px]">
+                        <span class="text-white/70">Flexibilidad</span>
+                        <span id="discAspectFlexibilidad" class="text-[#0effc7] font-brand uppercase tracking-wider text-[10px] font-medium">Media</span>
+                      </div>
+                      <div class="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
+                        <div id="discBarFlexibilidad" class="h-full bg-gradient-to-r from-[#0effc7] to-[#faa0c3] rounded-full transition-all duration-500 shadow-[0_0_8px_rgba(14,255,199,0.4)]" style="width: 45%;"></div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+              </div>
+
             </div>
+
+          </div>
+        </div>
 
           </div>
         </div>
@@ -1308,6 +1334,9 @@
     // Recorrido de las 5 disciplinas con paginador de iconos y ficha técnica
     // ==========================================
     const disciplinasTrack = document.getElementById('disciplinasTrack');
+    const discIntroContainer = document.getElementById('discIntroContainer');
+    const discTourContainer = document.getElementById('discTourContainer');
+    const discDetailBox = document.getElementById('discDetailBox');
     const discSlides = document.querySelectorAll('.disc-slide');
     const discDockIcons = [0, 1, 2, 3, 4].map(i => document.getElementById('discDockIcon-' + i));
     const discDockDots = [0, 1, 2, 3, 4].map(i => document.getElementById('discDockDot-' + i));
@@ -1390,61 +1419,6 @@
     let currentDiscActiveIdx = -1;
     let isTransitioningDisc = false;
     let queuedDiscIdx = -1;
-    let isDiscFocusMode = false;
-
-    function setDiscFocusMode(focus) {
-      if (isDiscFocusMode === focus) return;
-      isDiscFocusMode = focus;
-
-      const heading = document.getElementById('discMainHeading');
-      const introDesc = document.getElementById('discIntroDescWrapper');
-      const detailBox = document.getElementById('discDetailBox');
-      const badge = document.getElementById('discHeaderBadge');
-
-      if (focus) {
-        // Al hacer el primer scroll: se esconde la descripción general y el titular se encoge arriba
-        if (introDesc) {
-          introDesc.style.maxHeight = '0px';
-          introDesc.style.opacity = '0';
-          introDesc.style.pointerEvents = 'none';
-          introDesc.style.transform = 'translateY(-10px)';
-        }
-        if (heading) {
-          heading.className = 'font-brand uppercase tracking-[0.22em] text-white/50 transition-all duration-500 ease-out origin-left leading-none text-xs sm:text-sm drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]';
-          heading.innerHTML = 'DISTINTAS FORMAS DE ENTRENAR';
-        }
-        if (badge) {
-          badge.style.display = 'none';
-        }
-        if (detailBox) {
-          detailBox.style.maxHeight = '800px';
-          detailBox.style.opacity = '1';
-          detailBox.style.transform = 'translateY(0)';
-          detailBox.style.pointerEvents = '';
-        }
-      } else {
-        // En reposo inicial (antes del primer scroll): titular grande y descripción visible
-        if (introDesc) {
-          introDesc.style.maxHeight = '240px';
-          introDesc.style.opacity = '1';
-          introDesc.style.pointerEvents = '';
-          introDesc.style.transform = 'translateY(0)';
-        }
-        if (heading) {
-          heading.className = 'font-brand uppercase tracking-tight text-white transition-all duration-500 ease-out origin-left leading-tight drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)] text-3xl sm:text-5xl lg:text-6xl';
-          heading.innerHTML = 'DISTINTAS FORMAS <br class="disc-break"><span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-white/95 to-white/60">DE ENTRENAR</span>';
-        }
-        if (badge) {
-          badge.style.display = 'block';
-        }
-        if (detailBox) {
-          detailBox.style.maxHeight = '0px';
-          detailBox.style.opacity = '0';
-          detailBox.style.transform = 'translateY(16px)';
-          detailBox.style.pointerEvents = 'none';
-        }
-      }
-    }
 
     function renderDiscContent(idx) {
       const data = discDetails[idx];
@@ -1486,8 +1460,8 @@
       isTransitioningDisc = true;
       currentDiscActiveIdx = idx;
 
-      // 1. El contenido saliente desaparece suavemente si estamos en focus mode
-      if (discDetailBox && isDiscFocusMode) {
+      // 1. El contenido saliente desaparece suavemente si estamos en el recorrido
+      if (discDetailBox && discCurrentProgress > 0.04) {
         discDetailBox.style.opacity = '0';
         discDetailBox.style.transform = 'translateY(12px)';
       }
@@ -1500,8 +1474,8 @@
 
         renderDiscContent(targetIdx);
 
-        // 3. El nuevo contenido aparece claramente si estamos en focus mode
-        if (discDetailBox && isDiscFocusMode) {
+        // 3. El nuevo contenido aparece claramente si estamos en el recorrido
+        if (discDetailBox && discCurrentProgress > 0.04) {
           discDetailBox.style.opacity = '1';
           discDetailBox.style.transform = 'translateY(0)';
         }
@@ -1526,6 +1500,16 @@
       discTargetProgress = progress;
     }
 
+    function scrollDiscToTour() {
+      if (!disciplinasTrack) return;
+      const rect = disciplinasTrack.getBoundingClientRect();
+      const currentScrollY = window.pageYOffset || document.documentElement.scrollTop;
+      const trackTop = currentScrollY + rect.top;
+      const scrollable = rect.height - window.innerHeight;
+      const targetScroll = trackTop + 0.12 * scrollable;
+      window.scrollTo({ top: targetScroll, behavior: 'smooth' });
+    }
+
     function scrollDiscSlide(idx) {
       if (!disciplinasTrack) return;
       const rect = disciplinasTrack.getBoundingClientRect();
@@ -1547,11 +1531,20 @@
     function applyDisciplinasProgress(p) {
       if (!discSlides.length) return;
 
-      // Control de modo: Intro general vs Foco en Disciplina activa
-      if (p > 0.045) {
-        setDiscFocusMode(true);
-      } else if (p < 0.035) {
-        setDiscFocusMode(false);
+      // Transición progresiva y continua entre la intro inicial y el recorrido
+      // (sin saltos bruscos: interpolación continua entre p = 0.0 y p = 0.08)
+      const t = Math.max(0, Math.min(1.0, p / 0.08));
+
+      if (discIntroContainer) {
+        discIntroContainer.style.opacity = (1 - t).toFixed(3);
+        discIntroContainer.style.transform = `translateY(${(-t * 24).toFixed(1)}px)`;
+        discIntroContainer.style.pointerEvents = t < 0.35 ? 'auto' : 'none';
+      }
+
+      if (discTourContainer) {
+        discTourContainer.style.opacity = t.toFixed(3);
+        discTourContainer.style.transform = `translateY(${((1 - t) * 24).toFixed(1)}px)`;
+        discTourContainer.style.pointerEvents = t > 0.4 ? 'auto' : 'none';
       }
 
       // Calcular opacidad continua de cada fotografía de fondo
@@ -1584,16 +1577,17 @@
           weight = 0.5 * (1 + Math.cos(Math.PI * norm)); // Campana suave de coseno (0 a 1)
         }
 
-        // Si estamos en intro pura, los iconos reposan sutiles
-        const scale = (!isDiscFocusMode ? 1.0 : (1.0 + 0.48 * weight)).toFixed(3);
-        const translateY = (!isDiscFocusMode ? 0 : (-8 * weight)).toFixed(1);
-        const opacity = (!isDiscFocusMode ? (i === 0 ? 0.75 : 0.40) : (0.35 + 0.65 * weight)).toFixed(3);
+        // Magnificación suave escalada con la visibilidad del recorrido (t)
+        const activeWeight = weight * t;
+        const scale = (1.0 + 0.48 * activeWeight).toFixed(3);
+        const translateY = (-8 * activeWeight).toFixed(1);
+        const opacity = (0.35 + 0.65 * weight).toFixed(3);
 
         const iconEl = discDockIcons[i];
         if (iconEl) {
           iconEl.style.transform = `scale(${scale}) translateY(${translateY}px)`;
           iconEl.style.opacity = opacity;
-          if (weight > 0.55 && isDiscFocusMode) {
+          if (weight > 0.55 && t > 0.3) {
             iconEl.style.filter = 'drop-shadow(0 0 12px rgba(14,255,199,0.75)) brightness(1.2)';
           } else {
             iconEl.style.filter = 'drop-shadow(0 2px 6px rgba(0,0,0,0.8)) brightness(0.9)';
@@ -1602,7 +1596,7 @@
 
         const dotEl = discDockDots[i];
         if (dotEl) {
-          if (weight > 0.55 && isDiscFocusMode) {
+          if (weight > 0.55 && t > 0.3) {
             const dotW = (6 + 14 * ((weight - 0.55) / 0.45)).toFixed(1);
             dotEl.style.width = `${dotW}px`;
             dotEl.style.backgroundColor = '#0effc7';
