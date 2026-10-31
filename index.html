@@ -206,11 +206,11 @@
 
     /* Fundido suave desde el fondo gris #141416 detrás del plano a la izquierda hacia las fotos a la derecha */
     .spaces-tour-fade {
-      background: linear-gradient(to right, #141416 0%, #141416 24%, rgba(20, 20, 22, 0.92) 38%, rgba(20, 20, 22, 0.45) 54%, transparent 72%);
+      background: linear-gradient(to right, #141416 0%, #141416 16%, rgba(20, 20, 22, 0.85) 28%, rgba(20, 20, 22, 0.25) 42%, transparent 54%);
     }
     @media (min-width: 1024px) {
       .spaces-tour-fade {
-        background: linear-gradient(to right, #141416 0%, #141416 35%, rgba(20, 20, 22, 0.94) 47%, rgba(20, 20, 22, 0.45) 60%, transparent 75%);
+        background: linear-gradient(to right, #141416 0%, #141416 16%, rgba(20, 20, 22, 0.85) 26%, rgba(20, 20, 22, 0.20) 40%, transparent 52%);
       }
     }
   </style>
@@ -412,7 +412,7 @@
               </div>
 
               <!-- Contenedor del plano arquitectónico: En el recorrido se desliza a la izquierda y se amplía a mayor escala -->
-              <div id="blueprintContainer" class="relative w-full max-w-[720px] lg:max-w-[840px] xl:max-w-[920px] aspect-[1366/675] select-none will-change-[transform] transition-transform duration-300 ease-out origin-center">
+              <div id="blueprintContainer" class="relative w-full max-w-[720px] lg:max-w-[840px] xl:max-w-[920px] aspect-[1366/675] select-none will-change-[transform] origin-center">
                 
                 <!-- Retícula técnica arquitectónica tenue de fondo -->
                 <div class="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.06)_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none opacity-40"></div>
@@ -525,7 +525,7 @@
                 </div>
 
                 <!-- Descripción detallada de la planta -->
-                <p id="tourFloorDesc" class="text-base sm:text-lg text-white/90 font-light leading-relaxed max-w-xl">
+                <p id="tourFloorDesc" class="text-base sm:text-lg text-white/90 font-light leading-relaxed max-w-xl lg:max-w-2xl drop-shadow-[0_2px_12px_rgba(0,0,0,0.85)]">
                   Ubicada en la cúspide del edificio con iluminación natural cenital. Alberga la zona de cardio de alto rendimiento, el sector especializado GluteUp para entrenamiento biomecánico focalizado de tren inferior y el salón de aeróbicos 2 con vistas panorámicas y control acústico.
                 </p>
               </div>
@@ -533,10 +533,6 @@
             </div>
 
           </div>
-        </div>
-      </section>
-    </div>
-
         </div>
       </section>
     </div>
@@ -955,6 +951,23 @@
 
     let espaciosTargetProgress = 0;
     let espaciosCurrentProgress = 0;
+    let cachedBlueprintHalfCutShift = 0;
+
+    function measureBlueprintShift() {
+      if (!blueprintContainer) return;
+      const prevTransform = blueprintContainer.style.transform;
+      blueprintContainer.style.transform = 'none';
+
+      const rect = blueprintContainer.getBoundingClientRect();
+      const section = document.getElementById('espaciosPreview');
+      const sectionLeft = section ? section.getBoundingClientRect().left : 0;
+
+      // Distancia exacta desde el borde izquierdo del viewport hasta el eje central del edificio
+      const centerFromLeft = (rect.left - sectionLeft) + (rect.width / 2);
+      cachedBlueprintHalfCutShift = Math.max(100, centerFromLeft);
+
+      blueprintContainer.style.transform = prevTransform;
+    }
 
     function updateEspaciosScroll() {
       if (!espaciosTrack) return;
@@ -1126,13 +1139,14 @@
         // El plano está 100% revelado internamente
         blueprintWrapper.style.clipPath = 'inset(0% 0 0 0)';
 
-        // Desplazamiento a la izquierda y ampliación de escala del plano
+        // Desplazamiento a la izquierda ocultando exactamente la mitad izquierda tras el margen y ampliando escala
+        if (cachedBlueprintHalfCutShift <= 0) measureBlueprintShift();
+        const maxShift = cachedBlueprintHalfCutShift > 0 ? cachedBlueprintHalfCutShift : (window.innerWidth * 0.38);
         const isMobile = window.innerWidth < 1024;
-        const maxShift = isMobile ? 38 : 48;
-        const scaleTarget = isMobile ? 1.25 : 1.48;
+        const scaleTarget = isMobile ? 1.25 : 1.45;
         const currentScale = 1.0 + t * (scaleTarget - 1.0);
-        const shiftX = -t * maxShift;
-        blueprintContainer.style.transform = `translateX(${shiftX.toFixed(2)}%) scale(${currentScale.toFixed(3)})`;
+        const currentShift = t * maxShift;
+        blueprintContainer.style.transform = `translateX(-${currentShift.toFixed(1)}px) scale(${currentScale.toFixed(3)})`;
 
         // Desvanecimiento del contenido del preview
         const fadeOut = (1 - t);
@@ -1168,14 +1182,15 @@
 
       // ========================================================
       // FASE 3: RECORRIDO PLANTA POR PLANTA (p: 0.36 -> 0.94)
-      // Plano fijo a la izquierda (mitad visible). El scroll recorre de arriba hacia abajo:
-      // Planta 2 -> Planta 1 -> Planta Baja -> Subsuelo.
+      // Plano fijo a la izquierda (mitad izquierda oculta, mitad derecha visible).
+      // El scroll recorre de arriba hacia abajo: Planta 2 -> Planta 1 -> Planta Baja -> Subsuelo.
       // ========================================================
       blueprintWrapper.style.clipPath = 'inset(0% 0 0 0)';
+      if (cachedBlueprintHalfCutShift <= 0) measureBlueprintShift();
+      const maxShift = cachedBlueprintHalfCutShift > 0 ? cachedBlueprintHalfCutShift : (window.innerWidth * 0.38);
       const isMobile = window.innerWidth < 1024;
-      const maxShift = isMobile ? 38 : 48;
-      const scaleTarget = isMobile ? 1.25 : 1.48;
-      blueprintContainer.style.transform = `translateX(-${maxShift}%) scale(${scaleTarget})`;
+      const scaleTarget = isMobile ? 1.25 : 1.45;
+      blueprintContainer.style.transform = `translateX(-${maxShift.toFixed(1)}px) scale(${scaleTarget})`;
 
       // Preview 100% oculto
       if (espaciosTitle) espaciosTitle.style.opacity = '0';
@@ -1965,8 +1980,12 @@
     }
 
     window.addEventListener('scroll', onPageScroll, { passive: true });
-    window.addEventListener('resize', onPageScroll, { passive: true });
+    window.addEventListener('resize', () => {
+      measureBlueprintShift();
+      onPageScroll();
+    }, { passive: true });
     window.addEventListener('DOMContentLoaded', () => {
+      measureBlueprintShift();
       onPageScroll();
     });
 
