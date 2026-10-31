@@ -214,17 +214,19 @@
       }
     }
 
-    /* Footer Experience Expand Transition */
+    /* Footer Experience Expand Transition (Despliegue gradual y cinemático) */
     #footerExperienceWrapper {
       max-height: 0;
       opacity: 0;
       overflow: hidden;
-      transform: translateY(20px);
-      transition: max-height 0.7s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      transform: translateY(28px);
+      transition: max-height 1.15s cubic-bezier(0.22, 1, 0.36, 1), 
+                  opacity 0.95s cubic-bezier(0.22, 1, 0.36, 1) 0.08s, 
+                  transform 1.05s cubic-bezier(0.22, 1, 0.36, 1);
       will-change: max-height, opacity, transform;
     }
     #contacto.is-expanded #footerExperienceWrapper {
-      max-height: 800px;
+      max-height: 420px;
       opacity: 1;
       transform: translateY(0);
     }
@@ -265,11 +267,11 @@
     #contacto.is-expanded .social-text-box {
       max-width: 280px;
       opacity: 1;
-      transition: max-width 0.4s ease, opacity 0.4s ease 0.1s;
+      transition: max-width 0.8s ease 0.15s, opacity 0.7s ease 0.25s;
     }
     #contacto.is-expanded .social-arrow {
       opacity: 1;
-      transition: opacity 0.4s ease 0.1s;
+      transition: opacity 0.7s ease 0.25s;
     }
   </style>
 </head>
@@ -894,7 +896,7 @@
     <!-- ======================================================== -->
     <!-- FOOTER / EXPERIENCIA FORMAS & REDES (SCROLL-DRIVEN TRACK) -->
     <!-- ======================================================== -->
-    <div id="contactoTrack" class="relative h-[150vh] bg-[#060608] border-t border-white/10 select-none">
+    <div id="contactoTrack" class="relative h-[175vh] bg-[#060608] border-t border-white/10 select-none">
       <div id="contactoSticky" class="sticky top-20 w-full overflow-hidden">
         <footer id="contacto" class="relative transition-all duration-700 ease-out overflow-hidden is-collapsed">
     <div class="max-w-7xl mx-auto px-6 sm:px-12 lg:px-16 transition-all duration-500">
@@ -998,12 +1000,12 @@
       <div id="footerExperienceWrapper" class="overflow-hidden transition-all duration-700 ease-out">
         <div class="pt-8 sm:pt-12 pb-8 sm:pb-12 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-start lg:items-center border-t border-white/10">
           
-          <!-- Izquierda: Declaración Principal (Limpia de submensajes) -->
+          <!-- Izquierda: Declaración Principal -->
           <div class="lg:col-span-7 text-left">
-            <h2 class="font-brand text-2xl sm:text-3xl md:text-4xl lg:text-[2.35rem] xl:text-[2.65rem] font-normal uppercase tracking-tight text-white leading-[1.2]">
-              No nos creas solo porque lo decimos. <br class="hidden sm:inline">
+            <h2 class="font-brand text-2xl sm:text-3xl md:text-4xl lg:text-[2.2rem] xl:text-[2.45rem] font-normal uppercase tracking-tight text-white leading-[1.25]">
+              Más que palabras nuestras, <br class="hidden sm:inline">
               <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-white/95 to-[#0effc7]">
-                Mira lo que comentan en redes y vive la experiencia FOR+.
+                mira lo que dicen las redes y vive tú la experiencia FOR+.
               </span>
             </h2>
           </div>
@@ -2176,14 +2178,26 @@
 
     function updateGlobalScrollIndicator() {
       if (!globalScrollIndicator) return;
+      const track = document.getElementById('contactoTrack');
+      if (track) {
+        const rect = track.getBoundingClientRect();
+        // En cuanto el footer entra en el viewport inferior o se expande, la flecha de SCROLL se esconde de inmediato
+        if (rect.top <= window.innerHeight - 40 || isFooterExpanded) {
+          globalScrollIndicator.style.opacity = '0';
+          globalScrollIndicator.style.pointerEvents = 'none';
+          return;
+        }
+      }
       const scrollY = window.pageYOffset || document.documentElement.scrollTop;
       const docHeight = document.documentElement.scrollHeight;
       const winHeight = window.innerHeight;
       // Se mantiene constante al pie del viewport; solo se oculta suavemente al llegar al pie de página (footer)
       if (scrollY + winHeight >= docHeight - 140) {
         globalScrollIndicator.style.opacity = '0';
+        globalScrollIndicator.style.pointerEvents = 'none';
       } else {
         globalScrollIndicator.style.opacity = '1';
+        globalScrollIndicator.style.pointerEvents = 'none';
       }
     }
 
@@ -2197,6 +2211,12 @@
       if (isFooterExpanded === expand || isFooterTransitioning) return;
       isFooterExpanded = expand;
       isFooterTransitioning = true;
+
+      // Ocultar la flecha de scroll al expandir
+      if (expand && globalScrollIndicator) {
+        globalScrollIndicator.style.opacity = '0';
+        globalScrollIndicator.style.pointerEvents = 'none';
+      }
 
       const contacto = document.getElementById('contacto');
       const rowAnchor = document.getElementById('footerRowAnchor');
@@ -2240,16 +2260,16 @@
             el.style.transform = `translate(${dx.toFixed(1)}px, ${dy.toFixed(1)}px)`;
           });
 
-          // Play: animate smoothly back to origin
+          // Play: animate smoothly back to origin con cadencia gradual y fluida
           requestAnimationFrame(() => {
             items.forEach((el, i) => {
-              el.style.transition = `transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) ${i * 0.025}s`;
+              el.style.transition = `transform 0.9s cubic-bezier(0.22, 1, 0.36, 1) ${i * 0.05}s`;
               el.style.transform = '';
             });
 
             setTimeout(() => {
               isFooterTransitioning = false;
-            }, 550);
+            }, 950);
           });
         });
       } else {
@@ -2273,14 +2293,17 @@
       const scrollable = rect.height - window.innerHeight;
       if (scrollable <= 0) return;
 
+      // Actualizar visibilidad de la flecha de scroll
+      updateGlobalScrollIndicator();
+
       // Progreso a lo largo del track del footer (0 = inicio, 1 = fondo)
       const progress = Math.max(0, Math.min(1.0, -rect.top / scrollable));
 
-      // Al hacer scroll hacia abajo se despliega naturalmente
+      // Al hacer scroll hacia abajo se despliega gradualmente y con suavidad
       // Al hacer scroll hacia arriba regresa a su lugar
-      if (progress >= 0.20 && !isFooterExpanded) {
+      if (progress >= 0.10 && !isFooterExpanded) {
         setFooterExpanded(true, true);
-      } else if (progress < 0.14 && isFooterExpanded) {
+      } else if (progress < 0.05 && isFooterExpanded) {
         setFooterExpanded(false, true);
       }
     }
