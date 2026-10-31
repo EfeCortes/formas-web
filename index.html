@@ -1443,19 +1443,13 @@
           setTourBackgroundOpacities(2, cross);
         }
       } else {
-        // SUBSUELO (Underground & Vestidores)
+        // SUBSUELO (Underground & Vestidores): Se mantiene 100% visible hasta el final de la sección
         updateTourFloorContent(3);
         setFloorFocus(74.5, 23.0, 1);
         setTourBackgroundOpacities(3, 0);
-
-        // Desvanecimiento suave al salir hacia Disciplinas (p > 0.95)
-        if (p > 0.95) {
-          const exitT = Math.max(0, 1 - (p - 0.95) / 0.05);
-          if (espaciosTourContent) espaciosTourContent.style.opacity = exitT.toFixed(3);
-          if (spacesTourBg) spacesTourBg.style.opacity = exitT.toFixed(3);
-          setFloorFocus(74.5, 23.0, exitT);
-          if (blueprintSvg) blueprintSvg.style.opacity = (0.22 * exitT).toFixed(3);
-        }
+        if (espaciosTourContent) espaciosTourContent.style.opacity = '1';
+        if (spacesTourBg) spacesTourBg.style.opacity = '1';
+        if (blueprintSvg) blueprintSvg.style.opacity = '0.22';
       }
     }
 
