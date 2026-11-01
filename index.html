@@ -608,7 +608,7 @@
     <!-- PREVIEW 2: DISCIPLINAS (SCROLL-DRIVEN SLIDESHOW + PAGINADOR) -->
     <!-- ======================================================== -->
     <div id="disciplinasTrack" class="relative h-[440vh]">
-      <section id="disciplinasPreview" class="sticky top-0 h-screen w-full flex items-center justify-center pt-12 pb-6 sm:pt-16 sm:pb-8 lg:pt-20 lg:pb-12 px-4 sm:px-6 lg:px-8 border-t border-white/10 overflow-hidden bg-black">
+      <section id="disciplinasPreview" class="sticky top-0 h-screen w-full flex items-center justify-center py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 border-t border-white/10 overflow-hidden bg-black">
         
         <!-- SLIDESHOW DE FOTOS DE FONDO: 100% VISIBLES Y CLARAS, PRIORIZANDO LA ACCIÓN A LA DERECHA Y ALINEADAS ARRIBA -->
         <div id="discSlideshow" class="absolute inset-0 z-0">
@@ -641,7 +641,7 @@
         <!-- CAPA DE FONDO NEGRO PLENO INICIAL: Cubre fotos y gradientes en reposo (p=0), se desvanece al hacer scroll o presionar el botón -->
         <div id="discSolidBlackBg" class="absolute inset-0 bg-[#060608] z-[5] pointer-events-none will-change-[opacity] transition-opacity duration-300" style="opacity: 1;"></div>
 
-        <div id="discMasterContainer" class="max-w-7xl mx-auto relative z-10 w-full my-auto px-4 sm:px-6 lg:px-8 -translate-y-16 sm:-translate-y-24 lg:-translate-y-32">
+        <div id="discMasterContainer" class="max-w-7xl mx-auto relative z-10 w-full my-auto px-4 sm:px-6 lg:px-8 will-change-transform">
           <div id="discMainColumn" class="w-full relative my-auto min-h-[400px] sm:min-h-[440px] flex flex-col justify-center">
 
             <!-- 1. ZONA DE TITULARES (Espacio optimizado con suficiente separación vertical) -->
@@ -1693,6 +1693,19 @@
         const maxDockShift = Math.max(0, (stageWidth - dockWidth) / 2);
         const dockShift = -tIcons * maxDockShift;
         discDockWrapper.style.transform = `translateX(${dockShift.toFixed(1)}px)`;
+
+        // Elevación vertical progresiva y sincronizada:
+        // En reposo (p=0) el bloque inicial ("DIFERENTES FORMAS...") se ubica perfectamente centrado verticalmente (0px).
+        // Durante la Fase 2 (mientras los iconos viajan a la izquierda), el contenedor se eleva
+        // suavemente hasta la altura óptima actual (-128px en desktop) para recibir la ficha técnica.
+        let targetElevation = 128; // Desktop (lg)
+        if (window.innerWidth < 640) {
+          targetElevation = 64; // Mobile
+        } else if (window.innerWidth < 1024) {
+          targetElevation = 96; // Tablet (sm/md)
+        }
+        const currentElevation = tIcons * targetElevation;
+        discMasterContainer.style.transform = `translateY(-${currentElevation.toFixed(1)}px)`;
       }
 
       // Fase 3: Aparición del nuevo texto (p: 0.080 a 0.115)
