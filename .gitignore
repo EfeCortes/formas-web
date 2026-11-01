@@ -31,6 +31,10 @@ assets/app-preview/
 # Assets: Unused Images
 assets/images/*.jpg
 !assets/images/hero.jpg
+!assets/images/cardio.jpg
+!assets/images/aerobicos.jpg
+!assets/images/musculacion.jpg
+!assets/images/funcional.jpg
 assets/images/*.ai
 assets/images/infra/
 assets/images/phone/
