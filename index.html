@@ -372,20 +372,20 @@
     <!-- HERO SECTION: VIDEO CONTROLADO POR SCROLL CON PALABRAS EN 4 CUARTOS Y FUNDIDO A STATEMENT -->
     <div id="heroTrack" class="relative h-[340vh]">
       <section id="hero" class="sticky top-0 h-screen w-full flex items-center justify-center px-6 sm:px-8 pt-24 pb-16 overflow-hidden bg-[#080808]">
-        <!-- Imagen de alta fidelidad que se muestra inicialmente en reposo y como respaldo inmediato mientras carga el video -->
-        <img id="heroFallback" src="assets/images/hero.jpg" alt="Fachada FOR+" class="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none transition-opacity duration-700 ease-out" style="object-position: center top;" fetchpriority="high" decoding="async">
+        <!-- Imagen de alta fidelidad que se muestra inicialmente en reposo y al volver al inicio -->
+        <img id="heroFallback" src="assets/images/hero.jpg" alt="Fachada FOR+" class="absolute inset-0 w-full h-full object-cover z-[1] pointer-events-none transition-opacity duration-500 ease-out" style="object-position: center top;" fetchpriority="high" decoding="async">
 
         <!-- Video interactivo scroll-driven de fachada: continuo, fluido y sin parpadeos -->
-        <video id="heroVideo" src="videos/comp1.mp4" playsinline muted preload="auto" class="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none transition-opacity duration-700 ease-out opacity-0" style="object-position: center top;"></video>
+        <video id="heroVideo" src="videos/comp1.mp4" playsinline muted preload="auto" class="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none transition-opacity duration-500 ease-out opacity-0" style="object-position: center top;"></video>
         
-        <!-- Capa oscurecedora al 10% en modo multiplicar sobre el video -->
-        <div class="absolute inset-0 pointer-events-none z-[1]" style="background-color: #000000; opacity: 0.10; mix-blend-mode: multiply;"></div>
+        <!-- Capa oscurecedora al 10% en modo multiplicar sobre el fondo -->
+        <div class="absolute inset-0 pointer-events-none z-[2]" style="background-color: #000000; opacity: 0.10; mix-blend-mode: multiply;"></div>
 
         <!-- Difuminado a blur en la parte superior de la imagen (blur reducido a 12px) -->
-        <div class="absolute top-0 left-0 right-0 h-[120px] sm:h-[150px] pointer-events-none z-[2]" style="-webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); -webkit-mask-image: linear-gradient(to bottom, black 0%, black 45%, rgba(0,0,0,0.8) 70%, transparent 100%); mask-image: linear-gradient(to bottom, black 0%, black 45%, rgba(0,0,0,0.8) 70%, transparent 100%); background: linear-gradient(to bottom, rgba(8,8,8,0.41) 0%, rgba(8,8,8,0.32) 45%, rgba(8,8,8,0.10) 75%, transparent 100%);"></div>
+        <div class="absolute top-0 left-0 right-0 h-[120px] sm:h-[150px] pointer-events-none z-[3]" style="-webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); -webkit-mask-image: linear-gradient(to bottom, black 0%, black 45%, rgba(0,0,0,0.8) 70%, transparent 100%); mask-image: linear-gradient(to bottom, black 0%, black 45%, rgba(0,0,0,0.8) 70%, transparent 100%); background: linear-gradient(to bottom, rgba(8,8,8,0.41) 0%, rgba(8,8,8,0.32) 45%, rgba(8,8,8,0.10) 75%, transparent 100%);"></div>
 
         <!-- Sutil fade inferior para una transición limpia con la siguiente sección -->
-        <div class="absolute bottom-0 left-0 right-0 h-28 pointer-events-none z-[2]" style="background: linear-gradient(to top, #080808 0%, rgba(8,8,8,0.7) 50%, transparent 100%);"></div>
+        <div class="absolute bottom-0 left-0 right-0 h-28 pointer-events-none z-[3]" style="background: linear-gradient(to top, #080808 0%, rgba(8,8,8,0.7) 50%, transparent 100%);"></div>
 
         <!-- TEXTOS CINEMÁTICOS EN 4 CUARTOS: DEMUESTRA | DE QUÉ | ESTÁS | HECHO (En móvil en el primer tercio de altura) -->
         <div class="absolute inset-0 flex items-start justify-center pt-[26vh] sm:pt-[28vh] md:items-center md:pt-0 pointer-events-none z-10 px-6">
@@ -2061,7 +2061,6 @@
           heroCurrentTime = 0;
           heroTargetTime = 0;
           heroVideo.style.opacity = '1';
-          if (heroFallback) heroFallback.style.opacity = '0';
           updateHeroVideoScroll();
           updatePhoneVideoScroll();
         }).catch(() => {
@@ -2069,7 +2068,6 @@
           heroCurrentTime = 0;
           heroTargetTime = 0;
           heroVideo.style.opacity = '1';
-          if (heroFallback) heroFallback.style.opacity = '0';
           updateHeroVideoScroll();
           updatePhoneVideoScroll();
         });
@@ -2096,12 +2094,21 @@
       const progress = Math.max(0, Math.min(1.0, -rect.top / scrollableDist));
       const isVideoReady = heroVideo && !isNaN(heroVideo.duration) && heroVideo.duration > 0 && heroVideo.readyState >= 2;
 
-      // Una vez que el video cargó, se mantiene visible en todo momento para evitar parpadeos
+      // El video cargado se mantiene activo bajo la imagen estática
       if (isVideoReady) {
         if (heroVideo.style.opacity !== '1') {
           heroVideo.style.opacity = '1';
-          if (heroFallback) heroFallback.style.opacity = '0';
         }
+
+        // Transición de la imagen estática de bienvenida (heroFallback):
+        // En reposo o al tope de la página (progress <= 0.015), la imagen fija nítida se muestra al 100%.
+        // Al comenzar el scroll (entre 0.015 y 0.06), se desvanece suavemente para revelar el video interactivo.
+        // Al hacer scroll hacia arriba y regresar al inicio, vuelve a mostrarse con total nitidez.
+        if (heroFallback) {
+          const fallbackOp = Math.max(0, Math.min(1.0, 1 - (progress - 0.015) / 0.045));
+          heroFallback.style.opacity = fallbackOp.toFixed(3);
+        }
+
         const videoProgress = Math.min(1.0, progress / 0.60);
         heroTargetTime = videoProgress * heroVideo.duration;
       } else {
