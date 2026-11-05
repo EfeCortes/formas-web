@@ -4,5 +4,6 @@ deployment:
     - export DEPLOYPATH=/home1/crossbot/public_html/formas.com.bo/
     - /bin/cp index.html $DEPLOYPATH
     - /bin/cp .htaccess $DEPLOYPATH
+    - /bin/cp favicon* apple-touch-icon.png android-chrome* site.webmanifest $DEPLOYPATH 2>/dev/null || true
     - /bin/cp -R assets $DEPLOYPATH
     - /bin/cp -R videos $DEPLOYPATH
